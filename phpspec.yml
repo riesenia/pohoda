@@ -1,0 +1,4 @@
+suites:
+    rshop_suite:
+        namespace: Rshop\Synchronization
+        psr4_prefix: Rshop\Synchronization

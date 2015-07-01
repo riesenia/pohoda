@@ -1,0 +1,24 @@
+{
+    "name": "rshop/pohoda",
+    "description": "Pohoda XML communications",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tomas Saghy",
+            "email": "segy@riesenia.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "symfony/options-resolver": "~2.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "~2.0",
+        "bossa/phpspec2-expect": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rshop\\Synchronization\\": "src/"
+        }
+    }
+}

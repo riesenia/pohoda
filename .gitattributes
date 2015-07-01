@@ -1,0 +1,4 @@
+/spec                   export-ignore
+/phpspec.yml            export-ignore
+/.gitattributes         export-ignore
+/.gitignore             export-ignore
