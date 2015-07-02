@@ -59,7 +59,43 @@ abstract class Agenda
         // set ICO
         $this->_ico = $ico;
 
+        // resolve options
         $this->_data = $resolveOptions ? $this->_resolveOptions($data) : $data;
+    }
+
+    /**
+     * Set user-defined parameter
+     *
+     * @param string name (can be set without preceding VPr / RefVPr)
+     * @param string type
+     * @param string value
+     * @return void
+     */
+    public function addParameter($name, $type, $value)
+    {
+        if (!in_array($type, ['text', 'memo', 'currency', 'boolean', 'number', 'datetime', 'integer', 'list'])) {
+            throw new \OutOfRangeException('Invalid parameter type.');
+        }
+
+        if (!isset($this->_data['parameters'])) {
+            $this->_data['parameters'] = [];
+        }
+
+        $prefix = 'VPr';
+
+        if ($type == 'list') {
+            $prefix = 'RefVPr';
+
+            if (!is_array($value)) {
+                $value = ['ids' => $value];
+            }
+        }
+
+        $this->_data['parameters'][] = [
+            'name' => strpos($name, $prefix) === 0 ? $name : $prefix . $name,
+            'type' => $type,
+            'value' => $value
+        ];
     }
 
     /**
@@ -97,7 +133,7 @@ abstract class Agenda
      * @param string namespace
      * @return void
      */
-    protected function _addElements($xml, array $elements, $namespace = null)
+    protected function _addElements(\SimpleXMLElement $xml, array $elements, $namespace = null)
     {
         foreach ($elements as $element) {
             if (isset($this->_data[$element])) {
@@ -114,7 +150,7 @@ abstract class Agenda
      * @param string namespace
      * @return void
      */
-    protected function _addRefElements($xml, array $elements, $namespace = null)
+    protected function _addRefElements(\SimpleXMLElement $xml, array $elements, $namespace = null)
     {
         foreach ($elements as $element) {
             if (isset($this->_data[$element])) {
@@ -129,6 +165,39 @@ abstract class Agenda
                 foreach ($ref as $key => $value) {
                     $node->addChild('typ:' . $key, $value, $this->_namespace('typ'));
                 }
+            }
+        }
+    }
+
+    /**
+     * Add parameters element
+     *
+     * @param \SimpleXMLElement
+     * @param string namespace
+     * @param string element name
+     * @return void
+     */
+    protected function _addParameters(\SimpleXMLElement $xml, $namespace = null, $element = 'parameters')
+    {
+        if (!isset($this->_data['parameters'])) {
+            return;
+        }
+
+        $parameters = $xml->addChild(($namespace ? $namespace . ':' : '') . $element);
+
+        foreach ($this->_data['parameters'] as $parameter) {
+            $node = $parameters->addChild('typ:parameter', null, $this->_namespace('typ'));
+
+            $node->addChild('typ:name', $parameter['name']);
+
+            if ($parameter['type'] == 'list') {
+                $listValueRef = $node->addChild('typ:listValueRef', null);
+
+                foreach ($parameter['value'] as $key => $value) {
+                    $listValueRef->addChild('typ:' . $key, $value, $this->_namespace('typ'));
+                }
+            } else {
+                $node->addChild('typ:' . $parameter['type'] . 'Value', $parameter['value']);
             }
         }
     }

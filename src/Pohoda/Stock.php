@@ -62,6 +62,7 @@ class Stock extends Agenda
 
         $this->_addElements($header, ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'purchasingPrice', 'sellingPrice', 'limitMin', 'limitMax', 'mass', 'volume', 'shortName', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'], 'stk');
         $this->_addRefElements($header, ['storage', 'typePrice', 'typeRP'], 'stk');
+        $this->_addParameters($header, 'stk');
 
         return $xml->asXML();
     }
