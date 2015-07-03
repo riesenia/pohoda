@@ -72,13 +72,4 @@ class Category extends Agenda
             }
         }
     }
-
-    public function getRawXML()
-    {
-        $xml = $this->_createXML()->addChild('ctg:category', null, $this->_namespace('ctg'));
-
-        $this->_addElements($xml, ['name', 'description', 'sequence', 'displayed', 'picture', 'note'], 'ctg');
-
-        return $xml->asXML();
-    }
 }
