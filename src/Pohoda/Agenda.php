@@ -81,6 +81,12 @@ abstract class Agenda
             $this->_data['parameters'] = [];
         }
 
+        try {
+            $value = call_user_func($this->_createNormalizer($type), [], $value);
+        } catch (\Exception $e) {
+            // silent
+        }
+
         $prefix = 'VPr';
 
         if ($type == 'list') {
@@ -137,7 +143,7 @@ abstract class Agenda
     {
         foreach ($elements as $element) {
             if (isset($this->_data[$element])) {
-                $xml->addChild(($namespace ? $namespace . ':' : '') . $element, $this->_data[$element]);
+                $xml->addChild(($namespace ? $namespace . ':' : '') . $element, htmlspecialchars($this->_data[$element]));
             }
         }
     }
@@ -163,7 +169,7 @@ abstract class Agenda
                 }
 
                 foreach ($ref as $key => $value) {
-                    $node->addChild('typ:' . $key, $value, $this->_namespace('typ'));
+                    $node->addChild('typ:' . $key, htmlspecialchars($value), $this->_namespace('typ'));
                 }
             }
         }
@@ -194,10 +200,10 @@ abstract class Agenda
                 $listValueRef = $node->addChild('typ:listValueRef', null);
 
                 foreach ($parameter['value'] as $key => $value) {
-                    $listValueRef->addChild('typ:' . $key, $value, $this->_namespace('typ'));
+                    $listValueRef->addChild('typ:' . $key, htmlspecialchars($value), $this->_namespace('typ'));
                 }
             } else {
-                $node->addChild('typ:' . $parameter['type'] . 'Value', $parameter['value']);
+                $node->addChild('typ:' . $parameter['type'] . 'Value', htmlspecialchars($parameter['value']));
             }
         }
     }
@@ -212,36 +218,22 @@ abstract class Agenda
     {
         $resolver = new OptionsResolver();
 
-        // define maxLength normalizers
+        // define string normalizers
         foreach ([10, 24, 90, 240] as $length) {
             $resolver->{'string' . $length . 'Normalizer'} = $this->_createStringNormalizer($length);
         }
 
         // define date normalizer
-        $resolver->dateNormalizer = function ($options, $value) {
-            $time = strtotime($value);
-
-            if (!$time) {
-                throw new \DomainException("Not a valid date: " . $value);
-            }
-
-            return date('Y-m-d', $time);
-        };
+        $resolver->dateNormalizer = $this->_createDateNormalizer();
 
         // define float normalizer
-        $resolver->floatNormalizer = function ($options, $value) {
-            return str_replace(',', '.', preg_replace('/[^0-9,.]/', '', $value));
-        };
+        $resolver->floatNormalizer = $this->_createFloatNormalizer();
 
         // define int normalizer
-        $resolver->intNormalizer = function ($options, $value) {
-            return (int)$value;
-        };
+        $resolver->intNormalizer = $this->_createIntNormalizer();
 
         // define bool normalizer
-        $resolver->boolNormalizer = function ($options, $value) {
-            return !$value || strtolower($value) === 'false' ? 'false' : 'true';
-        };
+        $resolver->boolNormalizer = $this->_createBoolNormalizer();
 
         $this->_configureOptions($resolver);
 
@@ -249,15 +241,69 @@ abstract class Agenda
     }
 
     /**
-     * Create string normalizer
+     * Create normalizer
      *
-     * @param int max length
+     * @param string type
+     * @param mixed normalizer parameter
      * @return \Closure
      */
-    protected function _createStringNormalizer($length)
+    protected function _createNormalizer($type, $param = null)
     {
-        return function ($options, $value) use ($length) {
-            return mb_substr($value, 0, $length, 'utf-8');
-        };
+        switch ($type) {
+            case 'string':
+                return function ($options, $value) use ($param) {
+                    return mb_substr($value, 0, $param, 'utf-8');
+                };
+
+            case 'date':
+            case 'datetime':
+                return function ($options, $value) {
+                    $time = strtotime($value);
+
+                    if (!$time) {
+                        throw new \DomainException("Not a valid date: " . $value);
+                    }
+
+                    return date('Y-m-d', $time);
+                };
+
+            case 'float':
+            case 'number':
+                return function ($options, $value) {
+                    return str_replace(',', '.', preg_replace('/[^0-9,.]/', '', $value));
+                };
+
+            case 'int':
+            case 'integer':
+                return function ($options, $value) {
+                    return (int)$value;
+                };
+
+            case 'bool':
+            case 'boolean':
+                return function ($options, $value) {
+                    return !$value || strtolower($value) === 'false' ? 'false' : 'true';
+                };
+
+            default:
+                throw new \DomainException("Not a valid normalizer type: " . $type);
+        }
+    }
+
+    /**
+     * Handle dynamic method calls
+     *
+     * @param string method name
+     * @param array arguments
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+        // _create<Type>Normalizer for creating normalizers
+        if (preg_match('/_create([A-Z][a-zA-Z0-9]+)Normalizer/', $method, $matches)) {
+            return call_user_func([$this, '_createNormalizer'], lcfirst($matches[1]), isset($arguments[0]) ? $arguments[0] : null);
+        }
+
+        throw new \BadMethodCallException("Unknown method: " . $method);
     }
 }
