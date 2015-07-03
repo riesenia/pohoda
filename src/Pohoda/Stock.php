@@ -35,17 +35,17 @@ class Stock extends Agenda
         $resolver->setNormalizer('coefficient3', $resolver->floatNormalizer);
         $resolver->setRequired('storage');
         $resolver->setRequired('typePrice');
-        $resolver->setAllowedTypes('purchasingPrice', $resolver->floatNormalizer);
-        $resolver->setAllowedTypes('sellingPrice', $resolver->floatNormalizer);
-        $resolver->setAllowedTypes('limitMin', $resolver->floatNormalizer);
-        $resolver->setAllowedTypes('limitMax', $resolver->floatNormalizer);
-        $resolver->setAllowedTypes('mass', $resolver->floatNormalizer);
-        $resolver->setAllowedTypes('volume', $resolver->floatNormalizer);
+        $resolver->setNormalizer('purchasingPrice', $resolver->floatNormalizer);
+        $resolver->setNormalizer('sellingPrice', $resolver->floatNormalizer);
+        $resolver->setNormalizer('limitMin', $resolver->floatNormalizer);
+        $resolver->setNormalizer('limitMax', $resolver->floatNormalizer);
+        $resolver->setNormalizer('mass', $resolver->floatNormalizer);
+        $resolver->setNormalizer('volume', $resolver->floatNormalizer);
         $resolver->setNormalizer('shortName', $resolver->string24Normalizer);
         $resolver->setAllowedValues('guaranteeType', array('none', 'hour', 'day', 'month', 'year', 'life'));
         $resolver->setNormalizer('guarantee', $resolver->intNormalizer);
-        $resolver->setAllowedTypes('producer', $resolver->string90Normalizer);
-        $resolver->setAllowedTypes('description', $resolver->string240Normalizer);
+        $resolver->setNormalizer('producer', $resolver->string90Normalizer);
+        $resolver->setNormalizer('description', $resolver->string240Normalizer);
     }
 
     /**
