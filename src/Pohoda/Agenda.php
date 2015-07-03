@@ -219,7 +219,7 @@ abstract class Agenda
         $resolver = new OptionsResolver();
 
         // define string normalizers
-        foreach ([10, 24, 90, 240] as $length) {
+        foreach ([10, 24, 48, 90, 240] as $length) {
             $resolver->{'string' . $length . 'Normalizer'} = $this->_createStringNormalizer($length);
         }
 

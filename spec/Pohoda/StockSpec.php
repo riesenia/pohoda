@@ -2,7 +2,6 @@
 namespace spec\Rshop\Synchronization\Pohoda;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class StockSpec extends ObjectBehavior
 {
