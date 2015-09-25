@@ -287,7 +287,7 @@ abstract class Agenda
             case 'float':
             case 'number':
                 return function ($options, $value) {
-                    return str_replace(',', '.', preg_replace('/[^0-9,.]/', '', $value));
+                    return (float)str_replace(',', '.', preg_replace('/[^0-9,.]/', '', $value));
                 };
 
             case 'int':
