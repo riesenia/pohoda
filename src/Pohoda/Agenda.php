@@ -69,7 +69,7 @@ abstract class Agenda
      * @param string name (can be set without preceding VPr / RefVPr)
      * @param string type
      * @param string value
-     * @return void
+     * @return \Rshop\Synchronization\Pohoda\Agenda
      */
     public function addParameter($name, $type, $value)
     {
@@ -102,6 +102,8 @@ abstract class Agenda
             'type' => $type,
             'value' => $value
         ];
+
+        return $this;
     }
 
     /**
@@ -142,9 +144,11 @@ abstract class Agenda
     protected function _addElements(\SimpleXMLElement $xml, array $elements, $namespace = null)
     {
         foreach ($elements as $element) {
-            if (isset($this->_data[$element])) {
-                $xml->addChild(($namespace ? $namespace . ':' : '') . $element, htmlspecialchars($this->_data[$element]));
+            if (!isset($this->_data[$element])) {
+                continue;
             }
+
+            $xml->addChild(($namespace ? $namespace . ':' : '') . $element, htmlspecialchars($this->_data[$element]));
         }
     }
 
@@ -159,19 +163,32 @@ abstract class Agenda
     protected function _addRefElements(\SimpleXMLElement $xml, array $elements, $namespace = null)
     {
         foreach ($elements as $element) {
-            if (isset($this->_data[$element])) {
-                $node = $xml->addChild(($namespace ? $namespace . ':' : '') . $element);
-
-                $ref = $this->_data[$element];
-
-                if (!is_array($ref)) {
-                    $ref = ['ids' => $ref];
-                }
-
-                foreach ($ref as $key => $value) {
-                    $node->addChild('typ:' . $key, htmlspecialchars($value), $this->_namespace('typ'));
-                }
+            if (!isset($this->_data[$element])) {
+                continue;
             }
+
+            $this->_addRefElement($xml, ($namespace ? $namespace . ':' : '') . $element, $this->_data[$element]);
+        }
+    }
+
+    /**
+     * Add ref element
+     *
+     * @param \SimpleXMLElement
+     * @param string element name
+     * @param mixed value
+     * @return void
+     */
+    protected function _addRefElement(\SimpleXMLElement $xml, $name, $value)
+    {
+        $node = $xml->addChild($name);
+
+        if (!is_array($value)) {
+            $value = ['ids' => $value];
+        }
+
+        foreach ($value as $key => $value) {
+            $node->addChild('typ:' . $key, htmlspecialchars($value), $this->_namespace('typ'));
         }
     }
 

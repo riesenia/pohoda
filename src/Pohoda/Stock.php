@@ -49,6 +49,24 @@ class Stock extends Agenda
     }
 
     /**
+     * Add price
+     *
+     * @param string price code
+     * @param float price
+     * @return \Rshop\Synchronization\Pohoda\Stock
+     */
+    public function addPrice($code, $value)
+    {
+        if (!isset($this->_data['prices'])) {
+            $this->_data['prices'] = [];
+        }
+
+        $this->_data['prices'][$code] = (float)$value;
+
+        return $this;
+    }
+
+    /**
      * Get XML
      *
      * @return string
@@ -63,6 +81,14 @@ class Stock extends Agenda
         $this->_addElements($header, ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'purchasingPrice', 'sellingPrice', 'limitMin', 'limitMax', 'mass', 'volume', 'shortName', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'], 'stk');
         $this->_addRefElements($header, ['storage', 'typePrice', 'typeRP'], 'stk');
         $this->_addParameters($header, 'stk');
+
+        if (isset($this->_data['prices'])) {
+            $prices = $xml->addChild('stk:stockPriceItem');
+
+            foreach ($this->_data['prices'] as $code => $value) {
+                $this->_addRefElement($prices, 'stk:stockPrice', ['ids' => $code, 'price' => $value]);
+            }
+        }
 
         return $xml->asXML();
     }

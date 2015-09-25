@@ -29,6 +29,14 @@ class StockSpec extends ObjectBehavior
         $this->getXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader><stk:stockType>card</stk:stockType><stk:code>CODE</stk:code><stk:isSales>false</stk:isSales><stk:isSerialNumber>false</stk:isSerialNumber><stk:isInternet>true</stk:isInternet><stk:name>NAME</stk:name><stk:storage><typ:ids>STORAGE</typ:ids></stk:storage><stk:typePrice><typ:id>1</typ:id></stk:typePrice></stk:stockHeader></stk:stock>');
     }
 
+    public function it_can_set_prices()
+    {
+        $this->addPrice('Price1', 20.43);
+        $this->addPrice('Price2', 19);
+
+        $this->getXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader><stk:stockType>card</stk:stockType><stk:code>CODE</stk:code><stk:isSales>false</stk:isSales><stk:isSerialNumber>false</stk:isSerialNumber><stk:isInternet>true</stk:isInternet><stk:name>NAME</stk:name><stk:storage><typ:ids>STORAGE</typ:ids></stk:storage><stk:typePrice><typ:id>1</typ:id></stk:typePrice></stk:stockHeader><stk:stockPriceItem><stk:stockPrice><typ:ids>Price1</typ:ids><typ:price>20.43</typ:price></stk:stockPrice><stk:stockPrice><typ:ids>Price2</typ:ids><typ:price>19</typ:price></stk:stockPrice></stk:stockPriceItem></stk:stock>');
+    }
+
     public function it_can_set_parameters()
     {
         $this->addParameter('IsOn', 'boolean', 'true');
