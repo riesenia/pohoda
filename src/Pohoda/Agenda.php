@@ -68,10 +68,11 @@ abstract class Agenda
      *
      * @param string name (can be set without preceding VPr / RefVPr)
      * @param string type
-     * @param string value
+     * @param mixed value
+     * @param mixed list
      * @return \Rshop\Synchronization\Pohoda\Agenda
      */
-    public function addParameter($name, $type, $value)
+    public function addParameter($name, $type, $value, $list = null)
     {
         if (!in_array($type, ['text', 'memo', 'currency', 'boolean', 'number', 'datetime', 'integer', 'list'])) {
             throw new \OutOfRangeException('Invalid parameter type.');
@@ -91,17 +92,19 @@ abstract class Agenda
 
         if ($type == 'list') {
             $prefix = 'RefVPr';
-
-            if (!is_array($value)) {
-                $value = ['ids' => $value];
-            }
         }
 
-        $this->_data['parameters'][] = [
+        $parameter = [
             'name' => strpos($name, $prefix) === 0 ? $name : $prefix . $name,
             'type' => $type,
             'value' => $value
         ];
+
+        if ($list) {
+            $parameter['list'] = $list;
+        }
+
+        $this->_data['parameters'][] = $parameter;
 
         return $this;
     }
@@ -214,11 +217,11 @@ abstract class Agenda
             $node->addChild('typ:name', $parameter['name']);
 
             if ($parameter['type'] == 'list') {
-                $listValueRef = $node->addChild('typ:listValueRef', null);
-
-                foreach ($parameter['value'] as $key => $value) {
-                    $listValueRef->addChild('typ:' . $key, htmlspecialchars($value), $this->_namespace('typ'));
+                if (isset($parameter['list'])) {
+                    $this->_addRefElement($node, 'typ:list', $parameter['list']);
                 }
+
+                $this->_addRefElement($node, 'typ:listValueRef', $parameter['value']);
             } else {
                 $node->addChild('typ:' . $parameter['type'] . 'Value', htmlspecialchars($parameter['value']));
             }
