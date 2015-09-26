@@ -49,6 +49,31 @@ class Stock extends Agenda
     }
 
     /**
+     * Add action type
+     *
+     * @param string type
+     * @param mixed filter
+     * @return \Rshop\Synchronization\Pohoda\Stock
+     */
+    public function addActionType($type, $filter = null)
+    {
+        if (isset($this->_data['actionType'])) {
+            throw new \OutOfRangeException('Duplicate action type.');
+        }
+
+        if (!in_array($type, ['add', 'add/update', 'update', 'delete'])) {
+            throw new \OutOfRangeException('Invalid action type.');
+        }
+
+        $this->_data['actionType'] = [
+            'type' => $type,
+            'filter' => $filter
+        ];
+
+        return $this;
+    }
+
+    /**
      * Add price
      *
      * @param string price code
@@ -76,12 +101,37 @@ class Stock extends Agenda
         $xml = $this->_createXML()->addChild('stk:stock', null, $this->_namespace('stk'));
         $xml->addAttribute('version', '2.0');
 
+        // action type
+        if (isset($this->_data['actionType'])) {
+            $actionType = $xml->addChild('stk:actionType');
+            $action = $actionType->addChild('stk:' . ($this->_data['actionType']['type'] == 'add/update' ? 'add' : $this->_data['actionType']['type']));
+
+            if ($this->_data['actionType']['type'] == 'add/update') {
+                $action->addAttribute('update', 'true');
+            }
+
+            if ($this->_data['actionType']['filter']) {
+                $filter = $action->addChild('ftr:filter', null, $this->_namespace('ftr'));
+
+                foreach ($this->_data['actionType']['filter'] as $property => $value) {
+                    $ftr = $filter->addChild('ftr:' . $property, is_array($value) ? null : $value);
+
+                    if (is_array($value)) {
+                        foreach ($value as $tProperty => $tValue) {
+                            $ftr->addChild('typ:' . $tProperty, $tValue, $this->_namespace('typ'));
+                        }
+                    }
+                }
+            }
+        }
+
         $header = $xml->addChild('stk:stockHeader');
 
         $this->_addElements($header, ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'purchasingPrice', 'sellingPrice', 'limitMin', 'limitMax', 'mass', 'volume', 'shortName', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'], 'stk');
         $this->_addRefElements($header, ['storage', 'typePrice', 'typeRP'], 'stk');
         $this->_addParameters($header, 'stk');
 
+        // prices
         if (isset($this->_data['prices'])) {
             $prices = $xml->addChild('stk:stockPriceItem');
 
