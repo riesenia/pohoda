@@ -217,11 +217,11 @@ abstract class Agenda
             $node->addChild('typ:name', $parameter['name']);
 
             if ($parameter['type'] == 'list') {
+                $this->_addRefElement($node, 'typ:listValueRef', $parameter['value']);
+
                 if (isset($parameter['list'])) {
                     $this->_addRefElement($node, 'typ:list', $parameter['list']);
                 }
-
-                $this->_addRefElement($node, 'typ:listValueRef', $parameter['value']);
             } else {
                 $node->addChild('typ:' . $parameter['type'] . 'Value', htmlspecialchars($parameter['value']));
             }
