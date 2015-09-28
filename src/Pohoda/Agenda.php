@@ -158,7 +158,13 @@ abstract class Agenda
                 continue;
             }
 
-            $xml->addChild(($namespace ? $namespace . ':' : '') . $element, htmlspecialchars($this->_data[$element]));
+            $child = $xml->addChild(($namespace ? $namespace . ':' : '') . $element, is_array($this->_data[$element]) ? null : htmlspecialchars($this->_data[$element]));
+
+            if (is_array($this->_data[$element])) {
+                foreach ($this->_data[$element] as $node) {
+                    $this->_appendNode($child, $node->getXML());
+                }
+            }
         }
     }
 
@@ -247,7 +253,7 @@ abstract class Agenda
         $resolver = new OptionsResolver();
 
         // define string normalizers
-        foreach ([10, 16, 24, 48, 90, 240] as $length) {
+        foreach ([8, 10, 12, 15, 16, 18, 24, 32, 38, 40, 45, 48, 64, 90, 98, 240, 255] as $length) {
             $resolver->{'string' . $length . 'Normalizer'} = $this->_createStringNormalizer($length);
         }
 
