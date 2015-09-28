@@ -24,13 +24,13 @@ class Stock extends Agenda
 
         // validate / format options
         $resolver->setDefault('stockType', 'card');
-        $resolver->setAllowedValues('stockType', array('card', 'text', 'service', 'package', 'set', 'product'));
+        $resolver->setAllowedValues('stockType', ['card', 'text', 'service', 'package', 'set', 'product']);
         $resolver->setNormalizer('isSales', $resolver->boolNormalizer);
         $resolver->setNormalizer('isSerialNumber', $resolver->boolNormalizer);
         $resolver->setNormalizer('isInternet', $resolver->boolNormalizer);
         $resolver->setNormalizer('isBatch', $resolver->boolNormalizer);
-        $resolver->setAllowedValues('purchasingRateVAT', array('none', 'low', 'high'));
-        $resolver->setAllowedValues('sellingRateVAT', array('none', 'low', 'high'));
+        $resolver->setAllowedValues('purchasingRateVAT', ['none', 'low', 'high']);
+        $resolver->setAllowedValues('sellingRateVAT', ['none', 'low', 'high']);
         $resolver->setNormalizer('name', $resolver->string90Normalizer);
         $resolver->setNormalizer('nameComplement', $resolver->string90Normalizer);
         $resolver->setNormalizer('unit', $resolver->string10Normalizer);
@@ -45,7 +45,7 @@ class Stock extends Agenda
         $resolver->setNormalizer('mass', $resolver->floatNormalizer);
         $resolver->setNormalizer('volume', $resolver->floatNormalizer);
         $resolver->setNormalizer('shortName', $resolver->string24Normalizer);
-        $resolver->setAllowedValues('guaranteeType', array('none', 'hour', 'day', 'month', 'year', 'life'));
+        $resolver->setAllowedValues('guaranteeType', ['none', 'hour', 'day', 'month', 'year', 'life']);
         $resolver->setNormalizer('guarantee', $resolver->intNormalizer);
         $resolver->setNormalizer('producer', $resolver->string90Normalizer);
         $resolver->setNormalizer('description', $resolver->string240Normalizer);
