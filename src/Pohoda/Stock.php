@@ -18,14 +18,12 @@ class Stock extends Agenda
         // validate / format options
         $resolver->setDefault('stockType', 'card');
         $resolver->setAllowedValues('stockType', array('card', 'text', 'service', 'package', 'set', 'product'));
-        $resolver->setRequired('code');
         $resolver->setNormalizer('isSales', $resolver->boolNormalizer);
         $resolver->setNormalizer('isSerialNumber', $resolver->boolNormalizer);
         $resolver->setNormalizer('isInternet', $resolver->boolNormalizer);
         $resolver->setNormalizer('isBatch', $resolver->boolNormalizer);
         $resolver->setAllowedValues('purchasingRateVAT', array('none', 'low', 'high'));
         $resolver->setAllowedValues('sellingRateVAT', array('none', 'low', 'high'));
-        $resolver->setRequired('name');
         $resolver->setNormalizer('name', $resolver->string90Normalizer);
         $resolver->setNormalizer('nameComplement', $resolver->string90Normalizer);
         $resolver->setNormalizer('unit', $resolver->string10Normalizer);
@@ -33,8 +31,6 @@ class Stock extends Agenda
         $resolver->setNormalizer('unit3', $resolver->string10Normalizer);
         $resolver->setNormalizer('coefficient2', $resolver->floatNormalizer);
         $resolver->setNormalizer('coefficient3', $resolver->floatNormalizer);
-        $resolver->setRequired('storage');
-        $resolver->setRequired('typePrice');
         $resolver->setNormalizer('purchasingPrice', $resolver->floatNormalizer);
         $resolver->setNormalizer('sellingPrice', $resolver->floatNormalizer);
         $resolver->setNormalizer('limitMin', $resolver->floatNormalizer);
@@ -46,31 +42,6 @@ class Stock extends Agenda
         $resolver->setNormalizer('guarantee', $resolver->intNormalizer);
         $resolver->setNormalizer('producer', $resolver->string90Normalizer);
         $resolver->setNormalizer('description', $resolver->string240Normalizer);
-    }
-
-    /**
-     * Add action type
-     *
-     * @param string type
-     * @param mixed filter
-     * @return \Rshop\Synchronization\Pohoda\Stock
-     */
-    public function addActionType($type, $filter = null)
-    {
-        if (isset($this->_data['actionType'])) {
-            throw new \OutOfRangeException('Duplicate action type.');
-        }
-
-        if (!in_array($type, ['add', 'add/update', 'update', 'delete'])) {
-            throw new \OutOfRangeException('Invalid action type.');
-        }
-
-        $this->_data['actionType'] = [
-            'type' => $type,
-            'filter' => $filter
-        ];
-
-        return $this;
     }
 
     /**
@@ -102,33 +73,14 @@ class Stock extends Agenda
         $xml->addAttribute('version', '2.0');
 
         // action type
-        if (isset($this->_data['actionType'])) {
-            $actionType = $xml->addChild('stk:actionType');
-            $action = $actionType->addChild('stk:' . ($this->_data['actionType']['type'] == 'add/update' ? 'add' : $this->_data['actionType']['type']));
-
-            if ($this->_data['actionType']['type'] == 'add/update') {
-                $action->addAttribute('update', 'true');
-            }
-
-            if ($this->_data['actionType']['filter']) {
-                $filter = $action->addChild('ftr:filter', null, $this->_namespace('ftr'));
-
-                foreach ($this->_data['actionType']['filter'] as $property => $value) {
-                    $ftr = $filter->addChild('ftr:' . $property, is_array($value) ? null : $value);
-
-                    if (is_array($value)) {
-                        foreach ($value as $tProperty => $tValue) {
-                            $ftr->addChild('typ:' . $tProperty, $tValue, $this->_namespace('typ'));
-                        }
-                    }
-                }
-            }
-        }
+        $this->_addActionType($xml, 'stk');
 
         $header = $xml->addChild('stk:stockHeader');
 
         $this->_addElements($header, ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'purchasingPrice', 'sellingPrice', 'limitMin', 'limitMax', 'mass', 'volume', 'shortName', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'], 'stk');
         $this->_addRefElements($header, ['storage', 'typePrice', 'typeRP'], 'stk');
+
+        // parameters
         $this->_addParameters($header, 'stk');
 
         // prices

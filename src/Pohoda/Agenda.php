@@ -64,6 +64,31 @@ abstract class Agenda
     }
 
     /**
+     * Add action type
+     *
+     * @param string type
+     * @param mixed filter
+     * @return \Rshop\Synchronization\Pohoda\Stock
+     */
+    public function addActionType($type, $filter = null)
+    {
+        if (isset($this->_data['actionType'])) {
+            throw new \OutOfRangeException('Duplicate action type.');
+        }
+
+        if (!in_array($type, ['add', 'add/update', 'update', 'delete'])) {
+            throw new \OutOfRangeException('Invalid action type.');
+        }
+
+        $this->_data['actionType'] = [
+            'type' => $type,
+            'filter' => $filter
+        ];
+
+        return $this;
+    }
+
+    /**
      * Set user-defined parameter
      *
      * @param string name (can be set without preceding VPr / RefVPr)
@@ -192,6 +217,41 @@ abstract class Agenda
 
         foreach ($value as $key => $value) {
             $node->addChild('typ:' . $key, htmlspecialchars($value), $this->_namespace('typ'));
+        }
+    }
+
+    /**
+     * Add actionType element
+     *
+     * @param \SimpleXMLElement
+     * @param string namespace
+     * @return void
+     */
+    protected function _addActionType(\SimpleXMLElement $xml, $namespace = null)
+    {
+        if (!isset($this->_data['actionType'])) {
+            return;
+        }
+
+        $actionType = $xml->addChild(($namespace ? $namespace . ':' : '') . 'actionType');
+        $action = $actionType->addChild(($namespace ? $namespace . ':' : '') . ($this->_data['actionType']['type'] == 'add/update' ? 'add' : $this->_data['actionType']['type']));
+
+        if ($this->_data['actionType']['type'] == 'add/update') {
+            $action->addAttribute('update', 'true');
+        }
+
+        if ($this->_data['actionType']['filter']) {
+            $filter = $action->addChild('ftr:filter', null, $this->_namespace('ftr'));
+
+            foreach ($this->_data['actionType']['filter'] as $property => $value) {
+                $ftr = $filter->addChild('ftr:' . $property, is_array($value) ? null : $value);
+
+                if (is_array($value)) {
+                    foreach ($value as $tProperty => $tValue) {
+                        $ftr->addChild('typ:' . $tProperty, $tValue, $this->_namespace('typ'));
+                    }
+                }
+            }
         }
     }
 
