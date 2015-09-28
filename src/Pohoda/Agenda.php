@@ -2,6 +2,8 @@
 namespace Rshop\Synchronization\Pohoda;
 
 use Rshop\Synchronization\Pohoda;
+use Rshop\Synchronization\Pohoda\Type\ActionType;
+use Rshop\Synchronization\Pohoda\Type\Parameter;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -26,11 +28,11 @@ abstract class Agenda
     protected $_ico;
 
     /**
-     * XML object
+     * Ref elements
      *
-     * @var \SimpleXMLElement
+     * @var array
      */
-    protected $_xml;
+    protected $_refElements = [];
 
     /**
      * Configure options for options resolver
@@ -43,7 +45,7 @@ abstract class Agenda
     /**
      * Get XML
      *
-     * @return string
+     * @return \SimpleXMLElement
      */
     abstract public function getXML();
 
@@ -76,14 +78,10 @@ abstract class Agenda
             throw new \OutOfRangeException('Duplicate action type.');
         }
 
-        if (!in_array($type, ['add', 'add/update', 'update', 'delete'])) {
-            throw new \OutOfRangeException('Invalid action type.');
-        }
-
-        $this->_data['actionType'] = [
+        $this->_data['actionType'] = new ActionType([
             'type' => $type,
             'filter' => $filter
-        ];
+        ], $this->_ico);
 
         return $this;
     }
@@ -99,37 +97,16 @@ abstract class Agenda
      */
     public function addParameter($name, $type, $value, $list = null)
     {
-        if (!in_array($type, ['text', 'memo', 'currency', 'boolean', 'number', 'datetime', 'integer', 'list'])) {
-            throw new \OutOfRangeException('Invalid parameter type.');
-        }
-
         if (!isset($this->_data['parameters'])) {
             $this->_data['parameters'] = [];
         }
 
-        try {
-            $value = call_user_func($this->_createNormalizer($type), [], $value);
-        } catch (\Exception $e) {
-            // silent
-        }
-
-        $prefix = 'VPr';
-
-        if ($type == 'list') {
-            $prefix = 'RefVPr';
-        }
-
-        $parameter = [
-            'name' => strpos($name, $prefix) === 0 ? $name : $prefix . $name,
+        $this->_data['parameters'][] = new Parameter([
+            'name' => $name,
             'type' => $type,
-            'value' => $value
-        ];
-
-        if ($list) {
-            $parameter['list'] = $list;
-        }
-
-        $this->_data['parameters'][] = $parameter;
+            'value' => $value,
+            'list' => $list
+        ], $this->_ico);
 
         return $this;
     }
@@ -176,26 +153,12 @@ abstract class Agenda
                 continue;
             }
 
-            $xml->addChild(($namespace ? $namespace . ':' : '') . $element, htmlspecialchars($this->_data[$element]));
-        }
-    }
-
-    /**
-     * Add batch ref elements
-     *
-     * @param \SimpleXMLElement
-     * @param array
-     * @param string namespace
-     * @return void
-     */
-    protected function _addRefElements(\SimpleXMLElement $xml, array $elements, $namespace = null)
-    {
-        foreach ($elements as $element) {
-            if (!isset($this->_data[$element])) {
+            if (in_array($element, $this->_refElements)) {
+                $this->_addRefElement($xml, ($namespace ? $namespace . ':' : '') . $element, $this->_data[$element]);
                 continue;
             }
 
-            $this->_addRefElement($xml, ($namespace ? $namespace . ':' : '') . $element, $this->_data[$element]);
+            $xml->addChild(($namespace ? $namespace . ':' : '') . $element, htmlspecialchars($this->_data[$element]));
         }
     }
 
@@ -221,6 +184,21 @@ abstract class Agenda
     }
 
     /**
+     * Append SimpleXMLElement to another SimpleXMLElement
+     *
+     * @param \SimpleXMLElement
+     * @param \SimpleXMLElement
+     * @return void
+     */
+    protected function _appendNode(\SimpleXMLElement $xml, \SimpleXMLElement $node)
+    {
+        $dom = dom_import_simplexml($xml);
+        $dom2 = dom_import_simplexml($node);
+
+        $dom->appendChild($dom->ownerDocument->importNode($dom2, true));
+    }
+
+    /**
      * Add actionType element
      *
      * @param \SimpleXMLElement
@@ -233,26 +211,8 @@ abstract class Agenda
             return;
         }
 
-        $actionType = $xml->addChild(($namespace ? $namespace . ':' : '') . 'actionType');
-        $action = $actionType->addChild(($namespace ? $namespace . ':' : '') . ($this->_data['actionType']['type'] == 'add/update' ? 'add' : $this->_data['actionType']['type']));
-
-        if ($this->_data['actionType']['type'] == 'add/update') {
-            $action->addAttribute('update', 'true');
-        }
-
-        if ($this->_data['actionType']['filter']) {
-            $filter = $action->addChild('ftr:filter', null, $this->_namespace('ftr'));
-
-            foreach ($this->_data['actionType']['filter'] as $property => $value) {
-                $ftr = $filter->addChild('ftr:' . $property, is_array($value) ? null : $value);
-
-                if (is_array($value)) {
-                    foreach ($value as $tProperty => $tValue) {
-                        $ftr->addChild('typ:' . $tProperty, $tValue, $this->_namespace('typ'));
-                    }
-                }
-            }
-        }
+        $this->_data['actionType']->setNamespace($namespace);
+        $this->_appendNode($xml, $this->_data['actionType']->getXML());
     }
 
     /**
@@ -272,19 +232,7 @@ abstract class Agenda
         $parameters = $xml->addChild(($namespace ? $namespace . ':' : '') . $element);
 
         foreach ($this->_data['parameters'] as $parameter) {
-            $node = $parameters->addChild('typ:parameter', null, $this->_namespace('typ'));
-
-            $node->addChild('typ:name', $parameter['name']);
-
-            if ($parameter['type'] == 'list') {
-                $this->_addRefElement($node, 'typ:listValueRef', $parameter['value']);
-
-                if (isset($parameter['list'])) {
-                    $this->_addRefElement($node, 'typ:list', $parameter['list']);
-                }
-            } else {
-                $node->addChild('typ:' . $parameter['type'] . 'Value', htmlspecialchars($parameter['value']));
-            }
+            $this->_appendNode($parameters, $parameter->getXML());
         }
     }
 
@@ -299,7 +247,7 @@ abstract class Agenda
         $resolver = new OptionsResolver();
 
         // define string normalizers
-        foreach ([10, 24, 48, 90, 240] as $length) {
+        foreach ([10, 16, 24, 48, 90, 240] as $length) {
             $resolver->{'string' . $length . 'Normalizer'} = $this->_createStringNormalizer($length);
         }
 

@@ -6,6 +6,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Stock extends Agenda
 {
     /**
+     * Ref elements
+     *
+     * @var array
+     */
+    protected $_refElements = ['storage', 'typePrice', 'typeRP'];
+
+    /**
      * Configure options for options resolver
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver
@@ -65,7 +72,7 @@ class Stock extends Agenda
     /**
      * Get XML
      *
-     * @return string
+     * @return \SimpleXMLElement
      */
     public function getXML()
     {
@@ -77,8 +84,7 @@ class Stock extends Agenda
 
         $header = $xml->addChild('stk:stockHeader');
 
-        $this->_addElements($header, ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'purchasingPrice', 'sellingPrice', 'limitMin', 'limitMax', 'mass', 'volume', 'shortName', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'], 'stk');
-        $this->_addRefElements($header, ['storage', 'typePrice', 'typeRP'], 'stk');
+        $this->_addElements($header, ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'storage', 'typePrice', 'purchasingPrice', 'sellingPrice', 'limitMin', 'limitMax', 'mass', 'volume', 'shortName', 'typeRP', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'], 'stk');
 
         // parameters
         $this->_addParameters($header, 'stk');
@@ -92,6 +98,6 @@ class Stock extends Agenda
             }
         }
 
-        return $xml->asXML();
+        return $xml;
     }
 }

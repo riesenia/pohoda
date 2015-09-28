@@ -40,7 +40,7 @@ class Category extends Agenda
     /**
      * Get XML
      *
-     * @return string
+     * @return \SimpleXMLElement
      */
     public function getXML()
     {
@@ -49,7 +49,7 @@ class Category extends Agenda
 
         $this->categoryXML($xml);
 
-        return $xml->asXML();
+        return $xml;
     }
 
     /**

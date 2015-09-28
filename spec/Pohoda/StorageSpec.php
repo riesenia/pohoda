@@ -21,7 +21,7 @@ class StorageSpec extends ObjectBehavior
 
     public function it_creates_correct_xml()
     {
-        $this->getXML()->shouldReturn('<str:storage version="2.0"><str:itemStorage code="MAIN"/></str:storage>');
+        $this->getXML()->asXML()->shouldReturn('<str:storage version="2.0"><str:itemStorage code="MAIN"/></str:storage>');
     }
 
     public function it_can_add_substorages()
@@ -33,7 +33,7 @@ class StorageSpec extends ObjectBehavior
 
         $this->addSubstorage($sub);
 
-        $this->getXML()->shouldReturn('<str:storage version="2.0"><str:itemStorage code="MAIN"><str:subStorages><str:itemStorage code="Sub" name="Sub"/></str:subStorages></str:itemStorage></str:storage>');
+        $this->getXML()->asXML()->shouldReturn('<str:storage version="2.0"><str:itemStorage code="MAIN"><str:subStorages><str:itemStorage code="Sub" name="Sub"/></str:subStorages></str:itemStorage></str:storage>');
 
         $subsub = new Storage([
             'code' => 'SubSub',
@@ -42,6 +42,6 @@ class StorageSpec extends ObjectBehavior
 
         $sub->addSubstorage($subsub);
 
-        $this->getXML()->shouldReturn('<str:storage version="2.0"><str:itemStorage code="MAIN"><str:subStorages><str:itemStorage code="Sub" name="Sub"><str:subStorages><str:itemStorage code="SubSub" name="SubSub"/></str:subStorages></str:itemStorage></str:subStorages></str:itemStorage></str:storage>');
+        $this->getXML()->asXML()->shouldReturn('<str:storage version="2.0"><str:itemStorage code="MAIN"><str:subStorages><str:itemStorage code="Sub" name="Sub"><str:subStorages><str:itemStorage code="SubSub" name="SubSub"/></str:subStorages></str:itemStorage></str:subStorages></str:itemStorage></str:storage>');
     }
 }

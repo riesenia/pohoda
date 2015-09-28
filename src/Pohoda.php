@@ -16,6 +16,7 @@ class Pohoda
      * @var array
      */
     public static $namespaces = [
+        'adb' => 'http://www.stormware.cz/schema/version_2/addressbook.xsd',
         'ctg' => 'http://www.stormware.cz/schema/version_2/category.xsd',
         'dat' => 'http://www.stormware.cz/schema/version_2/data.xsd',
         'ftr' => 'http://www.stormware.cz/schema/version_2/filter.xsd',
@@ -93,7 +94,7 @@ class Pohoda
         $this->_xml->writeAttribute('version', '2.0');
         $this->_xml->writeAttribute('note', $note);
 
-        foreach (Pohoda::$namespaces as $k => $v) {
+        foreach (self::$namespaces as $k => $v) {
             $this->_xml->writeAttributeNS('xmlns', $k, null, $v);
         }
 
@@ -114,7 +115,10 @@ class Pohoda
         $this->_xml->writeAttribute('id', $id);
         $this->_xml->writeAttribute('version', '2.0');
 
-        $this->_xml->writeRaw($agenda->getXML());
+        $xml = $agenda->getXML();
+        if ($xml instanceof \SimpleXMLElement) {
+            $this->_xml->writeRaw($xml->asXML());
+        }
 
         $this->_xml->endElement();
         $this->_xml->flush();

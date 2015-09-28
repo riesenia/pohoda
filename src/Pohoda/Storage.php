@@ -37,7 +37,7 @@ class Storage extends Agenda
     /**
      * Get XML
      *
-     * @return string
+     * @return \SimpleXMLElement
      */
     public function getXML()
     {
@@ -46,7 +46,7 @@ class Storage extends Agenda
 
         $this->storageXML($xml);
 
-        return $xml->asXML();
+        return $xml;
     }
 
     /**
