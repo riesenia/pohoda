@@ -2,8 +2,6 @@
 namespace Rshop\Synchronization\Pohoda;
 
 use Rshop\Synchronization\Pohoda;
-use Rshop\Synchronization\Pohoda\Type\ActionType;
-use Rshop\Synchronization\Pohoda\Type\Parameter;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -66,52 +64,6 @@ abstract class Agenda
     }
 
     /**
-     * Add action type
-     *
-     * @param string type
-     * @param mixed filter
-     * @return \Rshop\Synchronization\Pohoda\Stock
-     */
-    public function addActionType($type, $filter = null)
-    {
-        if (isset($this->_data['actionType'])) {
-            throw new \OutOfRangeException('Duplicate action type.');
-        }
-
-        $this->_data['actionType'] = new ActionType([
-            'type' => $type,
-            'filter' => $filter
-        ], $this->_ico);
-
-        return $this;
-    }
-
-    /**
-     * Set user-defined parameter
-     *
-     * @param string name (can be set without preceding VPr / RefVPr)
-     * @param string type
-     * @param mixed value
-     * @param mixed list
-     * @return \Rshop\Synchronization\Pohoda\Agenda
-     */
-    public function addParameter($name, $type, $value, $list = null)
-    {
-        if (!isset($this->_data['parameters'])) {
-            $this->_data['parameters'] = [];
-        }
-
-        $this->_data['parameters'][] = new Parameter([
-            'name' => $name,
-            'type' => $type,
-            'value' => $value,
-            'list' => $list
-        ], $this->_ico);
-
-        return $this;
-    }
-
-    /**
      * Create XML
      *
      * @return \SimpleXMLElement
@@ -153,13 +105,26 @@ abstract class Agenda
                 continue;
             }
 
+            // ref element
             if (in_array($element, $this->_refElements)) {
                 $this->_addRefElement($xml, ($namespace ? $namespace . ':' : '') . $element, $this->_data[$element]);
                 continue;
             }
 
+            // Agenda object
+            if ($this->_data[$element] instanceof self) {
+                // set namespace
+                if ($namespace && method_exists($this->_data[$element], 'setNamespace')) {
+                    $this->_data[$element]->setNamespace($namespace);
+                }
+
+                $this->_appendNode($xml, $this->_data[$element]->getXML());
+                continue;
+            }
+
             $child = $xml->addChild(($namespace ? $namespace . ':' : '') . $element, is_array($this->_data[$element]) ? null : htmlspecialchars($this->_data[$element]));
 
+            // array of Agenda objects
             if (is_array($this->_data[$element])) {
                 foreach ($this->_data[$element] as $node) {
                     $this->_appendNode($child, $node->getXML());
@@ -174,7 +139,7 @@ abstract class Agenda
      * @param \SimpleXMLElement
      * @param string element name
      * @param mixed value
-     * @return void
+     * @return \SimpleXMLElement
      */
     protected function _addRefElement(\SimpleXMLElement $xml, $name, $value)
     {
@@ -187,6 +152,8 @@ abstract class Agenda
         foreach ($value as $key => $value) {
             $node->addChild('typ:' . $key, htmlspecialchars($value), $this->_namespace('typ'));
         }
+
+        return $node;
     }
 
     /**
@@ -202,44 +169,6 @@ abstract class Agenda
         $dom2 = dom_import_simplexml($node);
 
         $dom->appendChild($dom->ownerDocument->importNode($dom2, true));
-    }
-
-    /**
-     * Add actionType element
-     *
-     * @param \SimpleXMLElement
-     * @param string namespace
-     * @return void
-     */
-    protected function _addActionType(\SimpleXMLElement $xml, $namespace = null)
-    {
-        if (!isset($this->_data['actionType'])) {
-            return;
-        }
-
-        $this->_data['actionType']->setNamespace($namespace);
-        $this->_appendNode($xml, $this->_data['actionType']->getXML());
-    }
-
-    /**
-     * Add parameters element
-     *
-     * @param \SimpleXMLElement
-     * @param string namespace
-     * @param string element name
-     * @return void
-     */
-    protected function _addParameters(\SimpleXMLElement $xml, $namespace = null, $element = 'parameters')
-    {
-        if (!isset($this->_data['parameters'])) {
-            return;
-        }
-
-        $parameters = $xml->addChild(($namespace ? $namespace . ':' : '') . $element);
-
-        foreach ($this->_data['parameters'] as $parameter) {
-            $this->_appendNode($parameters, $parameter->getXML());
-        }
     }
 
     /**

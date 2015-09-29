@@ -66,9 +66,11 @@ class Parameter extends Agenda
             if (isset($this->_data['list'])) {
                 $this->_addRefElement($xml, 'typ:list', $this->_data['list']);
             }
-        } else {
-            $xml->addChild('typ:' . $this->_data['type'] . 'Value', htmlspecialchars($this->_data['value']));
+
+            return $xml;
         }
+
+        $xml->addChild('typ:' . $this->_data['type'] . 'Value', htmlspecialchars($this->_data['value']));
 
         return $xml;
     }
