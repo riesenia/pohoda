@@ -29,7 +29,7 @@ class StockSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader>' . $this->_defaultHeader() . '</stk:stockHeader></stk:stock>');
     }
 
-    public function it_can_add_action_type()
+    public function it_can_set_action_type()
     {
         $this->addActionType('update', [
             'code' => 'CODE',
@@ -45,6 +45,29 @@ class StockSpec extends ObjectBehavior
         $this->addPrice('Price2', 19);
 
         $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader>' . $this->_defaultHeader() . '</stk:stockHeader><stk:stockPriceItem><stk:stockPrice><typ:ids>Price1</typ:ids><typ:price>20.43</typ:price></stk:stockPrice><stk:stockPrice><typ:ids>Price2</typ:ids><typ:price>19</typ:price></stk:stockPrice></stk:stockPriceItem></stk:stock>');
+    }
+
+    public function it_can_set_images()
+    {
+        $this->addImage('image1.jpg');
+        $this->addImage('image2.jpg', 'NAME', null, true);
+
+        $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader>' . $this->_defaultHeader() . '<stk:pictures><stk:picture><stk:filepath>image1.jpg</stk:filepath><stk:description/><stk:order>1</stk:order></stk:picture><stk:picture default="true"><stk:filepath>image2.jpg</stk:filepath><stk:description>NAME</stk:description><stk:order>2</stk:order></stk:picture></stk:pictures></stk:stockHeader></stk:stock>');
+    }
+
+    public function it_can_set_categories()
+    {
+        $this->addCategory(1);
+        $this->addCategory(2);
+
+        $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader>' . $this->_defaultHeader() . '<stk:categories><stk:idCategory>1</stk:idCategory><stk:idCategory>2</stk:idCategory></stk:categories></stk:stockHeader></stk:stock>');
+    }
+
+    public function it_can_set_int_parameters()
+    {
+        $this->addIntParameter(1, 'VALUE1');
+
+        $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader>' . $this->_defaultHeader() . '<stk:intParameters><stk:intParameter><stk:intParameterID>1</stk:intParameterID><stk:intParameterValues><stk:intParameterValue><stk:parameterValue>VALUE1</stk:parameterValue></stk:intParameterValue></stk:intParameterValues></stk:intParameter></stk:intParameters></stk:stockHeader></stk:stock>');
     }
 
     public function it_can_set_parameters()

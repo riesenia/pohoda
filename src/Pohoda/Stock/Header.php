@@ -24,6 +24,13 @@ class Header extends Agenda
     protected $_elements = ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'storage', 'typePrice', 'purchasingPrice', 'sellingPrice', 'limitMin', 'limitMax', 'mass', 'volume', 'supplier', 'shortName', 'typeRP', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'];
 
     /**
+     * Images counter
+     *
+     * @var int
+     */
+    protected $_imagesCounter = 0;
+
+    /**
      * Configure options for options resolver
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver
@@ -63,6 +70,65 @@ class Header extends Agenda
     }
 
     /**
+     * Add image
+     *
+     * @param string filepath
+     * @param string description
+     * @param int order
+     * @param bool is default image
+     * @return void
+     */
+    public function addImage($filepath, $description, $order, $default)
+    {
+        if (!isset($this->_data['pictures'])) {
+            $this->_data['pictures'] = [];
+        }
+
+        $this->_data['pictures'][] = new Picture([
+            'filepath' => $filepath,
+            'description' => $description,
+            'order' => is_null($order) ? ++$this->_imagesCounter : $order,
+            'default' => $default
+        ], $this->_ico);
+    }
+
+    /**
+     * Add category
+     *
+     * @param int category id
+     * @return void
+     */
+    public function addCategory($categoryId)
+    {
+        if (!isset($this->_data['categories'])) {
+            $this->_data['categories'] = [];
+        }
+
+        $this->_data['categories'][] = new Category([
+            'idCategory' => $categoryId
+        ], $this->_ico);
+    }
+
+    /**
+     * Add int parameter
+     *
+     * @param int parameter id
+     * @param mixed value
+     * @return void
+     */
+    public function addIntParameter($parameterId, $value)
+    {
+        if (!isset($this->_data['intParameters'])) {
+            $this->_data['intParameters'] = [];
+        }
+
+        $this->_data['intParameters'][] = new IntParameter([
+            'intParameterID' => $parameterId,
+            'value' => $value
+        ], $this->_ico);
+    }
+
+    /**
      * Get XML
      *
      * @return \SimpleXMLElement
@@ -71,7 +137,7 @@ class Header extends Agenda
     {
         $xml = $this->_createXML()->addChild('stk:stockHeader', null, $this->_namespace('stk'));
 
-        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'stk');
+        $this->_addElements($xml, array_merge($this->_elements, ['categories', 'pictures', 'parameters', 'intParameters']), 'stk');
 
         return $xml;
     }

@@ -59,6 +59,49 @@ class Stock extends Agenda
     }
 
     /**
+     * Add image
+     *
+     * @param string filepath
+     * @param string description
+     * @param int order
+     * @param bool is default image
+     * @return \Rshop\Synchronization\Pohoda\Stock
+     */
+    public function addImage($filepath, $description = "", $order = null, $default = false)
+    {
+        $this->_data['header']->addImage($filepath, $description, $order, $default);
+
+        return $this;
+    }
+
+    /**
+     * Add category
+     *
+     * @param int category id
+     * @return \Rshop\Synchronization\Pohoda\Stock
+     */
+    public function addCategory($categoryId)
+    {
+        $this->_data['header']->addCategory($categoryId);
+
+        return $this;
+    }
+
+    /**
+     * Add int parameter
+     *
+     * @param int parameter id
+     * @param mixed value
+     * @return \Rshop\Synchronization\Pohoda\Stock
+     */
+    public function addIntParameter($parameterId, $value)
+    {
+        $this->_data['header']->addIntParameter($parameterId, $value);
+
+        return $this;
+    }
+
+    /**
      * Get XML
      *
      * @return \SimpleXMLElement

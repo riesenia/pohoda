@@ -30,7 +30,7 @@ class AddressbookSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:addressbookHeader>' . $this->_defaultHeader() . '</adb:addressbookHeader></adb:addressbook>');
     }
 
-    public function it_can_add_action_type()
+    public function it_can_set_action_type()
     {
         $this->addActionType('update', [
             'company' => 'COMPANY'
