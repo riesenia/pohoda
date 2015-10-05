@@ -14,11 +14,15 @@ class IntParameter extends Agenda
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
-        $resolver->setDefined(['intParameterID', 'value']);
+        $resolver->setDefined(['intParameterID', 'intParameterName', 'intParameterOrder', 'intParameterType', 'value']);
 
         // validate / format options
         $resolver->setRequired('intParameterID');
         $resolver->setNormalizer('intParameterID', $resolver->intNormalizer);
+        $resolver->setDefault('intParameterName', '...');
+        $resolver->setDefault('intParameterOrder', '1');
+        $resolver->setRequired('intParameterType');
+        $resolver->setAllowedValues('intParameterType', ['textValue', 'currencyValue', 'booleanValue', 'numberValue', 'integerValue', 'datetimeValue', 'unit', 'listValue']);
     }
 
     /**
@@ -30,7 +34,7 @@ class IntParameter extends Agenda
     {
         $xml = $this->_createXML()->addChild('stk:intParameter', null, $this->_namespace('stk'));
 
-        $this->_addElements($xml, ['intParameterID'], 'stk');
+        $this->_addElements($xml, ['intParameterID', 'intParameterName', 'intParameterOrder', 'intParameterType'], 'stk');
 
         // value
         $xml->addChild('stk:intParameterValues')->addChild('stk:intParameterValue')->addChild('stk:parameterValue', $this->_data['value']);

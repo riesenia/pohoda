@@ -113,10 +113,11 @@ class Header extends Agenda
      * Add int parameter
      *
      * @param int parameter id
+     * @param string type
      * @param mixed value
      * @return void
      */
-    public function addIntParameter($parameterId, $value)
+    public function addIntParameter($parameterId, $type, $value)
     {
         if (!isset($this->_data['intParameters'])) {
             $this->_data['intParameters'] = [];
@@ -124,6 +125,7 @@ class Header extends Agenda
 
         $this->_data['intParameters'][] = new IntParameter([
             'intParameterID' => $parameterId,
+            'intParameterType' => $type,
             'value' => $value
         ], $this->_ico);
     }

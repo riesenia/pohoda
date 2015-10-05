@@ -91,12 +91,13 @@ class Stock extends Agenda
      * Add int parameter
      *
      * @param int parameter id
+     * @param string type
      * @param mixed value
      * @return \Rshop\Synchronization\Pohoda\Stock
      */
-    public function addIntParameter($parameterId, $value)
+    public function addIntParameter($parameterId, $type, $value)
     {
-        $this->_data['header']->addIntParameter($parameterId, $value);
+        $this->_data['header']->addIntParameter($parameterId, $type, $value);
 
         return $this;
     }
