@@ -19,6 +19,8 @@ class Picture extends Agenda
         // validate / format options
         $resolver->setRequired('filepath');
         $resolver->setNormalizer('order', $resolver->intNormalizer);
+        $resolver->setDefault('default', 'false');
+        $resolver->setNormalizer('default', $resolver->boolNormalizer);
     }
 
     /**
@@ -29,10 +31,7 @@ class Picture extends Agenda
     public function getXML()
     {
         $xml = $this->_createXML()->addChild('stk:picture', null, $this->_namespace('stk'));
-
-        if ($this->_data['default']) {
-            $xml->addAttribute('default', 'true');
-        }
+        $xml->addAttribute('default', $this->_data['default']);
 
         $this->_addElements($xml, ['filepath', 'description', 'order'], 'stk');
 

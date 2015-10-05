@@ -52,7 +52,7 @@ class StockSpec extends ObjectBehavior
         $this->addImage('image1.jpg');
         $this->addImage('image2.jpg', 'NAME', null, true);
 
-        $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader>' . $this->_defaultHeader() . '<stk:pictures><stk:picture><stk:filepath>image1.jpg</stk:filepath><stk:description/><stk:order>1</stk:order></stk:picture><stk:picture default="true"><stk:filepath>image2.jpg</stk:filepath><stk:description>NAME</stk:description><stk:order>2</stk:order></stk:picture></stk:pictures></stk:stockHeader></stk:stock>');
+        $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader>' . $this->_defaultHeader() . '<stk:pictures><stk:picture default="false"><stk:filepath>image1.jpg</stk:filepath><stk:description/><stk:order>1</stk:order></stk:picture><stk:picture default="true"><stk:filepath>image2.jpg</stk:filepath><stk:description>NAME</stk:description><stk:order>2</stk:order></stk:picture></stk:pictures></stk:stockHeader></stk:stock>');
     }
 
     public function it_can_set_categories()
