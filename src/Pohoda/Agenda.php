@@ -83,6 +83,10 @@ abstract class Agenda
      */
     protected function _namespace($short)
     {
+        if (is_null($short)) {
+            return null;
+        }
+
         if (!isset(Pohoda::$namespaces[$short])) {
             throw new \OutOfRangeException('Invalid namespace.');
         }
@@ -107,7 +111,7 @@ abstract class Agenda
 
             // ref element
             if (in_array($element, $this->_refElements)) {
-                $this->_addRefElement($xml, ($namespace ? $namespace . ':' : '') . $element, $this->_data[$element]);
+                $this->_addRefElement($xml, ($namespace ? $namespace . ':' : '') . $element, $this->_data[$element], $namespace);
                 continue;
             }
 
@@ -127,14 +131,18 @@ abstract class Agenda
                 continue;
             }
 
-            $child = $xml->addChild(($namespace ? $namespace . ':' : '') . $element, is_array($this->_data[$element]) ? null : htmlspecialchars($this->_data[$element]), $this->_namespace($namespace));
-
             // array of Agenda objects
             if (is_array($this->_data[$element])) {
+                $child = $xml->addChild(($namespace ? $namespace . ':' : '') . $element, null, $this->_namespace($namespace));
+
                 foreach ($this->_data[$element] as $node) {
                     $this->_appendNode($child, $node->getXML());
                 }
+
+                continue;
             }
+
+            $xml->addChild(($namespace ? $namespace . ':' : '') . $element, htmlspecialchars($this->_data[$element]), $this->_namespace($namespace));
         }
     }
 
@@ -144,11 +152,12 @@ abstract class Agenda
      * @param \SimpleXMLElement
      * @param string element name
      * @param mixed value
+     * @param string namespace
      * @return \SimpleXMLElement
      */
-    protected function _addRefElement(\SimpleXMLElement $xml, $name, $value)
+    protected function _addRefElement(\SimpleXMLElement $xml, $name, $value, $namespace = null)
     {
-        $node = $xml->addChild($name);
+        $node = $xml->addChild($name, null, $this->_namespace($namespace));
 
         if (!is_array($value)) {
             $value = ['ids' => $value];

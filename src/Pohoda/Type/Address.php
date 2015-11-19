@@ -51,6 +51,7 @@ class Address extends Agenda
         if (isset($data['address'])) {
             $data['address'] = new AddressType($data['address'], $ico, $resolveOptions);
         }
+        // process shipping address
         if (isset($data['shipToAddress'])) {
             $data['shipToAddress'] = new ShipToAddressType($data['shipToAddress'], $ico, $resolveOptions);
         }
