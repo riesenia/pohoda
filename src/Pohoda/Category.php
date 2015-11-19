@@ -6,6 +6,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Category extends Agenda
 {
     /**
+     * All elements
+     *
+     * @var array
+     */
+    protected $_elements = ['name', 'description', 'sequence', 'displayed', 'picture', 'note'];
+
+    /**
      * Configure options for options resolver
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver
@@ -13,7 +20,7 @@ class Category extends Agenda
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
-        $resolver->setDefined(['name', 'description', 'sequence', 'displayed', 'picture', 'note']);
+        $resolver->setDefined($this->_elements);
 
         // validate / format options
         $resolver->setRequired('name');
@@ -62,7 +69,7 @@ class Category extends Agenda
     {
         $category = $xml->addChild('ctg:category', null, $this->_namespace('ctg'));
 
-        $this->_addElements($category, ['name', 'description', 'sequence', 'displayed', 'picture', 'note'], 'ctg');
+        $this->_addElements($category, $this->_elements, 'ctg');
 
         if (isset($this->_data['subCategories'])) {
             $subCategories = $category->addChild('ctg:subCategories', null, $this->_namespace('ctg'));
