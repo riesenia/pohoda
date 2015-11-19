@@ -7,13 +7,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Price extends Agenda
 {
     /**
-     * Ref elements
-     *
-     * @var array
-     */
-    protected $_refElements = ['storage', 'typePrice', 'typeRP'];
-
-    /**
      * Configure options for options resolver
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver
