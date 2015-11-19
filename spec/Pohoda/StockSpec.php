@@ -65,9 +65,14 @@ class StockSpec extends ObjectBehavior
 
     public function it_can_set_int_parameters()
     {
-        $this->addIntParameter(1, 'VALUE1');
+        $this->addIntParameter([
+            'intParameterID' => 1,
+            'intParameterType' => 'numberValue',
+            'value' => 'VALUE1',
 
-        $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader>' . $this->_defaultHeader() . '<stk:intParameters><stk:intParameter><stk:intParameterID>1</stk:intParameterID><stk:intParameterValues><stk:intParameterValue><stk:parameterValue>VALUE1</stk:parameterValue></stk:intParameterValue></stk:intParameterValues></stk:intParameter></stk:intParameters></stk:stockHeader></stk:stock>');
+        ]);
+
+        $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader>' . $this->_defaultHeader() . '<stk:intParameters><stk:intParameter><stk:intParameterID>1</stk:intParameterID><stk:intParameterType>numberValue</stk:intParameterType><stk:intParameterValues><stk:intParameterValue><stk:parameterValue>VALUE1</stk:parameterValue></stk:intParameterValue></stk:intParameterValues></stk:intParameter></stk:intParameters></stk:stockHeader></stk:stock>');
     }
 
     public function it_can_set_parameters()

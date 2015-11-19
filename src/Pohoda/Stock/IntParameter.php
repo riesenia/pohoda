@@ -21,6 +21,7 @@ class IntParameter extends Agenda
         $resolver->setNormalizer('intParameterID', $resolver->intNormalizer);
         $resolver->setRequired('intParameterType');
         $resolver->setAllowedValues('intParameterType', ['textValue', 'currencyValue', 'booleanValue', 'numberValue', 'integerValue', 'datetimeValue', 'unit', 'listValue']);
+        $resolver->setRequired('value');
     }
 
     /**

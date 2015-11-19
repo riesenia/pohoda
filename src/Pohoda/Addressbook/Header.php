@@ -4,7 +4,6 @@ namespace Rshop\Synchronization\Pohoda\Addressbook;
 use Rshop\Synchronization\Pohoda\Agenda;
 use Rshop\Synchronization\Pohoda\Common\AddParameterTrait;
 use Rshop\Synchronization\Pohoda\Type\Address;
-use Rshop\Synchronization\Pohoda\Type\ShipToAddress;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Header extends Agenda
@@ -66,12 +65,7 @@ class Header extends Agenda
     {
         // process identity
         if (isset($data['identity'])) {
-            if (isset($data['identity']['address'])) {
-                $data['identity']['address'] = new Address($data['identity']['address'], $ico, $resolveOptions);
-            }
-            if (isset($data['identity']['shipToAddress'])) {
-                $data['identity']['shipToAddress'] = new ShipToAddress($data['identity']['shipToAddress'], $ico, $resolveOptions);
-            }
+            $data['identity'] = new Address($data['identity'], $ico, $resolveOptions);
         }
 
         parent::__construct($data, $ico, $resolveOptions);

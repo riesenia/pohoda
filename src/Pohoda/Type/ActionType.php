@@ -2,16 +2,12 @@
 namespace Rshop\Synchronization\Pohoda\Type;
 
 use Rshop\Synchronization\Pohoda\Agenda;
+use Rshop\Synchronization\Pohoda\Common\SetNamespaceTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActionType extends Agenda
 {
-    /**
-     * Namespace
-     *
-     * @var string
-     */
-    protected $_namespace = null;
+    use SetNamespaceTrait;
 
     /**
      * Configure options for options resolver
@@ -26,17 +22,6 @@ class ActionType extends Agenda
         // validate / format options
         $resolver->setRequired('type');
         $resolver->setAllowedValues('type', ['add', 'add/update', 'update', 'delete']);
-    }
-
-    /**
-     * Set namespace
-     *
-     * @param string namespace
-     * @return void
-     */
-    public function setNamespace($namespace)
-    {
-        $this->_namespace = $namespace;
     }
 
     /**

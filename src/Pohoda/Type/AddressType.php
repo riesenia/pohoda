@@ -4,7 +4,7 @@ namespace Rshop\Synchronization\Pohoda\Type;
 use Rshop\Synchronization\Pohoda\Agenda;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ShipToAddress extends Agenda
+class AddressType extends Agenda
 {
     /**
      * Ref elements
@@ -14,6 +14,13 @@ class ShipToAddress extends Agenda
     protected $_refElements = ['country'];
 
     /**
+     * All elements
+     *
+     * @var array
+     */
+    protected $_elements = ['company', 'division', 'name', 'city', 'street', 'zip', 'ico', 'dic', 'icDph', 'country', 'phone', 'mobilPhone', 'fax', 'email'];
+
+    /**
      * Configure options for options resolver
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver
@@ -21,7 +28,7 @@ class ShipToAddress extends Agenda
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
-        $resolver->setDefined(['company', 'division', 'name', 'city', 'street', 'zip', 'country', 'phone', 'email', 'defaultShipAddress']);
+        $resolver->setDefined($this->_elements);
 
         // validate / format options
         $resolver->setNormalizer('company', $resolver->string255Normalizer);
@@ -30,9 +37,13 @@ class ShipToAddress extends Agenda
         $resolver->setNormalizer('city', $resolver->string45Normalizer);
         $resolver->setNormalizer('street', $resolver->string45Normalizer);
         $resolver->setNormalizer('zip', $resolver->string15Normalizer);
+        $resolver->setNormalizer('ico', $resolver->string15Normalizer);
+        $resolver->setNormalizer('dic', $resolver->string18Normalizer);
+        $resolver->setNormalizer('icDph', $resolver->string18Normalizer);
         $resolver->setNormalizer('phone', $resolver->string40Normalizer);
+        $resolver->setNormalizer('mobilPhone', $resolver->string24Normalizer);
+        $resolver->setNormalizer('fax', $resolver->string24Normalizer);
         $resolver->setNormalizer('email', $resolver->string98Normalizer);
-        $resolver->setNormalizer('defaultShipAddress', $resolver->boolNormalizer);
     }
 
     /**
@@ -42,9 +53,9 @@ class ShipToAddress extends Agenda
      */
     public function getXML()
     {
-        $xml = $this->_createXML()->addChild('typ:shipToAddress', null, $this->_namespace('typ'));
+        $xml = $this->_createXML()->addChild('typ:address', null, $this->_namespace('typ'));
 
-        $this->_addElements($xml, ['company', 'division', 'name', 'city', 'street', 'zip', 'country', 'phone', 'email', 'defaultShipAddress'], 'typ');
+        $this->_addElements($xml, $this->_elements, 'typ');
 
         return $xml;
     }

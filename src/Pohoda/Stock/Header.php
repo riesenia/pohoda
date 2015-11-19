@@ -112,22 +112,16 @@ class Header extends Agenda
     /**
      * Add int parameter
      *
-     * @param int parameter id
-     * @param string type
-     * @param mixed value
+     * @param array data
      * @return void
      */
-    public function addIntParameter($parameterId, $type, $value)
+    public function addIntParameter($data)
     {
         if (!isset($this->_data['intParameters'])) {
             $this->_data['intParameters'] = [];
         }
 
-        $this->_data['intParameters'][] = new IntParameter([
-            'intParameterID' => $parameterId,
-            'intParameterType' => $type,
-            'value' => $value
-        ], $this->_ico);
+        $this->_data['intParameters'][] = new IntParameter($data, $this->_ico);
     }
 
     /**

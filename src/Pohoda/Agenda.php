@@ -118,11 +118,16 @@ abstract class Agenda
                     $this->_data[$element]->setNamespace($namespace);
                 }
 
+                // set node name
+                if (method_exists($this->_data[$element], 'setNodeName')) {
+                    $this->_data[$element]->setNodeName($element);
+                }
+
                 $this->_appendNode($xml, $this->_data[$element]->getXML());
                 continue;
             }
 
-            $child = $xml->addChild(($namespace ? $namespace . ':' : '') . $element, is_array($this->_data[$element]) ? null : htmlspecialchars($this->_data[$element]));
+            $child = $xml->addChild(($namespace ? $namespace . ':' : '') . $element, is_array($this->_data[$element]) ? null : htmlspecialchars($this->_data[$element]), $this->_namespace($namespace));
 
             // array of Agenda objects
             if (is_array($this->_data[$element])) {
@@ -182,7 +187,7 @@ abstract class Agenda
         $resolver = new OptionsResolver();
 
         // define string normalizers
-        foreach ([8, 10, 12, 15, 16, 18, 24, 32, 38, 40, 45, 48, 64, 90, 98, 240, 255] as $length) {
+        foreach ([7, 8, 10, 12, 15, 16, 18, 24, 32, 38, 40, 45, 48, 64, 90, 98, 240, 255] as $length) {
             $resolver->{'string' . $length . 'Normalizer'} = $this->_createStringNormalizer($length);
         }
 

@@ -2,16 +2,27 @@
 namespace Rshop\Synchronization\Pohoda\Type;
 
 use Rshop\Synchronization\Pohoda\Agenda;
+use Rshop\Synchronization\Pohoda\Common\SetNamespaceTrait;
+use Rshop\Synchronization\Pohoda\Common\SetNodeNameTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Address extends Agenda
 {
+    use SetNamespaceTrait, SetNodeNameTrait;
+
     /**
      * Ref elements
      *
      * @var array
      */
-    protected $_refElements = ['country'];
+    protected $_refElements = ['extId'];
+
+    /**
+     * All elements
+     *
+     * @var array
+     */
+    protected $_elements = ['id', 'extId', 'address', 'shipToAddress'];
 
     /**
      * Configure options for options resolver
@@ -21,22 +32,30 @@ class Address extends Agenda
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
-        $resolver->setDefined(['company', 'division', 'name', 'city', 'street', 'zip', 'ico', 'dic', 'icDph', 'country', 'phone', 'mobilPhone', 'fax', 'email']);
+        $resolver->setDefined($this->_elements);
 
         // validate / format options
-        $resolver->setNormalizer('company', $resolver->string255Normalizer);
-        $resolver->setNormalizer('division', $resolver->string32Normalizer);
-        $resolver->setNormalizer('name', $resolver->string32Normalizer);
-        $resolver->setNormalizer('city', $resolver->string45Normalizer);
-        $resolver->setNormalizer('street', $resolver->string45Normalizer);
-        $resolver->setNormalizer('zip', $resolver->string15Normalizer);
-        $resolver->setNormalizer('ico', $resolver->string15Normalizer);
-        $resolver->setNormalizer('dic', $resolver->string18Normalizer);
-        $resolver->setNormalizer('icDph', $resolver->string18Normalizer);
-        $resolver->setNormalizer('phone', $resolver->string40Normalizer);
-        $resolver->setNormalizer('mobilPhone', $resolver->string24Normalizer);
-        $resolver->setNormalizer('fax', $resolver->string24Normalizer);
-        $resolver->setNormalizer('email', $resolver->string98Normalizer);
+        $resolver->setNormalizer('id', $resolver->intNormalizer);
+    }
+
+    /**
+     * Construct agenda using provided data
+     *
+     * @param array data
+     * @param string ICO
+     * @param bool if options resolver should be used
+     */
+    public function __construct($data, $ico, $resolveOptions = true)
+    {
+        // process address
+        if (isset($data['address'])) {
+            $data['address'] = new AddressType($data['address'], $ico, $resolveOptions);
+        }
+        if (isset($data['shipToAddress'])) {
+            $data['shipToAddress'] = new ShipToAddressType($data['shipToAddress'], $ico, $resolveOptions);
+        }
+
+        parent::__construct($data, $ico, $resolveOptions);
     }
 
     /**
@@ -46,9 +65,17 @@ class Address extends Agenda
      */
     public function getXML()
     {
-        $xml = $this->_createXML()->addChild('typ:address', null, $this->_namespace('typ'));
+        if (is_null($this->_namespace)) {
+            throw new \LogicException("Namespace not set.");
+        }
 
-        $this->_addElements($xml, ['company', 'division', 'name', 'city', 'street', 'zip', 'ico', 'dic', 'icDph', 'country', 'phone', 'mobilPhone', 'fax', 'email'], 'typ');
+        if (is_null($this->_nodeName)) {
+            throw new \LogicException("Node name not set.");
+        }
+
+        $xml = $this->_createXML()->addChild($this->_namespace . ':' . $this->_nodeName, null, $this->_namespace($this->_namespace));
+
+        $this->_addElements($xml, $this->_elements, 'typ');
 
         return $xml;
     }
