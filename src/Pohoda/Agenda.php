@@ -196,7 +196,7 @@ abstract class Agenda
         $resolver = new OptionsResolver();
 
         // define string normalizers
-        foreach ([7, 8, 10, 12, 15, 16, 18, 24, 32, 38, 40, 45, 48, 64, 90, 98, 240, 255] as $length) {
+        foreach ([4, 7, 8, 10, 12, 15, 16, 18, 20, 24, 32, 38, 40, 45, 48, 64, 90, 98, 240, 255] as $length) {
             $resolver->{'string' . $length . 'Normalizer'} = $this->_createStringNormalizer($length);
         }
 
@@ -247,7 +247,7 @@ abstract class Agenda
             case 'float':
             case 'number':
                 return function ($options, $value) {
-                    return (float)str_replace(',', '.', preg_replace('/[^0-9,.]/', '', $value));
+                    return (float)str_replace(',', '.', preg_replace('/[^0-9,.-]/', '', $value));
                 };
 
             case 'int':

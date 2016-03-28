@@ -1,5 +1,5 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Order;
+namespace Rshop\Synchronization\Pohoda\Invoice;
 
 use Rshop\Synchronization\Pohoda\Agenda;
 use Rshop\Synchronization\Pohoda\Common\AddParameterTrait;
@@ -16,14 +16,14 @@ class Item extends Agenda
      *
      * @var array
      */
-    protected $_refElements = ['centre', 'activity', 'contract'];
+    protected $_refElements = ['accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract'];
 
     /**
      * All elements
      *
      * @var array
      */
-    protected $_elements = ['text', 'quantity', 'delivered', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'note', 'code', 'stockItem', 'centre', 'activity', 'contract'];
+    protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'note', 'code', 'guarantee', 'guaranteeType', 'stockItem', 'accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract', 'expirationDate'];
 
     /**
      * Configure options for options resolver
@@ -38,7 +38,6 @@ class Item extends Agenda
         // validate / format options
         $resolver->setNormalizer('text', $resolver->string90Normalizer);
         $resolver->setNormalizer('quantity', $resolver->floatNormalizer);
-        $resolver->setNormalizer('delivered', $resolver->floatNormalizer);
         $resolver->setNormalizer('unit', $resolver->string10Normalizer);
         $resolver->setNormalizer('coefficient', $resolver->floatNormalizer);
         $resolver->setNormalizer('payVAT', $resolver->boolNormalizer);
@@ -46,6 +45,9 @@ class Item extends Agenda
         $resolver->setNormalizer('discountPercentage', $resolver->floatNormalizer);
         $resolver->setNormalizer('note', $resolver->string90Normalizer);
         $resolver->setNormalizer('code', $resolver->string64Normalizer);
+        $resolver->setNormalizer('guarantee', $resolver->intNormalizer);
+        $resolver->setAllowedValues('guaranteeType', ['none', 'hour', 'day', 'month', 'year', 'life']);
+        $resolver->setNormalizer('expirationDate', $resolver->dateNormalizer);
     }
 
     /**
@@ -80,9 +82,9 @@ class Item extends Agenda
      */
     public function getXML()
     {
-        $xml = $this->_createXML()->addChild('ord:orderItem', null, $this->_namespace('ord'));
+        $xml = $this->_createXML()->addChild('inv:invoiceItem', null, $this->_namespace('inv'));
 
-        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'ord');
+        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'inv');
 
         return $xml;
     }
