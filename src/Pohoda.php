@@ -159,7 +159,7 @@ class Pohoda
         }
 
         while ($this->_xml->read() && $this->_xml->name !== $fullName::$importRoot) {
-            // skip
+            // skip to first element
         }
 
         return true;
@@ -176,9 +176,13 @@ class Pohoda
             return false;
         }
 
+        $name = $this->_xml->name;
+
         $node = new \SimpleXMLElement($this->_xml->readOuterXML());
 
-        $this->_xml->next($this->_xml->name);
+        while ($this->_xml->next() && $this->_xml->name !== $name) {
+            // skip to next element
+        }
 
         return $node;
     }
