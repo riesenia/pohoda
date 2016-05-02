@@ -11,6 +11,13 @@ class Addressbook extends Agenda
     use AddActionTypeTrait, AddParameterToHeaderTrait;
 
     /**
+     * Root for import
+     *
+     * @var string
+     */
+    public static $importRoot = 'lAdb:addressbook';
+
+    /**
      * Configure options for options resolver
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver

@@ -142,12 +142,45 @@ class Pohoda
      *
      * @param string agenda name
      * @param string filename
-     * @param mixed callback
      * @return bool
      */
-    public function load($name, $filename, $callback)
+    public function load($name, $filename)
     {
-        #return $this->create($name)->setId($id);
+        $this->_xml = new \XMLReader();
+
+        if (!$this->_xml->open($filename)) {
+            return false;
+        }
+
+        $fullName = __NAMESPACE__ . '\\Pohoda\\' . $name;
+
+        if (!class_exists($fullName)) {
+            throw new \DomainException("Not allowed entity: " . $name);
+        }
+
+        while ($this->_xml->read() && $this->_xml->name !== $fullName::$importRoot) {
+            // skip
+        }
+
+        return true;
+    }
+
+    /**
+     * Get next item in loaded file
+     *
+     * @return \SimpleXMLElement
+     */
+    public function next()
+    {
+        if (!$this->_xml->name) {
+            return false;
+        }
+
+        $node = new \SimpleXMLElement($this->_xml->readOuterXML());
+
+        $this->_xml->next($this->_xml->name);
+
+        return $node;
     }
 
     /**
@@ -174,7 +207,7 @@ class Pohoda
                 throw new \DomainException("Callback not set.");
             }
 
-            return call_user_func(array($this, 'load'), $matches[1], $arguments[0], $arguments[1]);
+            return call_user_func(array($this, 'load'), $matches[1], $arguments[0]);
         }
 
         throw new \BadMethodCallException("Unknown method: " . $method);

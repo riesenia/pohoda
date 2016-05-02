@@ -13,6 +13,13 @@ class Order extends Agenda
     use AddActionTypeTrait, AddParameterToHeaderTrait;
 
     /**
+     * Root for import
+     *
+     * @var string
+     */
+    public static $importRoot = 'lst:order';
+
+    /**
      * Configure options for options resolver
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver

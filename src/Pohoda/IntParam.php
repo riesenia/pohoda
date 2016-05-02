@@ -7,6 +7,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class IntParam extends Agenda
 {
     /**
+     * Root for import
+     *
+     * @var string
+     */
+    public static $importRoot = 'ipm:intParam';
+
+    /**
      * All elements
      *
      * @var array

@@ -6,6 +6,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Category extends Agenda
 {
     /**
+     * Root for import
+     *
+     * @var string
+     */
+    public static $importRoot = 'ctg:categoryDetail';
+
+    /**
      * All elements
      *
      * @var array

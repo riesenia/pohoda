@@ -6,6 +6,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Storage extends Agenda
 {
     /**
+     * Root for import
+     *
+     * @var string
+     */
+    public static $importRoot = 'lst:itemStorage';
+
+    /**
      * Configure options for options resolver
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver
