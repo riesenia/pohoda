@@ -229,6 +229,9 @@ abstract class Agenda
         switch ($type) {
             case 'string':
                 return function ($options, $value) use ($param) {
+                    // remove new lines
+                    $value = str_replace('<br>', ' ', nl2br($value, false));
+
                     return mb_substr($value, 0, $param, 'utf-8');
                 };
 
