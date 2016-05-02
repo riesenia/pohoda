@@ -203,10 +203,6 @@ class Pohoda
                 throw new \DomainException("Filename not set.");
             }
 
-            if (!isset($arguments[1])) {
-                throw new \DomainException("Callback not set.");
-            }
-
             return call_user_func(array($this, 'load'), $matches[1], $arguments[0]);
         }
 
