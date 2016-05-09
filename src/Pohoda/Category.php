@@ -10,7 +10,7 @@ class Category extends Agenda
      *
      * @var string
      */
-    public static $importRoot = 'ctg:categoryDetail';
+    public static $importRoot = 'ctg:category';
 
     /**
      * All elements
