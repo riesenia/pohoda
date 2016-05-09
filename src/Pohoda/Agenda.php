@@ -230,7 +230,7 @@ abstract class Agenda
             case 'string':
                 return function ($options, $value) use ($param) {
                     // remove new lines
-                    $value = str_replace('<br>', ' ', nl2br($value, false));
+                    $value = str_replace(["\r\n", "\r", "\n"], ' ', $value);
 
                     return mb_substr($value, 0, $param, 'utf-8');
                 };
