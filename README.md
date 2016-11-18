@@ -1,6 +1,6 @@
 # Pohoda XML
 
-## Instalacia
+## Inštalácia
 
 Pridaním do *composer.json*:
 
@@ -13,6 +13,8 @@ Pridaním do *composer.json*:
 ```
 
 ## Príklad exportu objednávok
+
+Príklady pre export jednotlivých typov viď. *spec* folder.
 
 ```php
 use Rshop\Synchronization\Pohoda;
@@ -80,6 +82,8 @@ $pohoda->close();
 ```
 
 ## Príklad importu produktov
+
+Import je riešený jednoducho - vracia *SimpleXMLElement* s danou entitou.
 
 ```php
 use Rshop\Synchronization\Pohoda;
