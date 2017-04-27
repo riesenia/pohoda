@@ -196,12 +196,15 @@ abstract class Agenda
         $resolver = new OptionsResolver();
 
         // define string normalizers
-        foreach ([4, 7, 8, 10, 12, 15, 16, 18, 20, 24, 32, 38, 40, 45, 48, 64, 90, 98, 240, 255] as $length) {
+        foreach ([4, 7, 8, 9, 10, 12, 15, 16, 18, 20, 24, 32, 38, 40, 45, 48, 64, 90, 98, 240, 255] as $length) {
             $resolver->{'string' . $length . 'Normalizer'} = $this->_createStringNormalizer($length);
         }
 
         // define date normalizer
         $resolver->dateNormalizer = $this->_createDateNormalizer();
+
+        // define time normalizer
+        $resolver->timeNormalizer = $this->_createTimeNormalizer();
 
         // define float normalizer
         $resolver->floatNormalizer = $this->_createFloatNormalizer();
@@ -245,6 +248,17 @@ abstract class Agenda
                     }
 
                     return date('Y-m-d', $time);
+                };
+
+            case 'time':
+                return function ($options, $value) {
+                    $time = strtotime($value);
+
+                    if (!$time) {
+                        throw new \DomainException("Not a valid time: " . $value);
+                    }
+
+                    return date('H:i:s', $time);
                 };
 
             case 'float':

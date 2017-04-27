@@ -1,21 +1,21 @@
 <?php
 namespace Rshop\Synchronization\Pohoda;
 
-use Rshop\Synchronization\Pohoda\Common\AddActionTypeTrait;
 use Rshop\Synchronization\Pohoda\Common\AddParameterToHeaderTrait;
-use Rshop\Synchronization\Pohoda\Addressbook\Header;
+use Rshop\Synchronization\Pohoda\StockTransfer\Header;
+use Rshop\Synchronization\Pohoda\StockTransfer\Item;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Addressbook extends Agenda
+class StockTransfer extends Agenda
 {
-    use AddActionTypeTrait, AddParameterToHeaderTrait;
+    use AddParameterToHeaderTrait;
 
     /**
      * Root for import
      *
      * @var string
      */
-    public static $importRoot = 'lAdb:addressbook';
+    public static $importRoot = 'lst:prevodka';
 
     /**
      * Configure options for options resolver
@@ -44,16 +44,33 @@ class Addressbook extends Agenda
     }
 
     /**
+     * Add item
+     *
+     * @param array item data
+     * @return \Rshop\Synchronization\Pohoda\StockTransfer
+     */
+    public function addItem($data)
+    {
+        if (!isset($this->_data['prevodkaDetail'])) {
+            $this->_data['prevodkaDetail'] = [];
+        }
+
+        $this->_data['prevodkaDetail'][] = new Item($data, $this->_ico);
+
+        return $this;
+    }
+
+    /**
      * Get XML
      *
      * @return \SimpleXMLElement
      */
     public function getXML()
     {
-        $xml = $this->_createXML()->addChild('adb:addressbook', null, $this->_namespace('adb'));
+        $xml = $this->_createXML()->addChild('pre:prevodka', null, $this->_namespace('pre'));
         $xml->addAttribute('version', '2.0');
 
-        $this->_addElements($xml, ['actionType', 'header'], 'adb');
+        $this->_addElements($xml, ['header', 'prevodkaDetail'], 'pre');
 
         return $xml;
     }
