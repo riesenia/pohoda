@@ -14,7 +14,9 @@ class StockSpec extends ObjectBehavior
             'isSerialNumber' => 'false',
             'isInternet' => true,
             'storage' => 'STORAGE',
-            'typePrice' => ['id' => 1]
+            'typePrice' => ['id' => 1],
+            'sellingPrice' => 12.7,
+            'sellingPricePayVAT' => true
         ], '123');
     }
 
@@ -87,6 +89,6 @@ class StockSpec extends ObjectBehavior
 
     protected function _defaultHeader()
     {
-        return '<stk:stockType>card</stk:stockType><stk:code>CODE</stk:code><stk:isSales>false</stk:isSales><stk:isSerialNumber>false</stk:isSerialNumber><stk:isInternet>true</stk:isInternet><stk:name>NAME</stk:name><stk:storage><typ:ids>STORAGE</typ:ids></stk:storage><stk:typePrice><typ:id>1</typ:id></stk:typePrice>';
+        return '<stk:stockType>card</stk:stockType><stk:code>CODE</stk:code><stk:isSales>false</stk:isSales><stk:isSerialNumber>false</stk:isSerialNumber><stk:isInternet>true</stk:isInternet><stk:name>NAME</stk:name><stk:storage><typ:ids>STORAGE</typ:ids></stk:storage><stk:typePrice><typ:id>1</typ:id></stk:typePrice><stk:sellingPrice payVAT="true">12.7</stk:sellingPrice>';
     }
 }

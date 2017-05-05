@@ -17,11 +17,21 @@ class Header extends Agenda
     protected $_refElements = ['storage', 'typePrice', 'typeRP'];
 
     /**
+     * Elements attributes mapper
+     *
+     * @var array
+     */
+    protected $_elementsAttributesMapper = [
+        'purchasingPricePayVAT' => ['purchasingPrice', 'payVAT', null],
+        'sellingPricePayVAT' => ['sellingPrice', 'payVAT', null]
+    ];
+
+    /**
      * All elements
      *
      * @var array
      */
-    protected $_elements = ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'storage', 'typePrice', 'purchasingPrice', 'sellingPrice', 'limitMin', 'limitMax', 'mass', 'volume', 'supplier', 'shortName', 'typeRP', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'];
+    protected $_elements = ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'storage', 'typePrice', 'purchasingPrice', 'purchasingPricePayVAT', 'sellingPrice', 'sellingPricePayVAT', 'limitMin', 'limitMax', 'mass', 'volume', 'supplier', 'shortName', 'typeRP', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'];
 
     /**
      * Images counter
@@ -57,7 +67,9 @@ class Header extends Agenda
         $resolver->setNormalizer('coefficient2', $resolver->floatNormalizer);
         $resolver->setNormalizer('coefficient3', $resolver->floatNormalizer);
         $resolver->setNormalizer('purchasingPrice', $resolver->floatNormalizer);
+        $resolver->setNormalizer('purchasingPricePayVAT', $resolver->boolNormalizer);
         $resolver->setNormalizer('sellingPrice', $resolver->floatNormalizer);
+        $resolver->setNormalizer('sellingPricePayVAT', $resolver->boolNormalizer);
         $resolver->setNormalizer('limitMin', $resolver->floatNormalizer);
         $resolver->setNormalizer('limitMax', $resolver->floatNormalizer);
         $resolver->setNormalizer('mass', $resolver->floatNormalizer);

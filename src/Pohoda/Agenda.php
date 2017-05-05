@@ -33,6 +33,13 @@ abstract class Agenda
     protected $_refElements = [];
 
     /**
+     * Elements attributes mapper
+     *
+     * @var array
+     */
+    protected $_elementsAttributesMapper = [];
+
+    /**
      * Configure options for options resolver
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver
@@ -112,6 +119,17 @@ abstract class Agenda
             // ref element
             if (in_array($element, $this->_refElements)) {
                 $this->_addRefElement($xml, ($namespace ? $namespace . ':' : '') . $element, $this->_data[$element], $namespace);
+                continue;
+            }
+
+            // element attribute
+            if (isset($this->_elementsAttributesMapper[$element])) {
+                list($attrElement, $attrName, $attrNamespace) = $this->_elementsAttributesMapper[$element];
+
+                // get element
+                $attrElement = $namespace ? $xml->children($namespace, true)->{$attrElement} : $xml->{$attrElement};
+
+                $attrElement->addAttribute(($attrNamespace ? $attrNamespace . ':' : '') . $attrName, htmlspecialchars($this->_data[$element]), $this->_namespace($attrNamespace));
                 continue;
             }
 
