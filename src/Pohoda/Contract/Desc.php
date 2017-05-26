@@ -2,6 +2,7 @@
 namespace Rshop\Synchronization\Pohoda\Contract;
 
 use Rshop\Synchronization\Pohoda\Agenda;
+use Rshop\Synchronization\Pohoda\Type\Address;
 use Rshop\Synchronization\Pohoda\Common\AddParameterTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
