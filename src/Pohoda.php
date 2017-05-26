@@ -17,6 +17,7 @@ class Pohoda
      */
     public static $namespaces = [
         'adb' => 'http://www.stormware.cz/schema/version_2/addressbook.xsd',
+        'con' => 'http://www.stormware.cz/schema/version_2/contract.xsd',
         'ctg' => 'http://www.stormware.cz/schema/version_2/category.xsd',
         'dat' => 'http://www.stormware.cz/schema/version_2/data.xsd',
         'ftr' => 'http://www.stormware.cz/schema/version_2/filter.xsd',
