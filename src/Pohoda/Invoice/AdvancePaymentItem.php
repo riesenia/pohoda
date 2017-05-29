@@ -9,17 +9,35 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AdvancePaymentItem extends Item
 {
     /**
+     * Ref elements
+     *
+     * @var array
+     */
+    protected $_refElements = ['sourceDocument', 'accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract'];
+
+    /**
+     * All elements
+     *
+     * @var array
+     */
+    protected $_elements = ['sourceDocument', 'quantity', 'payVAT', 'rateVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'note', 'accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract'];
+
+    /**
      * Configure options for options resolver
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver
      */
     protected function _configureOptions(OptionsResolver $resolver)
     {
-        // add source document
-        $this->_refElements[] = 'sourceDocument';
-        $this->_elements[] = 'sourceDocument';
+        // available options
+        $resolver->setDefined($this->_elements);
 
-        parent::_configureOptions($resolver);
+        // validate / format options
+        $resolver->setNormalizer('quantity', $resolver->floatNormalizer);
+        $resolver->setNormalizer('payVAT', $resolver->boolNormalizer);
+        $resolver->setAllowedValues('rateVAT', ['none', 'low', 'high']);
+        $resolver->setNormalizer('discountPercentage', $resolver->floatNormalizer);
+        $resolver->setNormalizer('note', $resolver->string90Normalizer);
     }
 
     /**
