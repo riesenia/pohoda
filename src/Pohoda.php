@@ -23,6 +23,7 @@ class Pohoda
         'ftr' => 'http://www.stormware.cz/schema/version_2/filter.xsd',
         'inv' => 'http://www.stormware.cz/schema/version_2/invoice.xsd',
         'ipm' => 'http://www.stormware.cz/schema/version_2/intParam.xsd',
+        'lst' => 'http://www.stormware.cz/schema/version_2/list.xsd',
         'ord' => 'http://www.stormware.cz/schema/version_2/order.xsd',
         'pre' => 'http://www.stormware.cz/schema/version_2/prevodka.xsd',
         'str' => 'http://www.stormware.cz/schema/version_2/storage.xsd',
