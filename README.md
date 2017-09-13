@@ -1,5 +1,10 @@
 # Pohoda XML
 
+[![Build Status](https://img.shields.io/travis/riesenia/pohoda/master.svg?style=flat-square)](https://travis-ci.org/riesenia/pohoda)
+[![Latest Version](https://img.shields.io/packagist/v/rshop/pohoda.svg?style=flat-square)](https://packagist.org/packages/rshop/pohoda)
+[![Total Downloads](https://img.shields.io/packagist/dt/rshop/pohoda.svg?style=flat-square)](https://packagist.org/packages/rshop/pohoda)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+
 ## Inštalácia
 
 Pridaním do *composer.json*:
