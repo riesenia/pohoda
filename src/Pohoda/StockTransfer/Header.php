@@ -1,56 +1,34 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\StockTransfer;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Rshop\Synchronization\Pohoda\Common\AddParameterTrait;
-use Rshop\Synchronization\Pohoda\Type\Address;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\StockTransfer;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\AddParameterTrait;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Type\Address;
 
 class Header extends Agenda
 {
     use AddParameterTrait;
 
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_refElements = ['number', 'store', 'centreSource', 'centreDestination', 'activity', 'contract'];
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['number', 'date', 'time', 'dateOfReceipt', 'timeOfReceipt', 'symPar', 'store', 'text', 'partnerIdentity', 'centreSource', 'centreDestination', 'activity', 'contract', 'note', 'intNote'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined($this->_elements);
-
-        // validate / format options
-        $resolver->setNormalizer('date', $resolver->dateNormalizer);
-        $resolver->setNormalizer('time', $resolver->timeNormalizer);
-        $resolver->setNormalizer('dateOfReceipt', $resolver->dateNormalizer);
-        $resolver->setNormalizer('timeOfReceipt', $resolver->timeNormalizer);
-        $resolver->setNormalizer('symPar', $resolver->string20Normalizer);
-        $resolver->setNormalizer('text', $resolver->string48Normalizer);
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process partner identity
         if (isset($data['partnerIdentity'])) {
@@ -61,16 +39,31 @@ class Header extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('pre:prevodkaHeader', null, $this->_namespace('pre'));
 
         $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'pre');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined($this->_elements);
+
+        // validate / format options
+        $resolver->setNormalizer('date', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('time', $resolver->getNormalizer('time'));
+        $resolver->setNormalizer('dateOfReceipt', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('timeOfReceipt', $resolver->getNormalizer('time'));
+        $resolver->setNormalizer('symPar', $resolver->getNormalizer('string20'));
+        $resolver->setNormalizer('text', $resolver->getNormalizer('string48'));
     }
 }

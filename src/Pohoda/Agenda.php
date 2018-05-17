@@ -1,67 +1,48 @@
 <?php
-namespace Rshop\Synchronization\Pohoda;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda;
+
+use Riesenia\Pohoda;
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 /**
- * Base class for Pohoda objects
+ * Base class for Pohoda objects.
+ *
+ * @method setNamespace($namespace)
+ * @method setNodeName($nodeName)
  *
  * @author Tomas Saghy <segy@riesenia.com>
  */
 abstract class Agenda
 {
-    /**
-     * Data
-     *
-     * @var array
-     */
-    protected $_data;
-
-    /**
-     * ICO
-     *
-     * @var string
-     */
+    /** @var string */
     protected $_ico;
 
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
+    protected $_data;
+
+    /** @var array */
     protected $_refElements = [];
 
-    /**
-     * Elements attributes mapper
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elementsAttributesMapper = [];
 
     /**
-     * Configure options for options resolver
+     * Construct agenda using provided data.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
-     * @return void
+     * @param array  $data
+     * @param string $ico
+     * @param bool   $resolveOptions
      */
-    abstract protected function _configureOptions(OptionsResolver $resolver);
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    abstract public function getXML();
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // set ICO
         $this->_ico = $ico;
@@ -71,11 +52,25 @@ abstract class Agenda
     }
 
     /**
-     * Create XML
+     * Get XML.
      *
      * @return \SimpleXMLElement
      */
-    protected function _createXML()
+    abstract public function getXML(): \SimpleXMLElement;
+
+    /**
+     * Configure options for options resolver.
+     *
+     * @param OptionsResolver $resolver
+     */
+    abstract protected function _configureOptions(OptionsResolver $resolver);
+
+    /**
+     * Create XML.
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function _createXML(): \SimpleXMLElement
     {
         return new \SimpleXMLElement('<?xml version="1.0" encoding="Windows-1250"?><root ' . implode(' ', array_map(function ($k, $v) {
             return 'xmlns:' . $k . '="' . $v . '"';
@@ -83,14 +78,15 @@ abstract class Agenda
     }
 
     /**
-     * Get namespace
+     * Get namespace.
      *
-     * @param string
+     * @param string|null $short
+     *
      * @return string
      */
-    protected function _namespace($short)
+    protected function _namespace(string $short = null): ?string
     {
-        if (is_null($short)) {
+        if ($short === null) {
             return null;
         }
 
@@ -102,14 +98,13 @@ abstract class Agenda
     }
 
     /**
-     * Add batch elements
+     * Add batch elements.
      *
-     * @param \SimpleXMLElement
-     * @param array
-     * @param string namespace
-     * @return void
+     * @param \SimpleXMLElement $xml
+     * @param array             $elements
+     * @param string|null       $namespace
      */
-    protected function _addElements(\SimpleXMLElement $xml, array $elements, $namespace = null)
+    protected function _addElements(\SimpleXMLElement $xml, array $elements, string $namespace = null)
     {
         foreach ($elements as $element) {
             if (!isset($this->_data[$element])) {
@@ -165,15 +160,16 @@ abstract class Agenda
     }
 
     /**
-     * Add ref element
+     * Add ref element.
      *
-     * @param \SimpleXMLElement
-     * @param string element name
-     * @param mixed value
-     * @param string namespace
+     * @param \SimpleXMLElement $xml
+     * @param string            $name
+     * @param mixed             $value
+     * @param string|null       $namespace
+     *
      * @return \SimpleXMLElement
      */
-    protected function _addRefElement(\SimpleXMLElement $xml, $name, $value, $namespace = null)
+    protected function _addRefElement(\SimpleXMLElement $xml, string $name, $value, string $namespace = null): \SimpleXMLElement
     {
         $node = $xml->addChild($name, null, $this->_namespace($namespace));
 
@@ -182,18 +178,17 @@ abstract class Agenda
         }
 
         foreach ($value as $key => $value) {
-            $node->addChild('typ:' . $key, htmlspecialchars($value), $this->_namespace('typ'));
+            $node->addChild('typ:' . $key, htmlspecialchars((string) $value), $this->_namespace('typ'));
         }
 
         return $node;
     }
 
     /**
-     * Append SimpleXMLElement to another SimpleXMLElement
+     * Append SimpleXMLElement to another SimpleXMLElement.
      *
-     * @param \SimpleXMLElement
-     * @param \SimpleXMLElement
-     * @return void
+     * @param \SimpleXMLElement $xml
+     * @param \SimpleXMLElement $node
      */
     protected function _appendNode(\SimpleXMLElement $xml, \SimpleXMLElement $node)
     {
@@ -204,118 +199,18 @@ abstract class Agenda
     }
 
     /**
-     * Resolve options
+     * Resolve options.
      *
-     * @param array data
-     * @return array resolved data
+     * @param array $data
+     *
+     * @return array
      */
-    protected function _resolveOptions($data)
+    protected function _resolveOptions(array $data): array
     {
         $resolver = new OptionsResolver();
-
-        // define string normalizers
-        foreach ([4, 7, 8, 9, 10, 12, 15, 16, 18, 20, 24, 32, 38, 40, 45, 48, 64, 90, 98, 240, 255] as $length) {
-            $resolver->{'string' . $length . 'Normalizer'} = $this->_createStringNormalizer($length);
-        }
-
-        // define date normalizer
-        $resolver->dateNormalizer = $this->_createDateNormalizer();
-
-        // define time normalizer
-        $resolver->timeNormalizer = $this->_createTimeNormalizer();
-
-        // define float normalizer
-        $resolver->floatNormalizer = $this->_createFloatNormalizer();
-
-        // define int normalizer
-        $resolver->intNormalizer = $this->_createIntNormalizer();
-
-        // define bool normalizer
-        $resolver->boolNormalizer = $this->_createBoolNormalizer();
 
         $this->_configureOptions($resolver);
 
         return $resolver->resolve($data);
-    }
-
-    /**
-     * Create normalizer
-     *
-     * @param string type
-     * @param mixed normalizer parameter
-     * @return \Closure
-     */
-    protected function _createNormalizer($type, $param = null)
-    {
-        switch ($type) {
-            case 'string':
-                return function ($options, $value) use ($param) {
-                    // remove new lines
-                    $value = str_replace(["\r\n", "\r", "\n"], ' ', $value);
-
-                    return mb_substr($value, 0, $param, 'utf-8');
-                };
-
-            case 'date':
-            case 'datetime':
-                return function ($options, $value) {
-                    $time = strtotime($value);
-
-                    if (!$time) {
-                        throw new \DomainException("Not a valid date: " . $value);
-                    }
-
-                    return date('Y-m-d', $time);
-                };
-
-            case 'time':
-                return function ($options, $value) {
-                    $time = strtotime($value);
-
-                    if (!$time) {
-                        throw new \DomainException("Not a valid time: " . $value);
-                    }
-
-                    return date('H:i:s', $time);
-                };
-
-            case 'float':
-            case 'number':
-                return function ($options, $value) {
-                    return (float)str_replace(',', '.', preg_replace('/[^0-9,.-]/', '', $value));
-                };
-
-            case 'int':
-            case 'integer':
-                return function ($options, $value) {
-                    return (int)$value;
-                };
-
-            case 'bool':
-            case 'boolean':
-                return function ($options, $value) {
-                    return !$value || strtolower($value) === 'false' ? 'false' : 'true';
-                };
-
-            default:
-                throw new \DomainException("Not a valid normalizer type: " . $type);
-        }
-    }
-
-    /**
-     * Handle dynamic method calls
-     *
-     * @param string method name
-     * @param array arguments
-     * @return mixed
-     */
-    public function __call($method, $arguments)
-    {
-        // _create<Type>Normalizer for creating normalizers
-        if (preg_match('/_create([A-Z][a-zA-Z0-9]+)Normalizer/', $method, $matches)) {
-            return call_user_func([$this, '_createNormalizer'], lcfirst($matches[1]), isset($arguments[0]) ? $arguments[0] : null);
-        }
-
-        throw new \BadMethodCallException("Unknown method: " . $method);
     }
 }

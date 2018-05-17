@@ -1,41 +1,31 @@
 <?php
-namespace Rshop\Synchronization\Pohoda;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Common\AddParameterToHeaderTrait;
-use Rshop\Synchronization\Pohoda\StockTransfer\Header;
-use Rshop\Synchronization\Pohoda\StockTransfer\Item;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda;
+
+use Riesenia\Pohoda\Common\AddParameterToHeaderTrait;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\StockTransfer\Header;
+use Riesenia\Pohoda\StockTransfer\Item;
 
 class StockTransfer extends Agenda
 {
     use AddParameterToHeaderTrait;
 
-    /**
-     * Root for import
-     *
-     * @var string
-     */
+    /** @var string */
     public static $importRoot = 'lst:prevodka';
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined(['header']);
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // pass to header
         $data = ['header' => new Header($data, $ico, $resolveOptions)];
@@ -44,12 +34,13 @@ class StockTransfer extends Agenda
     }
 
     /**
-     * Add item
+     * Add item.
      *
-     * @param array item data
-     * @return \Rshop\Synchronization\Pohoda\StockTransfer
+     * @param array $data
+     *
+     * @return $this
      */
-    public function addItem($data)
+    public function addItem(array $data): self
     {
         if (!isset($this->_data['prevodkaDetail'])) {
             $this->_data['prevodkaDetail'] = [];
@@ -61,11 +52,9 @@ class StockTransfer extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('pre:prevodka', null, $this->_namespace('pre'));
         $xml->addAttribute('version', '2.0');
@@ -73,5 +62,14 @@ class StockTransfer extends Agenda
         $this->_addElements($xml, ['header', 'prevodkaDetail'], 'pre');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined(['header']);
     }
 }

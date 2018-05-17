@@ -1,31 +1,39 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Invoice;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Rshop\Synchronization\Pohoda\Type\CurrencyItem;
-use Rshop\Synchronization\Pohoda\Type\StockItem;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Invoice;
+
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 class AdvancePaymentItem extends Item
 {
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_refElements = ['sourceDocument', 'accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract'];
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['sourceDocument', 'quantity', 'payVAT', 'rateVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'note', 'accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
+     */
+    public function getXML(): \SimpleXMLElement
+    {
+        $xml = $this->_createXML()->addChild('inv:invoiceAdvancePaymentItem', null, $this->_namespace('inv'));
+
+        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'inv');
+
+        return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function _configureOptions(OptionsResolver $resolver)
     {
@@ -33,24 +41,10 @@ class AdvancePaymentItem extends Item
         $resolver->setDefined($this->_elements);
 
         // validate / format options
-        $resolver->setNormalizer('quantity', $resolver->floatNormalizer);
-        $resolver->setNormalizer('payVAT', $resolver->boolNormalizer);
+        $resolver->setNormalizer('quantity', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('payVAT', $resolver->getNormalizer('bool'));
         $resolver->setAllowedValues('rateVAT', ['none', 'low', 'high']);
-        $resolver->setNormalizer('discountPercentage', $resolver->floatNormalizer);
-        $resolver->setNormalizer('note', $resolver->string90Normalizer);
-    }
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    public function getXML()
-    {
-        $xml = $this->_createXML()->addChild('inv:invoiceAdvancePaymentItem', null, $this->_namespace('inv'));
-
-        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'inv');
-
-        return $xml;
+        $resolver->setNormalizer('discountPercentage', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('note', $resolver->getNormalizer('string90'));
     }
 }

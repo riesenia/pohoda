@@ -1,42 +1,28 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\StockTransfer;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Rshop\Synchronization\Pohoda\Type\StockItem;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\StockTransfer;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Type\StockItem;
 
 class Item extends Agenda
 {
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['quantity', 'stockItem', 'note'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined($this->_elements);
-
-        // validate / format options
-        $resolver->setNormalizer('quantity', $resolver->floatNormalizer);
-        $resolver->setNormalizer('note', $resolver->string90Normalizer);
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process stock item
         if (isset($data['stockItem'])) {
@@ -47,16 +33,27 @@ class Item extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('pre:prevodkaItem', null, $this->_namespace('pre'));
 
         $this->_addElements($xml, $this->_elements, 'pre');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined($this->_elements);
+
+        // validate / format options
+        $resolver->setNormalizer('quantity', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('note', $resolver->getNormalizer('string90'));
     }
 }

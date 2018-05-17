@@ -1,15 +1,35 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Stock;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Stock;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Picture extends Agenda
 {
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
+     */
+    public function getXML(): \SimpleXMLElement
+    {
+        $xml = $this->_createXML()->addChild('stk:picture', null, $this->_namespace('stk'));
+        $xml->addAttribute('default', $this->_data['default']);
+
+        $this->_addElements($xml, ['filepath', 'description', 'order'], 'stk');
+
+        return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function _configureOptions(OptionsResolver $resolver)
     {
@@ -18,23 +38,8 @@ class Picture extends Agenda
 
         // validate / format options
         $resolver->setRequired('filepath');
-        $resolver->setNormalizer('order', $resolver->intNormalizer);
+        $resolver->setNormalizer('order', $resolver->getNormalizer('int'));
         $resolver->setDefault('default', 'false');
-        $resolver->setNormalizer('default', $resolver->boolNormalizer);
-    }
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    public function getXML()
-    {
-        $xml = $this->_createXML()->addChild('stk:picture', null, $this->_namespace('stk'));
-        $xml->addAttribute('default', $this->_data['default']);
-
-        $this->_addElements($xml, ['filepath', 'description', 'order'], 'stk');
-
-        return $xml;
+        $resolver->setNormalizer('default', $resolver->getNormalizer('bool'));
     }
 }

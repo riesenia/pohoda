@@ -1,18 +1,28 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Common;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Type\ActionType;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Common;
+
+use Riesenia\Pohoda\Type\ActionType;
 
 trait AddActionTypeTrait
 {
     /**
-     * Add action type
+     * Add action type.
      *
-     * @param string type
-     * @param mixed filter
-     * @return \Rshop\Synchronization\Pohoda\Stock
+     * @param string     $type
+     * @param mixed|null $filter
+     *
+     * @return self
      */
-    public function addActionType($type, $filter = null)
+    public function addActionType(string $type, $filter = null): self
     {
         if (isset($this->_data['actionType'])) {
             throw new \OutOfRangeException('Duplicate action type.');

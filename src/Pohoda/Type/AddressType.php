@@ -1,29 +1,40 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Type;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Type;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 class AddressType extends Agenda
 {
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_refElements = ['country'];
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['company', 'division', 'name', 'city', 'street', 'zip', 'ico', 'dic', 'icDph', 'country', 'phone', 'mobilPhone', 'fax', 'email'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
+     */
+    public function getXML(): \SimpleXMLElement
+    {
+        $xml = $this->_createXML()->addChild('typ:address', null, $this->_namespace('typ'));
+
+        $this->_addElements($xml, $this->_elements, 'typ');
+
+        return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function _configureOptions(OptionsResolver $resolver)
     {
@@ -31,32 +42,18 @@ class AddressType extends Agenda
         $resolver->setDefined($this->_elements);
 
         // validate / format options
-        $resolver->setNormalizer('company', $resolver->string255Normalizer);
-        $resolver->setNormalizer('division', $resolver->string32Normalizer);
-        $resolver->setNormalizer('name', $resolver->string32Normalizer);
-        $resolver->setNormalizer('city', $resolver->string45Normalizer);
-        $resolver->setNormalizer('street', $resolver->string45Normalizer);
-        $resolver->setNormalizer('zip', $resolver->string15Normalizer);
-        $resolver->setNormalizer('ico', $resolver->string15Normalizer);
-        $resolver->setNormalizer('dic', $resolver->string18Normalizer);
-        $resolver->setNormalizer('icDph', $resolver->string18Normalizer);
-        $resolver->setNormalizer('phone', $resolver->string40Normalizer);
-        $resolver->setNormalizer('mobilPhone', $resolver->string24Normalizer);
-        $resolver->setNormalizer('fax', $resolver->string24Normalizer);
-        $resolver->setNormalizer('email', $resolver->string98Normalizer);
-    }
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    public function getXML()
-    {
-        $xml = $this->_createXML()->addChild('typ:address', null, $this->_namespace('typ'));
-
-        $this->_addElements($xml, $this->_elements, 'typ');
-
-        return $xml;
+        $resolver->setNormalizer('company', $resolver->getNormalizer('string255'));
+        $resolver->setNormalizer('division', $resolver->getNormalizer('string32'));
+        $resolver->setNormalizer('name', $resolver->getNormalizer('string32'));
+        $resolver->setNormalizer('city', $resolver->getNormalizer('string45'));
+        $resolver->setNormalizer('street', $resolver->getNormalizer('string45'));
+        $resolver->setNormalizer('zip', $resolver->getNormalizer('string15'));
+        $resolver->setNormalizer('ico', $resolver->getNormalizer('string15'));
+        $resolver->setNormalizer('dic', $resolver->getNormalizer('string18'));
+        $resolver->setNormalizer('icDph', $resolver->getNormalizer('string18'));
+        $resolver->setNormalizer('phone', $resolver->getNormalizer('string40'));
+        $resolver->setNormalizer('mobilPhone', $resolver->getNormalizer('string24'));
+        $resolver->setNormalizer('fax', $resolver->getNormalizer('string24'));
+        $resolver->setNormalizer('email', $resolver->getNormalizer('string98'));
     }
 }

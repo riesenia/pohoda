@@ -1,5 +1,5 @@
 {
-    "name": "rshop/pohoda",
+    "name": "riesenia/pohoda",
     "description": "Pohoda XML communication",
     "license": "MIT",
     "authors": [
@@ -9,16 +9,18 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "symfony/options-resolver": "~2.0"
+        "php": ">=7.1",
+        "symfony/options-resolver": "~4.0"
     },
     "require-dev": {
-        "phpspec/phpspec": "~2.0",
-        "bossa/phpspec2-expect": "*"
+        "bossa/phpspec2-expect": "~3.0",
+        "phpspec/phpspec": "~4.0",
+        "phpstan/phpstan": "~0.9",
+        "rshop/php-cs-fixer-config": "~1.0"
     },
     "autoload": {
         "psr-4": {
-            "Rshop\\Synchronization\\": "src/"
+            "Riesenia\\": "src/"
         }
     },
     "extra": {

@@ -1,8 +1,8 @@
 # Pohoda XML
 
 [![Build Status](https://img.shields.io/travis/riesenia/pohoda/master.svg?style=flat-square)](https://travis-ci.org/riesenia/pohoda)
-[![Latest Version](https://img.shields.io/packagist/v/rshop/pohoda.svg?style=flat-square)](https://packagist.org/packages/rshop/pohoda)
-[![Total Downloads](https://img.shields.io/packagist/dt/rshop/pohoda.svg?style=flat-square)](https://packagist.org/packages/rshop/pohoda)
+[![Latest Version](https://img.shields.io/packagist/v/riesenia/pohoda.svg?style=flat-square)](https://packagist.org/packages/riesenia/pohoda)
+[![Total Downloads](https://img.shields.io/packagist/dt/riesenia/pohoda.svg?style=flat-square)](https://packagist.org/packages/riesenia/pohoda)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 ## Inštalácia
@@ -12,7 +12,7 @@ Pridaním do *composer.json*:
 ```json
 {
     "require": {
-        "rshop/pohoda": "1.x-dev"
+        "riesenia/pohoda": "1.x-dev"
     }
 }
 ```
@@ -22,7 +22,7 @@ Pridaním do *composer.json*:
 Príklady pre export jednotlivých typov viď. *spec* folder.
 
 ```php
-use Rshop\Synchronization\Pohoda;
+use Riesenia\Pohoda;
 
 $pohoda = new Pohoda('ICO');
 
@@ -91,7 +91,7 @@ $pohoda->close();
 Import je riešený jednoducho - vracia *SimpleXMLElement* s danou entitou.
 
 ```php
-use Rshop\Synchronization\Pohoda;
+use Riesenia\Pohoda;
 
 $pohoda = new Pohoda('ICO');
 

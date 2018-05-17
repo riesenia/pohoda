@@ -1,56 +1,41 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Type;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Rshop\Synchronization\Pohoda\Common\SetNamespaceTrait;
-use Rshop\Synchronization\Pohoda\Common\SetNodeNameTrait;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Type;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Common\SetNamespaceTrait;
+use Riesenia\Pohoda\Common\SetNodeNameTrait;
 
 class StockItem extends Agenda
 {
     use SetNamespaceTrait, SetNodeNameTrait;
 
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_refElements = ['store', 'stockItem'];
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['store', 'stockItem', 'serialNumber'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
+    public function getXML(): \SimpleXMLElement
     {
-        // available options
-        $resolver->setDefined($this->_elements);
-
-        // validate / format options
-        $resolver->setNormalizer('serialNumber', $resolver->string40Normalizer);
-    }
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    public function getXML()
-    {
-        if (is_null($this->_namespace)) {
-            throw new \LogicException("Namespace not set.");
+        if ($this->_namespace === null) {
+            throw new \LogicException('Namespace not set.');
         }
 
-        if (is_null($this->_nodeName)) {
-            throw new \LogicException("Node name not set.");
+        if ($this->_nodeName === null) {
+            throw new \LogicException('Node name not set.');
         }
 
         $xml = $this->_createXML()->addChild($this->_namespace . ':' . $this->_nodeName, null, $this->_namespace($this->_namespace));
@@ -58,5 +43,17 @@ class StockItem extends Agenda
         $this->_addElements($xml, $this->_elements, 'typ');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined($this->_elements);
+
+        // validate / format options
+        $resolver->setNormalizer('serialNumber', $resolver->getNormalizer('string40'));
     }
 }

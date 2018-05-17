@@ -1,32 +1,24 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\UserList;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\UserList;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 class ItemUserCode extends Agenda
 {
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined(['code', 'name', 'constant']);
-
-        // validate / format options
-        $resolver->setRequired('code');
-        $resolver->setRequired('name');
-    }
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('lst:itemUserCode', null, $this->_namespace('lst'));
         $xml->addAttribute('code', $this->_data['code']);
@@ -37,5 +29,18 @@ class ItemUserCode extends Agenda
         }
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined(['code', 'name', 'constant']);
+
+        // validate / format options
+        $resolver->setRequired('code');
+        $resolver->setRequired('name');
     }
 }

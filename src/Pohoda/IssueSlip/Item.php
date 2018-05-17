@@ -1,60 +1,35 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\IssueSlip;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Rshop\Synchronization\Pohoda\Common\AddParameterTrait;
-use Rshop\Synchronization\Pohoda\Type\CurrencyItem;
-use Rshop\Synchronization\Pohoda\Type\StockItem;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\IssueSlip;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\AddParameterTrait;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Type\CurrencyItem;
+use Riesenia\Pohoda\Type\StockItem;
 
 class Item extends Agenda
 {
     use AddParameterTrait;
 
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_refElements = ['centre', 'activity', 'contract'];
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'note', 'code', 'stockItem', 'centre', 'activity', 'contract'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined($this->_elements);
-
-        // validate / format options
-        $resolver->setNormalizer('text', $resolver->string90Normalizer);
-        $resolver->setNormalizer('quantity', $resolver->floatNormalizer);
-        $resolver->setNormalizer('unit', $resolver->string10Normalizer);
-        $resolver->setNormalizer('coefficient', $resolver->floatNormalizer);
-        $resolver->setNormalizer('payVAT', $resolver->boolNormalizer);
-        $resolver->setAllowedValues('rateVAT', ['none', 'low', 'high']);
-        $resolver->setNormalizer('discountPercentage', $resolver->floatNormalizer);
-        $resolver->setNormalizer('note', $resolver->string90Normalizer);
-        $resolver->setNormalizer('code', $resolver->string64Normalizer);
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process home currency
         if (isset($data['homeCurrency'])) {
@@ -73,16 +48,34 @@ class Item extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('vyd:vydejkaItem', null, $this->_namespace('vyd'));
 
         $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'vyd');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined($this->_elements);
+
+        // validate / format options
+        $resolver->setNormalizer('text', $resolver->getNormalizer('string90'));
+        $resolver->setNormalizer('quantity', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('unit', $resolver->getNormalizer('string10'));
+        $resolver->setNormalizer('coefficient', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('payVAT', $resolver->getNormalizer('bool'));
+        $resolver->setAllowedValues('rateVAT', ['none', 'low', 'high']);
+        $resolver->setNormalizer('discountPercentage', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('note', $resolver->getNormalizer('string90'));
+        $resolver->setNormalizer('code', $resolver->getNormalizer('string64'));
     }
 }

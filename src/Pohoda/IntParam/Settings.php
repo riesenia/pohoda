@@ -1,29 +1,40 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\IntParam;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\IntParam;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Settings extends Agenda
 {
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_refElements = ['currency'];
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['unit', 'length', 'currency', 'parameterList'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
+     */
+    public function getXML(): \SimpleXMLElement
+    {
+        $xml = $this->_createXML()->addChild('ipm:parameterSettings', null, $this->_namespace('ipm'));
+
+        $this->_addElements($xml, $this->_elements, 'ipm');
+
+        return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function _configureOptions(OptionsResolver $resolver)
     {
@@ -31,20 +42,6 @@ class Settings extends Agenda
         $resolver->setDefined($this->_elements);
 
         // validate / format options
-        $resolver->setNormalizer('length', $resolver->intNormalizer);
-    }
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    public function getXML()
-    {
-        $xml = $this->_createXML()->addChild('ipm:parameterSettings', null, $this->_namespace('ipm'));
-
-        $this->_addElements($xml, $this->_elements, 'ipm');
-
-        return $xml;
+        $resolver->setNormalizer('length', $resolver->getNormalizer('int'));
     }
 }

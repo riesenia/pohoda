@@ -1,61 +1,35 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Order;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Rshop\Synchronization\Pohoda\Common\AddParameterTrait;
-use Rshop\Synchronization\Pohoda\Type\Address;
-use Rshop\Synchronization\Pohoda\Type\MyAddress;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Order;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\AddParameterTrait;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Type\Address;
+use Riesenia\Pohoda\Type\MyAddress;
 
 class Header extends Agenda
 {
     use AddParameterTrait;
 
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_refElements = ['number', 'paymentType', 'priceLevel', 'centre', 'activity', 'contract', 'regVATinEU', 'carrier'];
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['orderType', 'number', 'numberOrder', 'date', 'dateDelivery', 'dateFrom', 'dateTo', 'text', 'partnerIdentity', 'myIdentity', 'paymentType', 'priceLevel', 'isExecuted', 'isReserved', 'centre', 'activity', 'contract', 'regVATinEU', 'note', 'carrier', 'intNote'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined($this->_elements);
-
-        // validate / format options
-        $resolver->setDefault('orderType', 'receivedOrder');
-        $resolver->setAllowedValues('orderType', ['receivedOrder', 'issuedOrder']);
-        $resolver->setNormalizer('numberOrder', $resolver->string32Normalizer);
-        $resolver->setNormalizer('date', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateDelivery', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateFrom', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateTo', $resolver->dateNormalizer);
-        $resolver->setNormalizer('text', $resolver->string240Normalizer);
-        $resolver->setNormalizer('isExecuted', $resolver->boolNormalizer);
-        $resolver->setNormalizer('isReserved', $resolver->boolNormalizer);
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process partner identity
         if (isset($data['partnerIdentity'])) {
@@ -71,16 +45,35 @@ class Header extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('ord:orderHeader', null, $this->_namespace('ord'));
 
         $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'ord');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined($this->_elements);
+
+        // validate / format options
+        $resolver->setDefault('orderType', 'receivedOrder');
+        $resolver->setAllowedValues('orderType', ['receivedOrder', 'issuedOrder']);
+        $resolver->setNormalizer('numberOrder', $resolver->getNormalizer('string32'));
+        $resolver->setNormalizer('date', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateDelivery', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateFrom', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateTo', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('text', $resolver->getNormalizer('string240'));
+        $resolver->setNormalizer('isExecuted', $resolver->getNormalizer('bool'));
+        $resolver->setNormalizer('isReserved', $resolver->getNormalizer('bool'));
     }
 }

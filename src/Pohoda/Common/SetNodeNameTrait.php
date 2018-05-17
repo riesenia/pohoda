@@ -1,22 +1,26 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Common;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
+
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Common;
 
 trait SetNodeNameTrait
 {
-    /**
-     * Node name
-     *
-     * @var string
-     */
-    protected $_nodeName = null;
+    /** @var string */
+    protected $_nodeName;
 
     /**
-     * Set node name
+     * Set node name.
      *
-     * @param string node name
-     * @return void
+     * @param string $nodeName
      */
-    public function setNodeName($nodeName)
+    public function setNodeName(string $nodeName)
     {
         $this->_nodeName = $nodeName;
     }

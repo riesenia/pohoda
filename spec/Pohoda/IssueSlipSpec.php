@@ -1,5 +1,14 @@
 <?php
-namespace spec\Rshop\Synchronization\Pohoda;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
+
+declare(strict_types=1);
+
+namespace spec\Riesenia\Pohoda;
 
 use PhpSpec\ObjectBehavior;
 
@@ -23,8 +32,8 @@ class IssueSlipSpec extends ObjectBehavior
 
     public function it_is_initializable_and_extends_agenda()
     {
-        $this->shouldHaveType('Rshop\Synchronization\Pohoda\IssueSlip');
-        $this->shouldHaveType('Rshop\Synchronization\Pohoda\Agenda');
+        $this->shouldHaveType('Riesenia\Pohoda\IssueSlip');
+        $this->shouldHaveType('Riesenia\Pohoda\Agenda');
     }
 
     public function it_creates_correct_xml()

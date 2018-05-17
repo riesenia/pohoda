@@ -1,41 +1,29 @@
 <?php
-namespace Rshop\Synchronization\Pohoda;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\UserList\ItemUserCode;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda;
+
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\UserList\ItemUserCode;
 
 class UserList extends Agenda
 {
-    /**
-     * Root for import
-     *
-     * @var string
-     */
+    /** @var string */
     public static $importRoot = 'lst:listUserCode';
 
     /**
-     * Configure options for options resolver
+     * Add item user code.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * @param array $data
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined(['code', 'name', 'constants']);
-
-        // validate / format options
-        $resolver->setRequired('code');
-        $resolver->setRequired('name');
-        $resolver->setNormalizer('constants', $resolver->boolNormalizer);
-    }
-
-    /**
-     * Add item user code
-     *
-     * @param array data
-     * @return void
-     */
-    public function addItemUserCode($data)
+    public function addItemUserCode(array $data)
     {
         if (!isset($this->_data['itemUserCodes'])) {
             $this->_data['itemUserCodes'] = [];
@@ -45,11 +33,9 @@ class UserList extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('lst:listUserCode', null, $this->_namespace('lst'));
         $xml->addAttribute('version', '1.1');
@@ -67,5 +53,19 @@ class UserList extends Agenda
         }
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined(['code', 'name', 'constants']);
+
+        // validate / format options
+        $resolver->setRequired('code');
+        $resolver->setRequired('name');
+        $resolver->setNormalizer('constants', $resolver->getNormalizer('bool'));
     }
 }

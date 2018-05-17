@@ -1,49 +1,30 @@
 <?php
-namespace Rshop\Synchronization\Pohoda;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\IntParam\Settings;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda;
+
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\IntParam\Settings;
 
 class IntParam extends Agenda
 {
-    /**
-     * Root for import
-     *
-     * @var string
-     */
+    /** @var string */
     public static $importRoot = 'ipm:intParam';
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['name', 'description', 'parameterType', 'parameterSettings'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined($this->_elements);
-
-        // validate / format options
-        $resolver->setRequired('name');
-        $resolver->setRequired('parameterType');
-        $resolver->setAllowedValues('parameterType', ['textValue', 'currencyValue', 'booleanValue', 'numberValue', 'integerValue', 'datetimeValue', 'unit', 'listValue']);
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // prepare empty parameter list for list
         if ($data['parameterType'] == 'listValue') {
@@ -59,11 +40,9 @@ class IntParam extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('ipm:intParamDetail', null, $this->_namespace('ipm'));
         $xml->addAttribute('version', '2.0');
@@ -72,5 +51,19 @@ class IntParam extends Agenda
         $this->_addElements($param, $this->_elements, 'ipm');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined($this->_elements);
+
+        // validate / format options
+        $resolver->setRequired('name');
+        $resolver->setRequired('parameterType');
+        $resolver->setAllowedValues('parameterType', ['textValue', 'currencyValue', 'booleanValue', 'numberValue', 'integerValue', 'datetimeValue', 'unit', 'listValue']);
     }
 }

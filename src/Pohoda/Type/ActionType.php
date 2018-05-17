@@ -1,38 +1,30 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Type;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Rshop\Synchronization\Pohoda\Common\SetNamespaceTrait;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Type;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Common\SetNamespaceTrait;
 
 class ActionType extends Agenda
 {
     use SetNamespaceTrait;
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
+    public function getXML(): \SimpleXMLElement
     {
-        // available options
-        $resolver->setDefined(['type', 'filter']);
-
-        // validate / format options
-        $resolver->setRequired('type');
-        $resolver->setAllowedValues('type', ['add', 'add/update', 'update', 'delete']);
-    }
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    public function getXML()
-    {
-        if (is_null($this->_namespace)) {
-            throw new \LogicException("Namespace not set.");
+        if ($this->_namespace === null) {
+            throw new \LogicException('Namespace not set.');
         }
 
         $xml = $this->_createXML()->addChild($this->_namespace . ':actionType', null, $this->_namespace($this->_namespace));
@@ -57,5 +49,18 @@ class ActionType extends Agenda
         }
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined(['type', 'filter']);
+
+        // validate / format options
+        $resolver->setRequired('type');
+        $resolver->setAllowedValues('type', ['add', 'add/update', 'update', 'delete']);
     }
 }

@@ -1,38 +1,28 @@
 <?php
-namespace Rshop\Synchronization\Pohoda;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda;
+
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Storage extends Agenda
 {
-    /**
-     * Root for import
-     *
-     * @var string
-     */
+    /** @var string */
     public static $importRoot = 'lst:itemStorage';
 
     /**
-     * Configure options for options resolver
+     * Add substorage.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * @param self $storage
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined(['code', 'name']);
-
-        // validate / format options
-        $resolver->setRequired('code');
-    }
-
-    /**
-     * Add substorage
-     *
-     * @param Storage substorage
-     * @return void
-     */
-    public function addSubstorage(Storage $storage)
+    public function addSubstorage(self $storage)
     {
         if (!isset($this->_data['subStorages'])) {
             $this->_data['subStorages'] = [];
@@ -42,11 +32,9 @@ class Storage extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('str:storage', null, $this->_namespace('str'));
         $xml->addAttribute('version', '2.0');
@@ -57,10 +45,9 @@ class Storage extends Agenda
     }
 
     /**
-     * Attach storage to XML element
+     * Attach storage to XML element.
      *
-     * @param \SimpleXMLElement
-     * @return void
+     * @param \SimpleXMLElement $xml
      */
     public function storageXML(\SimpleXMLElement $xml)
     {
@@ -78,5 +65,17 @@ class Storage extends Agenda
                 $subStorage->storageXML($subStorages);
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined(['code', 'name']);
+
+        // validate / format options
+        $resolver->setRequired('code');
     }
 }

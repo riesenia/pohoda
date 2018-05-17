@@ -1,42 +1,32 @@
 <?php
-namespace Rshop\Synchronization\Pohoda;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Common\AddActionTypeTrait;
-use Rshop\Synchronization\Pohoda\Common\AddParameterToHeaderTrait;
-use Rshop\Synchronization\Pohoda\Stock\Header;
-use Rshop\Synchronization\Pohoda\Stock\Price;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda;
+
+use Riesenia\Pohoda\Common\AddActionTypeTrait;
+use Riesenia\Pohoda\Common\AddParameterToHeaderTrait;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Stock\Header;
+use Riesenia\Pohoda\Stock\Price;
 
 class Stock extends Agenda
 {
     use AddActionTypeTrait, AddParameterToHeaderTrait;
 
-    /**
-     * Root for import
-     *
-     * @var string
-     */
+    /** @var string */
     public static $importRoot = 'lStk:stock';
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined(['header']);
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // pass to header
         $data = ['header' => new Header($data, $ico, $resolveOptions)];
@@ -45,13 +35,14 @@ class Stock extends Agenda
     }
 
     /**
-     * Add price
+     * Add price.
      *
-     * @param string price code
-     * @param float price
-     * @return \Rshop\Synchronization\Pohoda\Stock
+     * @param string $code
+     * @param float  $value
+     *
+     * @return $this
      */
-    public function addPrice($code, $value)
+    public function addPrice(string $code, float $value): self
     {
         if (!isset($this->_data['stockPriceItem'])) {
             $this->_data['stockPriceItem'] = [];
@@ -66,15 +57,16 @@ class Stock extends Agenda
     }
 
     /**
-     * Add image
+     * Add image.
      *
-     * @param string filepath
-     * @param string description
-     * @param int order
-     * @param bool is default image
-     * @return \Rshop\Synchronization\Pohoda\Stock
+     * @param string   $filepath
+     * @param string   $description
+     * @param int|null $order
+     * @param bool     $default
+     *
+     * @return $this
      */
-    public function addImage($filepath, $description = "", $order = null, $default = false)
+    public function addImage(string $filepath, string $description = '', int $order = null, bool $default = false): self
     {
         $this->_data['header']->addImage($filepath, $description, $order, $default);
 
@@ -82,12 +74,13 @@ class Stock extends Agenda
     }
 
     /**
-     * Add category
+     * Add category.
      *
-     * @param int category id
-     * @return \Rshop\Synchronization\Pohoda\Stock
+     * @param int $categoryId
+     *
+     * @return $this
      */
-    public function addCategory($categoryId)
+    public function addCategory(int $categoryId): self
     {
         $this->_data['header']->addCategory($categoryId);
 
@@ -95,12 +88,13 @@ class Stock extends Agenda
     }
 
     /**
-     * Add int parameter
+     * Add int parameter.
      *
-     * @param array data
-     * @return \Rshop\Synchronization\Pohoda\Stock
+     * @param array $data
+     *
+     * @return $this
      */
-    public function addIntParameter($data)
+    public function addIntParameter(array $data): self
     {
         $this->_data['header']->addIntParameter($data);
 
@@ -108,11 +102,9 @@ class Stock extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('stk:stock', null, $this->_namespace('stk'));
         $xml->addAttribute('version', '2.0');
@@ -120,5 +112,14 @@ class Stock extends Agenda
         $this->_addElements($xml, ['actionType', 'header', 'stockPriceItem'], 'stk');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined(['header']);
     }
 }

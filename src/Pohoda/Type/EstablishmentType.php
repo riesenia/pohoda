@@ -1,22 +1,37 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Type;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Type;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 class EstablishmentType extends Agenda
 {
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['company', 'city', 'street', 'zip'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
+     */
+    public function getXML(): \SimpleXMLElement
+    {
+        $xml = $this->_createXML()->addChild('typ:establishment', null, $this->_namespace('typ'));
+
+        $this->_addElements($xml, $this->_elements, 'typ');
+
+        return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function _configureOptions(OptionsResolver $resolver)
     {
@@ -24,23 +39,9 @@ class EstablishmentType extends Agenda
         $resolver->setDefined($this->_elements);
 
         // validate / format options
-        $resolver->setNormalizer('company', $resolver->string255Normalizer);
-        $resolver->setNormalizer('city', $resolver->string45Normalizer);
-        $resolver->setNormalizer('street', $resolver->string64Normalizer);
-        $resolver->setNormalizer('zip', $resolver->string15Normalizer);
-    }
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    public function getXML()
-    {
-        $xml = $this->_createXML()->addChild('typ:establishment', null, $this->_namespace('typ'));
-
-        $this->_addElements($xml, $this->_elements, 'typ');
-
-        return $xml;
+        $resolver->setNormalizer('company', $resolver->getNormalizer('string255'));
+        $resolver->setNormalizer('city', $resolver->getNormalizer('string45'));
+        $resolver->setNormalizer('street', $resolver->getNormalizer('string64'));
+        $resolver->setNormalizer('zip', $resolver->getNormalizer('string15'));
     }
 }

@@ -1,15 +1,30 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Stock;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Stock;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Category extends Agenda
 {
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
+     */
+    public function getXML(): \SimpleXMLElement
+    {
+        return $this->_createXML()->addChild('stk:idCategory', $this->_data['idCategory'], $this->_namespace('stk'));
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function _configureOptions(OptionsResolver $resolver)
     {
@@ -18,16 +33,6 @@ class Category extends Agenda
 
         // validate / format options
         $resolver->setRequired('idCategory');
-        $resolver->setNormalizer('idCategory', $resolver->intNormalizer);
-    }
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    public function getXML()
-    {
-        return $this->_createXML()->addChild('stk:idCategory', $this->_data['idCategory'], $this->_namespace('stk'));
+        $resolver->setNormalizer('idCategory', $resolver->getNormalizer('int'));
     }
 }

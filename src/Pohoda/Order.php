@@ -1,43 +1,33 @@
 <?php
-namespace Rshop\Synchronization\Pohoda;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Common\AddActionTypeTrait;
-use Rshop\Synchronization\Pohoda\Common\AddParameterToHeaderTrait;
-use Rshop\Synchronization\Pohoda\Order\Header;
-use Rshop\Synchronization\Pohoda\Order\Item;
-use Rshop\Synchronization\Pohoda\Order\Summary;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda;
+
+use Riesenia\Pohoda\Common\AddActionTypeTrait;
+use Riesenia\Pohoda\Common\AddParameterToHeaderTrait;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Order\Header;
+use Riesenia\Pohoda\Order\Item;
+use Riesenia\Pohoda\Order\Summary;
 
 class Order extends Agenda
 {
     use AddActionTypeTrait, AddParameterToHeaderTrait;
 
-    /**
-     * Root for import
-     *
-     * @var string
-     */
+    /** @var string */
     public static $importRoot = 'lst:order';
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined(['header']);
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // pass to header
         $data = ['header' => new Header($data, $ico, $resolveOptions)];
@@ -46,12 +36,13 @@ class Order extends Agenda
     }
 
     /**
-     * Add order item
+     * Add order item.
      *
-     * @param array item data
-     * @return \Rshop\Synchronization\Pohoda\Order
+     * @param array $data
+     *
+     * @return $this
      */
-    public function addItem($data)
+    public function addItem(array $data): self
     {
         if (!isset($this->_data['orderDetail'])) {
             $this->_data['orderDetail'] = [];
@@ -63,12 +54,13 @@ class Order extends Agenda
     }
 
     /**
-     * Add order summary
+     * Add order summary.
      *
-     * @param array summary data
-     * @return \Rshop\Synchronization\Pohoda\Order
+     * @param array $data
+     *
+     * @return $this
      */
-    public function addSummary($data)
+    public function addSummary($data): self
     {
         $this->_data['summary'] = new Summary($data, $this->_ico);
 
@@ -76,11 +68,9 @@ class Order extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('ord:order', null, $this->_namespace('ord'));
         $xml->addAttribute('version', '2.0');
@@ -88,5 +78,14 @@ class Order extends Agenda
         $this->_addElements($xml, ['actionType', 'header', 'orderDetail', 'summary'], 'ord');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined(['header']);
     }
 }

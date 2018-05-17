@@ -1,48 +1,31 @@
 <?php
-namespace Rshop\Synchronization\Pohoda;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda;
+
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Category extends Agenda
 {
-    /**
-     * Root for import
-     *
-     * @var string
-     */
+    /** @var string */
     public static $importRoot = 'ctg:category';
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['name', 'description', 'sequence', 'displayed', 'picture', 'note'];
 
     /**
-     * Configure options for options resolver
+     * Add subcategory.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * @param self $category
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined($this->_elements);
-
-        // validate / format options
-        $resolver->setRequired('name');
-        $resolver->setNormalizer('name', $resolver->string48Normalizer);
-        $resolver->setNormalizer('sequence', $resolver->intNormalizer);
-        $resolver->setNormalizer('displayed', $resolver->boolNormalizer);
-    }
-
-    /**
-     * Add subcategory
-     *
-     * @param Category subcategory
-     * @return void
-     */
-    public function addSubcategory(Category $category)
+    public function addSubcategory(self $category)
     {
         if (!isset($this->_data['subCategories'])) {
             $this->_data['subCategories'] = [];
@@ -52,11 +35,9 @@ class Category extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('ctg:categoryDetail', null, $this->_namespace('ctg'));
         $xml->addAttribute('version', '2.0');
@@ -67,10 +48,9 @@ class Category extends Agenda
     }
 
     /**
-     * Attach category to XML element
+     * Attach category to XML element.
      *
-     * @param \SimpleXMLElement
-     * @return void
+     * @param \SimpleXMLElement $xml
      */
     public function categoryXML(\SimpleXMLElement $xml)
     {
@@ -85,5 +65,20 @@ class Category extends Agenda
                 $subCategory->categoryXML($subCategories);
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined($this->_elements);
+
+        // validate / format options
+        $resolver->setRequired('name');
+        $resolver->setNormalizer('name', $resolver->getNormalizer('string48'));
+        $resolver->setNormalizer('sequence', $resolver->getNormalizer('int'));
+        $resolver->setNormalizer('displayed', $resolver->getNormalizer('bool'));
     }
 }

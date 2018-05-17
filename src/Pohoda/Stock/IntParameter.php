@@ -1,35 +1,24 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Stock;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Stock;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\OptionsResolver;
 
 class IntParameter extends Agenda
 {
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined(['intParameterID', 'intParameterName', 'intParameterOrder', 'intParameterType', 'value']);
-
-        // validate / format options
-        $resolver->setRequired('intParameterID');
-        $resolver->setNormalizer('intParameterID', $resolver->intNormalizer);
-        $resolver->setRequired('intParameterType');
-        $resolver->setAllowedValues('intParameterType', ['textValue', 'currencyValue', 'booleanValue', 'numberValue', 'integerValue', 'datetimeValue', 'unit', 'listValue']);
-        $resolver->setRequired('value');
-    }
-
-    /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
-     */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('stk:intParameter', null, $this->_namespace('stk'));
 
@@ -39,5 +28,21 @@ class IntParameter extends Agenda
         $xml->addChild('stk:intParameterValues')->addChild('stk:intParameterValue')->addChild('stk:parameterValue', $this->_data['value']);
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined(['intParameterID', 'intParameterName', 'intParameterOrder', 'intParameterType', 'value']);
+
+        // validate / format options
+        $resolver->setRequired('intParameterID');
+        $resolver->setNormalizer('intParameterID', $resolver->getNormalizer('int'));
+        $resolver->setRequired('intParameterType');
+        $resolver->setAllowedValues('intParameterType', ['textValue', 'currencyValue', 'booleanValue', 'numberValue', 'integerValue', 'datetimeValue', 'unit', 'listValue']);
+        $resolver->setRequired('value');
     }
 }

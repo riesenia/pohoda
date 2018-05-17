@@ -1,67 +1,34 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Addressbook;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Rshop\Synchronization\Pohoda\Common\AddParameterTrait;
-use Rshop\Synchronization\Pohoda\Type\Address;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Addressbook;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\AddParameterTrait;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Type\Address;
 
 class Header extends Agenda
 {
     use AddParameterTrait;
 
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_refElements = ['centre', 'activity', 'contract', 'number'];
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['identity', 'region', 'phone', 'mobil', 'fax', 'email', 'web', 'ICQ', 'Skype', 'GPS', 'credit', 'priceIDS', 'maturity', 'paymentType', 'agreement', 'number', 'ost1', 'ost2', 'message', 'note', 'intNote', 'centre', 'activity', 'contract'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined($this->_elements);
-
-        // validate / format options
-        $resolver->setNormalizer('region', $resolver->string32Normalizer);
-        $resolver->setNormalizer('phone', $resolver->string40Normalizer);
-        $resolver->setNormalizer('mobil', $resolver->string24Normalizer);
-        $resolver->setNormalizer('fax', $resolver->string24Normalizer);
-        $resolver->setNormalizer('email', $resolver->string98Normalizer);
-        $resolver->setNormalizer('web', $resolver->string32Normalizer);
-        $resolver->setNormalizer('ICQ', $resolver->string12Normalizer);
-        $resolver->setNormalizer('Skype', $resolver->string32Normalizer);
-        $resolver->setNormalizer('GPS', $resolver->string38Normalizer);
-        $resolver->setNormalizer('credit', $resolver->floatNormalizer);
-        $resolver->setNormalizer('priceIDS', $resolver->string10Normalizer);
-        $resolver->setNormalizer('maturity', $resolver->intNormalizer);
-        $resolver->setAllowedValues('paymentType', ['draft', 'cash', 'postal', 'delivery', 'creditcard', 'advance', 'encashment', 'cheque', 'compensation']);
-        $resolver->setNormalizer('agreement', $resolver->string12Normalizer);
-        $resolver->setNormalizer('ost1', $resolver->string8Normalizer);
-        $resolver->setNormalizer('ost2', $resolver->string8Normalizer);
-        $resolver->setNormalizer('message', $resolver->string64Normalizer);
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process identity
         if (isset($data['identity'])) {
@@ -72,16 +39,42 @@ class Header extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('adb:addressbookHeader', null, $this->_namespace('adb'));
 
         $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'adb');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined($this->_elements);
+
+        // validate / format options
+        $resolver->setNormalizer('region', $resolver->getNormalizer('string32'));
+        $resolver->setNormalizer('phone', $resolver->getNormalizer('string40'));
+        $resolver->setNormalizer('mobil', $resolver->getNormalizer('string24'));
+        $resolver->setNormalizer('fax', $resolver->getNormalizer('string24'));
+        $resolver->setNormalizer('email', $resolver->getNormalizer('string98'));
+        $resolver->setNormalizer('web', $resolver->getNormalizer('string32'));
+        $resolver->setNormalizer('ICQ', $resolver->getNormalizer('string12'));
+        $resolver->setNormalizer('Skype', $resolver->getNormalizer('string32'));
+        $resolver->setNormalizer('GPS', $resolver->getNormalizer('string38'));
+        $resolver->setNormalizer('credit', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('priceIDS', $resolver->getNormalizer('string10'));
+        $resolver->setNormalizer('maturity', $resolver->getNormalizer('int'));
+        $resolver->setAllowedValues('paymentType', ['draft', 'cash', 'postal', 'delivery', 'creditcard', 'advance', 'encashment', 'cheque', 'compensation']);
+        $resolver->setNormalizer('agreement', $resolver->getNormalizer('string12'));
+        $resolver->setNormalizer('ost1', $resolver->getNormalizer('string8'));
+        $resolver->setNormalizer('ost2', $resolver->getNormalizer('string8'));
+        $resolver->setNormalizer('message', $resolver->getNormalizer('string64'));
     }
 }

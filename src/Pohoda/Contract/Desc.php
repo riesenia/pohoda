@@ -1,57 +1,34 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Contract;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Rshop\Synchronization\Pohoda\Type\Address;
-use Rshop\Synchronization\Pohoda\Common\AddParameterTrait;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Contract;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\AddParameterTrait;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Type\Address;
 
 class Desc extends Agenda
 {
     use AddParameterTrait;
 
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_refElements = ['number', 'responsiblePerson'];
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['number', 'datePlanStart', 'datePlanDelivery', 'dateStart', 'dateDelivery', 'dateWarranty', 'text', 'partnerIdentity', 'responsiblePerson', 'note'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined($this->_elements);
-
-        $resolver->setNormalizer('datePlanStart', $resolver->dateNormalizer);
-        $resolver->setNormalizer('datePlanDelivery', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateStart', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateDelivery', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateWarranty', $resolver->dateNormalizer);
-        $resolver->setRequired('text');
-        $resolver->setNormalizer('text', $resolver->string90Normalizer);
-
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process partner identity
         if (isset($data['partnerIdentity'])) {
@@ -62,16 +39,31 @@ class Desc extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('con:contractDesc', null, $this->_namespace('con'));
 
         $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'con');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined($this->_elements);
+
+        $resolver->setNormalizer('datePlanStart', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('datePlanDelivery', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateStart', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateDelivery', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateWarranty', $resolver->getNormalizer('date'));
+        $resolver->setRequired('text');
+        $resolver->setNormalizer('text', $resolver->getNormalizer('string90'));
     }
 }

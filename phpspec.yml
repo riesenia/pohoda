@@ -1,4 +1,4 @@
 suites:
     rshop_suite:
-        namespace: Rshop\Synchronization
-        psr4_prefix: Rshop\Synchronization
+        namespace: Riesenia
+        psr4_prefix: Riesenia

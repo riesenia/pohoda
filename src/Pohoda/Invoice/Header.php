@@ -1,70 +1,35 @@
 <?php
-namespace Rshop\Synchronization\Pohoda\Invoice;
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
 
-use Rshop\Synchronization\Pohoda\Agenda;
-use Rshop\Synchronization\Pohoda\Common\AddParameterTrait;
-use Rshop\Synchronization\Pohoda\Type\Address;
-use Rshop\Synchronization\Pohoda\Type\MyAddress;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+declare(strict_types=1);
+
+namespace Riesenia\Pohoda\Invoice;
+
+use Riesenia\Pohoda\Agenda;
+use Riesenia\Pohoda\Common\AddParameterTrait;
+use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Type\Address;
+use Riesenia\Pohoda\Type\MyAddress;
 
 class Header extends Agenda
 {
     use AddParameterTrait;
 
-    /**
-     * Ref elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_refElements = ['number', 'accounting', 'classificationVAT', 'classificationKVDPH', 'order', 'paymentType', 'priceLevel', 'account', 'paymentAccount', 'centre', 'activity', 'contract', 'regVATinEU', 'carrier'];
 
-    /**
-     * All elements
-     *
-     * @var array
-     */
+    /** @var array */
     protected $_elements = ['extId', 'invoiceType', 'number', 'symVar', 'originalDocument', 'originalDocumentNumber', 'symPar', 'date', 'dateTax', 'dateAccounting', 'dateKHDPH', 'dateDue', 'dateApplicationVAT', 'dateDelivery', 'accounting', 'classificationVAT', 'classificationKVDPH', 'numberKHDPH', 'text', 'partnerIdentity', 'myIdentity', 'order', 'numberOrder', 'dateOrder', 'paymentType', 'priceLevel', 'account', 'symConst', 'symSpec', 'paymentAccount', 'paymentTerminal', 'centre', 'activity', 'contract', 'regVATinEU', 'note', 'carrier', 'intNote'];
 
     /**
-     * Configure options for options resolver
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver
+     * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined($this->_elements);
-
-        // validate / format options
-        $resolver->setDefault('invoiceType', 'issuedInvoice');
-        $resolver->setAllowedValues('invoiceType', ['issuedInvoice', 'issuedCreditNotice', 'issuedDebitNote', 'issuedAdvanceInvoice', 'receivable', 'issuedProformaInvoice', 'penalty', 'issuedCorrectiveTax', 'receivedInvoice', 'receivedCreditNotice', 'receivedDebitNote', 'receivedAdvanceInvoice', 'commitment', 'receivedProformaInvoice', 'receivedCorrectiveTax']);
-        $resolver->setNormalizer('symVar', $resolver->string20Normalizer);
-        $resolver->setNormalizer('originalDocument', $resolver->string32Normalizer);
-        $resolver->setNormalizer('symPar', $resolver->string20Normalizer);
-        $resolver->setNormalizer('date', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateTax', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateAccounting', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateKHDPH', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateDue', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateApplicationVAT', $resolver->dateNormalizer);
-        $resolver->setNormalizer('dateDelivery', $resolver->dateNormalizer);
-        $resolver->setNormalizer('numberKHDPH', $resolver->string32Normalizer);
-        $resolver->setNormalizer('text', $resolver->string240Normalizer);
-        $resolver->setNormalizer('numberOrder', $resolver->string32Normalizer);
-        $resolver->setNormalizer('dateOrder', $resolver->dateNormalizer);
-        $resolver->setNormalizer('symConst', $resolver->string4Normalizer);
-        $resolver->setNormalizer('symSpec', $resolver->string16Normalizer);
-        $resolver->setNormalizer('paymentTerminal', $resolver->boolNormalizer);
-    }
-
-    /**
-     * Construct agenda using provided data
-     *
-     * @param array data
-     * @param string ICO
-     * @param bool if options resolver should be used
-     */
-    public function __construct($data, $ico, $resolveOptions = true)
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process partner identity
         if (isset($data['partnerIdentity'])) {
@@ -80,16 +45,44 @@ class Header extends Agenda
     }
 
     /**
-     * Get XML
-     *
-     * @return \SimpleXMLElement
+     * {@inheritdoc}
      */
-    public function getXML()
+    public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('inv:invoiceHeader', null, $this->_namespace('inv'));
 
         $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'inv');
 
         return $xml;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _configureOptions(OptionsResolver $resolver)
+    {
+        // available options
+        $resolver->setDefined($this->_elements);
+
+        // validate / format options
+        $resolver->setDefault('invoiceType', 'issuedInvoice');
+        $resolver->setAllowedValues('invoiceType', ['issuedInvoice', 'issuedCreditNotice', 'issuedDebitNote', 'issuedAdvanceInvoice', 'receivable', 'issuedProformaInvoice', 'penalty', 'issuedCorrectiveTax', 'receivedInvoice', 'receivedCreditNotice', 'receivedDebitNote', 'receivedAdvanceInvoice', 'commitment', 'receivedProformaInvoice', 'receivedCorrectiveTax']);
+        $resolver->setNormalizer('symVar', $resolver->getNormalizer('string20'));
+        $resolver->setNormalizer('originalDocument', $resolver->getNormalizer('string32'));
+        $resolver->setNormalizer('symPar', $resolver->getNormalizer('string20'));
+        $resolver->setNormalizer('date', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateTax', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateAccounting', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateKHDPH', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateDue', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateApplicationVAT', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateDelivery', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('numberKHDPH', $resolver->getNormalizer('string32'));
+        $resolver->setNormalizer('text', $resolver->getNormalizer('string240'));
+        $resolver->setNormalizer('numberOrder', $resolver->getNormalizer('string32'));
+        $resolver->setNormalizer('dateOrder', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('symConst', $resolver->getNormalizer('string4'));
+        $resolver->setNormalizer('symSpec', $resolver->getNormalizer('string16'));
+        $resolver->setNormalizer('paymentTerminal', $resolver->getNormalizer('bool'));
     }
 }
