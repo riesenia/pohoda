@@ -12,7 +12,7 @@ Pridaním do *composer.json*:
 ```json
 {
     "require": {
-        "riesenia/pohoda": "1.x-dev"
+        "riesenia/pohoda": "~1.0"
     }
 }
 ```
