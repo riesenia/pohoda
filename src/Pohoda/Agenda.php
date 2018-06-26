@@ -82,7 +82,7 @@ abstract class Agenda
      *
      * @param string|null $short
      *
-     * @return string
+     * @return string|null
      */
     protected function _namespace(string $short = null): ?string
     {
@@ -194,6 +194,10 @@ abstract class Agenda
     {
         $dom = dom_import_simplexml($xml);
         $dom2 = dom_import_simplexml($node);
+
+        if ($dom === false || $dom2 === false) {
+            throw new \InvalidArgumentException('Invalid XML.');
+        }
 
         $dom->appendChild($dom->ownerDocument->importNode($dom2, true));
     }

@@ -1,0 +1,4 @@
+parameters:
+    ignoreErrors:
+        - '#Parameter \#2 \$value of method SimpleXMLElement::addChild\(\) expects string, null given\.#'
+        - '#Parameter \#3 \$ns of method SimpleXMLElement::addChild\(\) expects string, string\|null given\.#'

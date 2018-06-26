@@ -123,7 +123,7 @@ class Pohoda
 
         $xml = $agenda->getXML();
         if ($xml instanceof \SimpleXMLElement) {
-            $this->_xmlWriter->writeRaw($xml->asXML());
+            $this->_xmlWriter->writeRaw((string) $xml->asXML());
         }
 
         $this->_xmlWriter->endElement();
