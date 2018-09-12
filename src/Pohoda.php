@@ -106,10 +106,7 @@ class Pohoda
 
         if ($filename === null) {
             $this->_isInMemory = true;
-
-            if (!$this->_xmlWriter->openMemory()) {
-                return false;
-            }
+            $this->_xmlWriter->openMemory();
         } else {
             $this->_isInMemory = false;
 

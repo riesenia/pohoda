@@ -88,13 +88,31 @@ $pohoda->close();
 
 ## Príklad importu produktov
 
-Import je riešený jednoducho - vracia *SimpleXMLElement* s danou entitou.
+Vytorenie príkazu na export sa realizuje prostredníctvom *ListRequest*.
 
 ```php
 use Riesenia\Pohoda;
 
 $pohoda = new Pohoda('ICO');
 
+// create request for export
+$pohoda->open($filename, 'Export orders');
+
+$request = $pohoda->createListRequest([
+    'type' => 'Stock'
+]);
+
+// optional filter
+$request->addUserFilterName('MyFilter');
+
+$pohoda->addItem('Export 001', $request);
+
+$pohoda->close();
+```
+
+Samotné spracovanie dát je riešené jednoducho - volanie `next` vracia *SimpleXMLElement* s danou entitou.
+
+```php
 // load file
 $pohoda->loadStock($filename);
 
