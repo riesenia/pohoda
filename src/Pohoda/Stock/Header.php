@@ -92,7 +92,7 @@ class Header extends Agenda
     {
         $xml = $this->_createXML()->addChild('stk:stockHeader', null, $this->_namespace('stk'));
 
-        $this->_addElements($xml, array_merge($this->_elements, ['categories', 'pictures', 'parameters', 'intParameters']), 'stk');
+        $this->_addElements($xml, \array_merge($this->_elements, ['categories', 'pictures', 'parameters', 'intParameters']), 'stk');
 
         return $xml;
     }

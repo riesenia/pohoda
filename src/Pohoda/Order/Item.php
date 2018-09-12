@@ -54,7 +54,7 @@ class Item extends Agenda
     {
         $xml = $this->_createXML()->addChild('ord:orderItem', null, $this->_namespace('ord'));
 
-        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'ord');
+        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'ord');
 
         return $xml;
     }

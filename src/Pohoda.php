@@ -15,7 +15,19 @@ use Riesenia\Pohoda\Agenda;
 /**
  * Factory for Pohoda objects.
  *
- * @author Tomas Saghy <segy@riesenia.com>
+ *
+ * @method Agenda createAddressbook(array $data = [])
+ * @method Agenda createAgenda(array $data = [])
+ * @method Agenda createCategory(array $data = [])
+ * @method Agenda createContract(array $data = [])
+ * @method Agenda createIntParam(array $data = [])
+ * @method Agenda createInvoice(array $data = [])
+ * @method Agenda createIssueSlip(array $data = [])
+ * @method Agenda createOrder(array $data = [])
+ * @method Agenda createStock(array $data = [])
+ * @method Agenda createStockTransfer(array $data = [])
+ * @method Agenda createStorage(array $data = [])
+ * @method Agenda createUserList(array $data = [])
  */
 class Pohoda
 {
@@ -28,7 +40,9 @@ class Pohoda
         'ftr' => 'http://www.stormware.cz/schema/version_2/filter.xsd',
         'inv' => 'http://www.stormware.cz/schema/version_2/invoice.xsd',
         'ipm' => 'http://www.stormware.cz/schema/version_2/intParam.xsd',
+        'lAdb' => 'http://www.stormware.cz/schema/version_2/list_addBook.xsd',
         'lst' => 'http://www.stormware.cz/schema/version_2/list.xsd',
+        'lStk' => 'http://www.stormware.cz/schema/version_2/list_stock.xsd',
         'ord' => 'http://www.stormware.cz/schema/version_2/order.xsd',
         'pre' => 'http://www.stormware.cz/schema/version_2/prevodka.xsd',
         'str' => 'http://www.stormware.cz/schema/version_2/storage.xsd',
@@ -39,6 +53,9 @@ class Pohoda
 
     /** @var string */
     protected $_ico;
+
+    /** @var bool */
+    protected $_isInMemory;
 
     /** @var \XMLWriter */
     protected $_xmlWriter;
@@ -68,7 +85,7 @@ class Pohoda
     {
         $fullName = __NAMESPACE__ . '\\Pohoda\\' . $name;
 
-        if (!class_exists($fullName)) {
+        if (!\class_exists($fullName)) {
             throw new \DomainException('Not allowed entity: ' . $name);
         }
 
@@ -78,18 +95,28 @@ class Pohoda
     /**
      * Open new XML file for writing.
      *
-     * @param string $filename
-     * @param string $id
-     * @param string $note
+     * @param string|null $filename path to output file or null for memory
+     * @param string      $id
+     * @param string      $note
      *
      * @return bool
      */
-    public function open(string $filename, string $id, string $note = ''): bool
+    public function open(?string $filename, string $id, string $note = ''): bool
     {
         $this->_xmlWriter = new \XMLWriter();
 
-        if (!$this->_xmlWriter->openUri($filename)) {
-            return false;
+        if ($filename === null) {
+            $this->_isInMemory = true;
+
+            if (!$this->_xmlWriter->openMemory()) {
+                return false;
+            }
+        } else {
+            $this->_isInMemory = false;
+
+            if (!$this->_xmlWriter->openUri($filename)) {
+                return false;
+            }
         }
 
         $this->_xmlWriter->startDocument('1.0', 'windows-1250');
@@ -120,23 +147,24 @@ class Pohoda
 
         $this->_xmlWriter->writeAttribute('id', $id);
         $this->_xmlWriter->writeAttribute('version', '2.0');
-
-        $xml = $agenda->getXML();
-        if ($xml instanceof \SimpleXMLElement) {
-            $this->_xmlWriter->writeRaw((string) $xml->asXML());
-        }
-
+        $this->_xmlWriter->writeRaw((string) $agenda->getXML()->asXML());
         $this->_xmlWriter->endElement();
-        $this->_xmlWriter->flush();
+
+        if (!$this->_isInMemory) {
+            $this->_xmlWriter->flush();
+        }
     }
 
     /**
      * End and close XML file.
+     *
+     * @return int|string written bytes for file or XML string for memory
      */
     public function close()
     {
         $this->_xmlWriter->endElement();
-        $this->_xmlWriter->flush();
+
+        return $this->_xmlWriter->flush();
     }
 
     /**
@@ -157,7 +185,7 @@ class Pohoda
 
         $fullName = __NAMESPACE__ . '\\Pohoda\\' . $name;
 
-        if (!class_exists($fullName)) {
+        if (!\class_exists($fullName)) {
             throw new \DomainException('Not allowed entity: ' . $name);
         }
 
@@ -201,17 +229,17 @@ class Pohoda
     public function __call(string $method, array  $arguments)
     {
         // create<Agenda> method
-        if (preg_match('/create([A-Z][a-zA-Z0-9]*)/', $method, $matches)) {
-            return call_user_func([$this, 'create'], $matches[1], $arguments[0] ?? []);
+        if (\preg_match('/create([A-Z][a-zA-Z0-9]*)/', $method, $matches)) {
+            return \call_user_func([$this, 'create'], $matches[1], $arguments[0] ?? []);
         }
 
         // load<Agenda> method
-        if (preg_match('/load([A-Z][a-zA-Z0-9]*)/', $method, $matches)) {
+        if (\preg_match('/load([A-Z][a-zA-Z0-9]*)/', $method, $matches)) {
             if (!isset($arguments[0])) {
                 throw new \DomainException('Filename not set.');
             }
 
-            return call_user_func([$this, 'load'], $matches[1], $arguments[0]);
+            return \call_user_func([$this, 'load'], $matches[1], $arguments[0]);
         }
 
         throw new \BadMethodCallException('Unknown method: ' . $method);

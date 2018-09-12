@@ -37,7 +37,7 @@ class Parameter extends Agenda
             return $xml;
         }
 
-        $xml->addChild('typ:' . $this->_data['type'] . 'Value', htmlspecialchars($this->_data['value']));
+        $xml->addChild('typ:' . $this->_data['type'] . 'Value', \htmlspecialchars($this->_data['value']));
 
         return $xml;
     }
@@ -59,7 +59,7 @@ class Parameter extends Agenda
                 $prefix = 'RefVPr';
             }
 
-            if (strpos($value, $prefix) === 0) {
+            if (\strpos($value, $prefix) === 0) {
                 return $value;
             }
 
@@ -69,9 +69,9 @@ class Parameter extends Agenda
         $resolver->setAllowedValues('type', ['text', 'memo', 'currency', 'boolean', 'number', 'datetime', 'integer', 'list']);
         $resolver->setNormalizer('value', function ($options, $value) use ($resolver) {
             try {
-                return call_user_func($resolver->getNormalizer($options['type']), [], $value);
+                return \call_user_func($resolver->getNormalizer($options['type']), [], $value);
             } catch (\Exception $e) {
-                return is_array($value) ? $value : (string) $value;
+                return \is_array($value) ? $value : (string) $value;
             }
         });
     }

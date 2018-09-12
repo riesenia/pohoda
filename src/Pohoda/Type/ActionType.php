@@ -38,9 +38,9 @@ class ActionType extends Agenda
             $filter = $action->addChild('ftr:filter', null, $this->_namespace('ftr'));
 
             foreach ($this->_data['filter'] as $property => $value) {
-                $ftr = $filter->addChild('ftr:' . $property, is_array($value) ? null : $value);
+                $ftr = $filter->addChild('ftr:' . $property, \is_array($value) ? null : $value);
 
-                if (is_array($value)) {
+                if (\is_array($value)) {
                     foreach ($value as $tProperty => $tValue) {
                         $ftr->addChild('typ:' . $tProperty, $tValue, $this->_namespace('typ'));
                     }

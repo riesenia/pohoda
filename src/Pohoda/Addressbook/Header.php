@@ -45,7 +45,7 @@ class Header extends Agenda
     {
         $xml = $this->_createXML()->addChild('adb:addressbookHeader', null, $this->_namespace('adb'));
 
-        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'adb');
+        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'adb');
 
         return $xml;
     }

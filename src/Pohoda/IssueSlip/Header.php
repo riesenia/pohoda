@@ -45,7 +45,7 @@ class Header extends Agenda
     {
         $xml = $this->_createXML()->addChild('vyd:vydejkaHeader', null, $this->_namespace('vyd'));
 
-        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'vyd');
+        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'vyd');
 
         return $xml;
     }

@@ -45,7 +45,7 @@ class Header extends Agenda
     {
         $xml = $this->_createXML()->addChild('pre:prevodkaHeader', null, $this->_namespace('pre'));
 
-        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'pre');
+        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'pre');
 
         return $xml;
     }

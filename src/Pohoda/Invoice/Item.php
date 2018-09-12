@@ -54,7 +54,7 @@ class Item extends Agenda
     {
         $xml = $this->_createXML()->addChild('inv:invoiceItem', null, $this->_namespace('inv'));
 
-        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'inv');
+        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'inv');
 
         return $xml;
     }

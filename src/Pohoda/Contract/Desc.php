@@ -45,7 +45,7 @@ class Desc extends Agenda
     {
         $xml = $this->_createXML()->addChild('con:contractDesc', null, $this->_namespace('con'));
 
-        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'con');
+        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'con');
 
         return $xml;
     }

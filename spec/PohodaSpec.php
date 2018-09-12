@@ -41,10 +41,10 @@ class PohodaSpec extends ObjectBehavior
         ])->shouldBeAnInstanceOf('Riesenia\Pohoda\Stock');
     }
 
-    #public function it_can_write_file(Stock $stock)
     public function it_can_write_file()
     {
-        $tmpFile = tempnam(sys_get_temp_dir(), 'xml');
+        $tmpFile = \tempnam(\sys_get_temp_dir(), 'xml');
+
         $stock = new Stock([
             'code' => 'CODE',
             'name' => 'NAME',
@@ -56,7 +56,7 @@ class PohodaSpec extends ObjectBehavior
         $this->addItem('ITEM_ID', $stock);
         $this->close();
 
-        $xml = simplexml_load_file($tmpFile);
+        $xml = \simplexml_load_file($tmpFile);
 
         // test dataPack properties
         expect((string) $xml['id'])->toBe('ABC');
@@ -66,6 +66,29 @@ class PohodaSpec extends ObjectBehavior
         // test dataPackItem properties
         expect((string) $xml->children('dat', true)->dataPackItem->attributes()['id'])->toBe('ITEM_ID');
 
-        unlink($tmpFile);
+        \unlink($tmpFile);
+    }
+
+    public function it_can_write_to_memory()
+    {
+        $stock = new Stock([
+            'code' => 'CODE',
+            'name' => 'NAME',
+            'storage' => 'STORAGE',
+            'typePrice' => ['id' => 1]
+        ], '123');
+
+        $this->open(null, 'ABC')->shouldReturn(true);
+        $this->addItem('ITEM_ID', $stock);
+
+        $xml = \simplexml_load_string($this->close()->getWrappedObject());
+
+        // test dataPack properties
+        expect((string) $xml['id'])->toBe('ABC');
+        expect((string) $xml['ico'])->toBe('123');
+        expect((string) $xml['note'])->toBe('');
+
+        // test dataPackItem properties
+        expect((string) $xml->children('dat', true)->dataPackItem->attributes()['id'])->toBe('ITEM_ID');
     }
 }

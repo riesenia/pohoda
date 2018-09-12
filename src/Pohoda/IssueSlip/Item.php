@@ -54,7 +54,7 @@ class Item extends Agenda
     {
         $xml = $this->_createXML()->addChild('vyd:vydejkaItem', null, $this->_namespace('vyd'));
 
-        $this->_addElements($xml, array_merge($this->_elements, ['parameters']), 'vyd');
+        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'vyd');
 
         return $xml;
     }

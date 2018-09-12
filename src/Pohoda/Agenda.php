@@ -18,8 +18,6 @@ use Riesenia\Pohoda\Common\OptionsResolver;
  *
  * @method setNamespace($namespace)
  * @method setNodeName($nodeName)
- *
- * @author Tomas Saghy <segy@riesenia.com>
  */
 abstract class Agenda
 {
@@ -72,9 +70,9 @@ abstract class Agenda
      */
     protected function _createXML(): \SimpleXMLElement
     {
-        return new \SimpleXMLElement('<?xml version="1.0" encoding="Windows-1250"?><root ' . implode(' ', array_map(function ($k, $v) {
+        return new \SimpleXMLElement('<?xml version="1.0" encoding="Windows-1250"?><root ' . \implode(' ', \array_map(function ($k, $v) {
             return 'xmlns:' . $k . '="' . $v . '"';
-        }, array_keys(Pohoda::$namespaces), Pohoda::$namespaces)) . '></root>');
+        }, \array_keys(Pohoda::$namespaces), Pohoda::$namespaces)) . '></root>');
     }
 
     /**
@@ -112,7 +110,7 @@ abstract class Agenda
             }
 
             // ref element
-            if (in_array($element, $this->_refElements)) {
+            if (\in_array($element, $this->_refElements)) {
                 $this->_addRefElement($xml, ($namespace ? $namespace . ':' : '') . $element, $this->_data[$element], $namespace);
                 continue;
             }
@@ -124,19 +122,19 @@ abstract class Agenda
                 // get element
                 $attrElement = $namespace ? $xml->children($namespace, true)->{$attrElement} : $xml->{$attrElement};
 
-                $attrElement->addAttribute(($attrNamespace ? $attrNamespace . ':' : '') . $attrName, htmlspecialchars($this->_data[$element]), $this->_namespace($attrNamespace));
+                $attrElement->addAttribute(($attrNamespace ? $attrNamespace . ':' : '') . $attrName, \htmlspecialchars($this->_data[$element]), $this->_namespace($attrNamespace));
                 continue;
             }
 
             // Agenda object
             if ($this->_data[$element] instanceof self) {
                 // set namespace
-                if ($namespace && method_exists($this->_data[$element], 'setNamespace')) {
+                if ($namespace && \method_exists($this->_data[$element], 'setNamespace')) {
                     $this->_data[$element]->setNamespace($namespace);
                 }
 
                 // set node name
-                if (method_exists($this->_data[$element], 'setNodeName')) {
+                if (\method_exists($this->_data[$element], 'setNodeName')) {
                     $this->_data[$element]->setNodeName($element);
                 }
 
@@ -145,7 +143,7 @@ abstract class Agenda
             }
 
             // array of Agenda objects
-            if (is_array($this->_data[$element])) {
+            if (\is_array($this->_data[$element])) {
                 $child = $xml->addChild(($namespace ? $namespace . ':' : '') . $element, null, $this->_namespace($namespace));
 
                 foreach ($this->_data[$element] as $node) {
@@ -155,7 +153,7 @@ abstract class Agenda
                 continue;
             }
 
-            $xml->addChild(($namespace ? $namespace . ':' : '') . $element, htmlspecialchars($this->_data[$element]), $this->_namespace($namespace));
+            $xml->addChild(($namespace ? $namespace . ':' : '') . $element, \htmlspecialchars($this->_data[$element]), $this->_namespace($namespace));
         }
     }
 
@@ -173,12 +171,12 @@ abstract class Agenda
     {
         $node = $xml->addChild($name, null, $this->_namespace($namespace));
 
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             $value = ['ids' => $value];
         }
 
         foreach ($value as $key => $value) {
-            $node->addChild('typ:' . $key, htmlspecialchars((string) $value), $this->_namespace('typ'));
+            $node->addChild('typ:' . $key, \htmlspecialchars((string) $value), $this->_namespace('typ'));
         }
 
         return $node;
@@ -192,8 +190,8 @@ abstract class Agenda
      */
     protected function _appendNode(\SimpleXMLElement $xml, \SimpleXMLElement $node)
     {
-        $dom = dom_import_simplexml($xml);
-        $dom2 = dom_import_simplexml($node);
+        $dom = \dom_import_simplexml($xml);
+        $dom2 = \dom_import_simplexml($node);
 
         if ($dom === false || $dom2 === false) {
             throw new \InvalidArgumentException('Invalid XML.');
