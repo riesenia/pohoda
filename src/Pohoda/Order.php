@@ -60,7 +60,7 @@ class Order extends Agenda
      *
      * @return $this
      */
-    public function addSummary($data): self
+    public function addSummary(array $data): self
     {
         $this->_data['summary'] = new Summary($data, $this->_ico);
 
