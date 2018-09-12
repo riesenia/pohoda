@@ -62,14 +62,16 @@ class OptionsResolver extends SymfonyOptionsResolver
 
             case 'date':
             case 'datetime':
-                return function ($options, $value) {
+                $format = $type == 'datetime' ? 'Y-m-d\TH:i:s' : 'Y-m-d';
+
+                return function ($options, $value) use ($format) {
                     $time = \strtotime($value);
 
                     if (!$time) {
                         throw new \DomainException('Not a valid date: ' . $value);
                     }
 
-                    return \date('Y-m-d', $time);
+                    return \date($format, $time);
                 };
 
             case 'time':
