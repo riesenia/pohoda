@@ -22,6 +22,7 @@ use Riesenia\Pohoda\Agenda;
  * @method Agenda createIntParam(array $data = [])
  * @method Agenda createInvoice(array $data = [])
  * @method Agenda createIssueSlip(array $data = [])
+ * @method Agenda createListRequest(array $data = [])
  * @method Agenda createOrder(array $data = [])
  * @method Agenda createStock(array $data = [])
  * @method Agenda createStockTransfer(array $data = [])
