@@ -15,7 +15,6 @@ use Riesenia\Pohoda\Agenda;
 /**
  * Factory for Pohoda objects.
  *
- *
  * @method Agenda createAddressbook(array $data = [])
  * @method Agenda createAgenda(array $data = [])
  * @method Agenda createCategory(array $data = [])

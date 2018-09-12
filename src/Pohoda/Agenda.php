@@ -21,8 +21,8 @@ use Riesenia\Pohoda\Common\OptionsResolver;
  */
 abstract class Agenda
 {
-    /** @var OptionsResolver */
-    protected static $_resolver;
+    /** @var OptionsResolver[] */
+    private static $_resolvers = [];
 
     /** @var string */
     protected $_ico;
@@ -212,11 +212,13 @@ abstract class Agenda
      */
     protected function _resolveOptions(array $data): array
     {
-        if (!static::$_resolver) {
-            static::$_resolver = new OptionsResolver();
-            $this->_configureOptions(static::$_resolver);
+        $class = get_class($this);
+
+        if (!isset(self::$_resolvers[$class])) {
+            self::$_resolvers[$class] = new OptionsResolver();
+            $this->_configureOptions(self::$_resolvers[$class]);
         }
 
-        return static::$_resolver->resolve($data);
+        return self::$_resolvers[$class]->resolve($data);
     }
 }
