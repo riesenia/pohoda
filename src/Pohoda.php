@@ -15,19 +15,19 @@ use Riesenia\Pohoda\Agenda;
 /**
  * Factory for Pohoda objects.
  *
- * @method Agenda createAddressbook(array $data = [])
- * @method Agenda createAgenda(array $data = [])
- * @method Agenda createCategory(array $data = [])
- * @method Agenda createContract(array $data = [])
- * @method Agenda createIntParam(array $data = [])
- * @method Agenda createInvoice(array $data = [])
- * @method Agenda createIssueSlip(array $data = [])
- * @method Agenda createListRequest(array $data = [])
- * @method Agenda createOrder(array $data = [])
- * @method Agenda createStock(array $data = [])
- * @method Agenda createStockTransfer(array $data = [])
- * @method Agenda createStorage(array $data = [])
- * @method Agenda createUserList(array $data = [])
+ * @method \Riesenia\Pohoda\Addressbook   createAddressbook(array $data = [])
+ * @method \Riesenia\Pohoda\Agenda        createAgenda(array $data = [])
+ * @method \Riesenia\Pohoda\Category      createCategory(array $data = [])
+ * @method \Riesenia\Pohoda\Contract      createContract(array $data = [])
+ * @method \Riesenia\Pohoda\IntParam      createIntParam(array $data = [])
+ * @method \Riesenia\Pohoda\Invoice       createInvoice(array $data = [])
+ * @method \Riesenia\Pohoda\IssueSlip     createIssueSlip(array $data = [])
+ * @method \Riesenia\Pohoda\ListRequest   createListRequest(array $data = [])
+ * @method \Riesenia\Pohoda\Order         createOrder(array $data = [])
+ * @method \Riesenia\Pohoda\Stock         createStock(array $data = [])
+ * @method \Riesenia\Pohoda\StockTransfer createStockTransfer(array $data = [])
+ * @method \Riesenia\Pohoda\Storage       createStorage(array $data = [])
+ * @method \Riesenia\Pohoda\UserList      createUserList(array $data = [])
  */
 class Pohoda
 {
