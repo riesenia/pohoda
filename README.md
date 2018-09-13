@@ -88,7 +88,7 @@ $pohoda->close();
 
 ## Príklad importu produktov
 
-Vytorenie príkazu na export sa realizuje prostredníctvom *ListRequest*.
+Vytvorenie príkazu na export sa realizuje prostredníctvom *ListRequest*.
 
 ```php
 use Riesenia\Pohoda;
