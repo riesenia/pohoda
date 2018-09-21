@@ -15,6 +15,12 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Filter extends Agenda
 {
+    /** @var array */
+    protected $_refElements = ['storage', 'store'];
+
+    /** @var array */
+    protected $_elements = ['id', 'code', 'EAN', 'name', 'storage', 'store', 'internet', 'company', 'ico', 'dic', 'lastChanges'];
+
     /**
      * {@inheritdoc}
      */
@@ -33,10 +39,11 @@ class Filter extends Agenda
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
-        $resolver->setDefined(['id', 'lastChanges']);
+        $resolver->setDefined($this->_elements);
 
         // validate / format options
         $resolver->setNormalizer('id', $resolver->getNormalizer('int'));
+        $resolver->setNormalizer('internet', $resolver->getNormalizer('bool'));
         $resolver->setNormalizer('lastChanges', $resolver->getNormalizer('datetime'));
     }
 }
