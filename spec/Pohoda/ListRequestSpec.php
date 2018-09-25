@@ -42,13 +42,13 @@ class ListRequestSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<lst:listInvoiceRequest version="2.0" invoiceVersion="2.0" invoiceType="issuedAdvanceInvoice"><lst:requestInvoice/></lst:listInvoiceRequest>');
     }
 
-    public function it_creates_correct_xml_for_stock()
+    public function it_creates_correct_xml_for_issue_slip()
     {
         $this->beConstructedWith([
-            'type' => 'Stock'
+            'type' => 'Vydejka'
         ], '123');
 
-        $this->getXML()->asXML()->shouldReturn('<lStk:listStockRequest version="2.0" stockVersion="2.0"><lStk:requestStock/></lStk:listStockRequest>');
+        $this->getXML()->asXML()->shouldReturn('<lst:listVydejkaRequest version="2.0" vydejkaVersion="2.0"><lst:requestVydejka/></lst:listVydejkaRequest>');
     }
 
     public function it_creates_correct_xml_for_address_book()
@@ -69,12 +69,12 @@ class ListRequestSpec extends ObjectBehavior
         $this->addUserFilterName('CustomFilter')->getXML()->asXML()->shouldReturn('<lst:listInvoiceRequest version="2.0" invoiceVersion="2.0" invoiceType="issuedInvoice"><lst:requestInvoice><ftr:userFilterName>CustomFilter</ftr:userFilterName></lst:requestInvoice></lst:listInvoiceRequest>');
     }
 
-    public function it_creates_correct_xml_for_issue_slip_with_last_changes_filter()
+    public function it_creates_correct_xml_for_stock_with_complex_filter()
     {
         $this->beConstructedWith([
-            'type' => 'Vydejka'
+            'type' => 'Stock'
         ], '123');
 
-        $this->addFilter(['lastChanges' => '2018-04-29 14:30'])->getXML()->asXML()->shouldReturn('<lst:listVydejkaRequest version="2.0" vydejkaVersion="2.0"><lst:requestVydejka><ftr:filter><ftr:lastChanges>2018-04-29T14:30:00</ftr:lastChanges></ftr:filter></lst:requestVydejka></lst:listVydejkaRequest>');
+        $this->addFilter(['storage' => ['ids' => 'MAIN'], 'lastChanges' => '2018-04-29 14:30'])->getXML()->asXML()->shouldReturn('<lStk:listStockRequest version="2.0" stockVersion="2.0"><lStk:requestStock><ftr:filter><ftr:storage><typ:ids>MAIN</typ:ids></ftr:storage><ftr:lastChanges>2018-04-29T14:30:00</ftr:lastChanges></ftr:filter></lStk:requestStock></lStk:listStockRequest>');
     }
 }

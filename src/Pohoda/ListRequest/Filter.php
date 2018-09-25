@@ -28,7 +28,7 @@ class Filter extends Agenda
     {
         $xml = $this->_createXML()->addChild('ftr:filter', null, $this->_namespace('ftr'));
 
-        $this->_addElements($xml, ['id', 'lastChanges'], 'ftr');
+        $this->_addElements($xml, $this->_elements, 'ftr');
 
         return $xml;
     }
