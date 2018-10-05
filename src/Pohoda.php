@@ -16,7 +16,6 @@ use Riesenia\Pohoda\Agenda;
  * Factory for Pohoda objects.
  *
  * @method \Riesenia\Pohoda\Addressbook   createAddressbook(array $data = [])
- * @method \Riesenia\Pohoda\Agenda        createAgenda(array $data = [])
  * @method \Riesenia\Pohoda\Category      createCategory(array $data = [])
  * @method \Riesenia\Pohoda\Contract      createContract(array $data = [])
  * @method \Riesenia\Pohoda\IntParam      createIntParam(array $data = [])
@@ -24,6 +23,7 @@ use Riesenia\Pohoda\Agenda;
  * @method \Riesenia\Pohoda\IssueSlip     createIssueSlip(array $data = [])
  * @method \Riesenia\Pohoda\ListRequest   createListRequest(array $data = [])
  * @method \Riesenia\Pohoda\Order         createOrder(array $data = [])
+ * @method \Riesenia\Pohoda\Receipt       createReceipt(array $data = [])
  * @method \Riesenia\Pohoda\Stock         createStock(array $data = [])
  * @method \Riesenia\Pohoda\StockTransfer createStockTransfer(array $data = [])
  * @method \Riesenia\Pohoda\Storage       createStorage(array $data = [])
@@ -45,6 +45,7 @@ class Pohoda
         'lStk' => 'http://www.stormware.cz/schema/version_2/list_stock.xsd',
         'ord' => 'http://www.stormware.cz/schema/version_2/order.xsd',
         'pre' => 'http://www.stormware.cz/schema/version_2/prevodka.xsd',
+        'pri' => 'http://www.stormware.cz/schema/version_2/prijemka.xsd',
         'str' => 'http://www.stormware.cz/schema/version_2/storage.xsd',
         'stk' => 'http://www.stormware.cz/schema/version_2/stock.xsd',
         'typ' => 'http://www.stormware.cz/schema/version_2/type.xsd',
