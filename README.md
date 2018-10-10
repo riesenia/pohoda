@@ -126,7 +126,7 @@ while ($stock = $pohoda->next()) {
 
 ## Príklad zmazania zásoby
 
-Pri mazaní je potrebné poslať prázdne dáta a nastaviť *delete* actionType.
+Pri mazaní je potrebné vytvoriť agendu s prázdnymi dátami a nastaviť jej *delete* actionType.
 
 ```php
 use Riesenia\Pohoda;
