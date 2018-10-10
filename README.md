@@ -17,9 +17,9 @@ Pridaním do *composer.json*:
 }
 ```
 
-## Príklad exportu objednávok
+## Príklad importu objednávok
 
-Príklady pre export jednotlivých typov viď. *spec* folder.
+Príklady pre import jednotlivých typov viď. *spec* folder.
 
 ```php
 use Riesenia\Pohoda;
@@ -79,16 +79,16 @@ $order->addSummary([
     'roundingDocument' => 'none'
 ]);
 
-// add order to export (identified by $order_number)
+// add order to import (identified by $order_number)
 $pohoda->addItem($order_number, $order);
 
-// finish export
+// finish import file
 $pohoda->close();
 ```
 
-## Príklad importu produktov
+## Príklad exportu zásob
 
-Vytvorenie príkazu na export sa realizuje prostredníctvom *ListRequest*.
+Vytvorenie príkazu na export sa realizuje prostredníctvom vytvorenia *ListRequest*.
 
 ```php
 use Riesenia\Pohoda;
@@ -96,7 +96,7 @@ use Riesenia\Pohoda;
 $pohoda = new Pohoda('ICO');
 
 // create request for export
-$pohoda->open($filename, 'Export orders');
+$pohoda->open($filename, 'Export stock');
 
 $request = $pohoda->createListRequest([
     'type' => 'Stock'
@@ -122,4 +122,26 @@ while ($stock = $pohoda->next()) {
 
     // ...
 }
+```
+
+## Príklad zmazania zásoby
+
+Pri mazaní je potrebné poslať prázdne dáta a nastaviť *delete* actionType.
+
+```php
+use Riesenia\Pohoda;
+
+$pohoda = new Pohoda('ICO');
+
+$pohoda->open($filename, 'Delete stock');
+
+$stock = $pohoda->createStock([]);
+
+$stock->addActionType('delete', [
+    'code' => $code
+]);
+
+$pohoda->addItem($code, $stock);
+
+$pohoda->close();
 ```
