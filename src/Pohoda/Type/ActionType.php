@@ -37,6 +37,10 @@ class ActionType extends Agenda
         if ($this->_data['filter']) {
             $filter = $action->addChild('ftr:filter', null, $this->_namespace('ftr'));
 
+            if ($this->_data['agenda']) {
+                $filter->addAttribute('agenda', $this->_data['agenda']);
+            }
+
             foreach ($this->_data['filter'] as $property => $value) {
                 $ftr = $filter->addChild('ftr:' . $property, \is_array($value) ? null : $value);
 
@@ -57,7 +61,7 @@ class ActionType extends Agenda
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
-        $resolver->setDefined(['type', 'filter']);
+        $resolver->setDefined(['type', 'filter', 'agenda']);
 
         // validate / format options
         $resolver->setRequired('type');

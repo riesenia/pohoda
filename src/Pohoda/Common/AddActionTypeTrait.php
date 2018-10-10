@@ -17,12 +17,13 @@ trait AddActionTypeTrait
     /**
      * Add action type.
      *
-     * @param string     $type
-     * @param mixed|null $filter
+     * @param string      $type
+     * @param mixed|null  $filter
+     * @param string|null $agenda
      *
      * @return self
      */
-    public function addActionType(string $type, $filter = null): self
+    public function addActionType(string $type, $filter = null, string $agenda = null): self
     {
         if (isset($this->_data['actionType'])) {
             throw new \OutOfRangeException('Duplicate action type.');
@@ -30,7 +31,8 @@ trait AddActionTypeTrait
 
         $this->_data['actionType'] = new ActionType([
             'type' => $type,
-            'filter' => $filter
+            'filter' => $filter,
+            'agenda' => $agenda
         ], $this->_ico);
 
         return $this;

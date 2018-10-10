@@ -95,6 +95,18 @@ class StockSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:stockHeader>' . $this->_defaultHeader() . '<stk:parameters><typ:parameter><typ:name>VPrIsOn</typ:name><typ:booleanValue>true</typ:booleanValue></typ:parameter><typ:parameter><typ:name>VPrNum</typ:name><typ:numberValue>10.43</typ:numberValue></typ:parameter><typ:parameter><typ:name>RefVPrCountry</typ:name><typ:listValueRef><typ:ids>SK</typ:ids></typ:listValueRef><typ:list><typ:ids>Country</typ:ids></typ:list></typ:parameter><typ:parameter><typ:name>RefVPrCustomList</typ:name><typ:listValueRef><typ:id>5</typ:id></typ:listValueRef><typ:list><typ:id>6</typ:id></typ:list></typ:parameter></stk:parameters></stk:stockHeader></stk:stock>');
     }
 
+    protected function it_can_delete_stock()
+    {
+        $this->beConstructedWith([], '123');
+
+        $this->addActionType('delete', [
+            'code' => 'CODE',
+            'store' => ['ids' => 'STORAGE']
+        ]);
+
+        $this->getXML()->asXML()->shouldReturn('<stk:stock version="2.0"><stk:actionType><stk:delete><ftr:filter><ftr:code>CODE</ftr:code><ftr:store><typ:ids>STORAGE</typ:ids></ftr:store></ftr:filter></stk:delete></stk:actionType></stk:stock>');
+    }
+
     protected function _defaultHeader()
     {
         return '<stk:stockType>card</stk:stockType><stk:code>CODE</stk:code><stk:isSales>false</stk:isSales><stk:isSerialNumber>false</stk:isSerialNumber><stk:isInternet>true</stk:isInternet><stk:name>NAME</stk:name><stk:storage><typ:ids>STORAGE</typ:ids></stk:storage><stk:typePrice><typ:id>1</typ:id></stk:typePrice><stk:sellingPrice payVAT="true">12.7</stk:sellingPrice>';

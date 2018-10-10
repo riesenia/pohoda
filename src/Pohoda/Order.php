@@ -30,7 +30,9 @@ class Order extends Agenda
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // pass to header
-        $data = ['header' => new Header($data, $ico, $resolveOptions)];
+        if ($data) {
+            $data = ['header' => new Header($data, $ico, $resolveOptions)];
+        }
 
         parent::__construct($data, $ico, $resolveOptions);
     }
