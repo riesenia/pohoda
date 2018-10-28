@@ -16,6 +16,7 @@ use Riesenia\Pohoda\Invoice\AdvancePaymentItem;
 use Riesenia\Pohoda\Invoice\Header;
 use Riesenia\Pohoda\Invoice\Item;
 use Riesenia\Pohoda\Invoice\Summary;
+use Riesenia\Pohoda\Type\Link;
 
 class Invoice extends Agenda
 {
@@ -33,6 +34,24 @@ class Invoice extends Agenda
         $data = ['header' => new Header($data, $ico, $resolveOptions)];
 
         parent::__construct($data, $ico, $resolveOptions);
+    }
+
+    /**
+     * Add link.
+     *
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function addLink(array $data): self
+    {
+        if (!isset($this->_data['links'])) {
+            $this->_data['links'] = [];
+        }
+
+        $this->_data['links'][] = new Link($data, $this->_ico);
+
+        return $this;
     }
 
     /**
@@ -93,7 +112,7 @@ class Invoice extends Agenda
         $xml = $this->_createXML()->addChild('inv:invoice', null, $this->_namespace('inv'));
         $xml->addAttribute('version', '2.0');
 
-        $this->_addElements($xml, ['header', 'invoiceDetail', 'summary'], 'inv');
+        $this->_addElements($xml, ['links', 'header', 'invoiceDetail', 'summary'], 'inv');
 
         return $xml;
     }

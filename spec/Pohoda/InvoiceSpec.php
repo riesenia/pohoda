@@ -115,6 +115,18 @@ class InvoiceSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<inv:invoice version="2.0"><inv:invoiceHeader>' . $this->_defaultHeader() . '<inv:parameters><typ:parameter><typ:name>VPrIsOn</typ:name><typ:booleanValue>true</typ:booleanValue></typ:parameter><typ:parameter><typ:name>VPrNum</typ:name><typ:numberValue>10.43</typ:numberValue></typ:parameter><typ:parameter><typ:name>RefVPrCountry</typ:name><typ:listValueRef><typ:ids>SK</typ:ids></typ:listValueRef><typ:list><typ:ids>Country</typ:ids></typ:list></typ:parameter><typ:parameter><typ:name>RefVPrCustomList</typ:name><typ:listValueRef><typ:id>5</typ:id></typ:listValueRef><typ:list><typ:id>6</typ:id></typ:list></typ:parameter></inv:parameters></inv:invoiceHeader></inv:invoice>');
     }
 
+    public function it_can_link_to_order()
+    {
+        $this->addLink([
+            'sourceAgenda' => 'receivedOrder',
+            'sourceDocument' => [
+                'number' => '142100003'
+            ]
+        ]);
+
+        $this->getXML()->asXML()->shouldReturn('<inv:invoice version="2.0"><inv:links><typ:link><typ:sourceAgenda>receivedOrder</typ:sourceAgenda><typ:sourceDocument><typ:number>142100003</typ:number></typ:sourceDocument></typ:link></inv:links><inv:invoiceHeader>' . $this->_defaultHeader() . '</inv:invoiceHeader></inv:invoice>');
+    }
+
     protected function _defaultHeader()
     {
         return '<inv:invoiceType>issuedInvoice</inv:invoiceType><inv:date>2015-01-10</inv:date><inv:partnerIdentity><typ:id>25</typ:id></inv:partnerIdentity><inv:myIdentity><typ:address><typ:name>NAME</typ:name><typ:ico>123</typ:ico></typ:address></inv:myIdentity><inv:intNote>Note</inv:intNote>';
