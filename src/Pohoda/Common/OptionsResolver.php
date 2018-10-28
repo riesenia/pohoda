@@ -88,7 +88,7 @@ class OptionsResolver extends SymfonyOptionsResolver
             case 'float':
             case 'number':
                 return function ($options, $value) {
-                    return (string) \floatval(\str_replace(',', '.', \preg_replace('/[^0-9,.-]/', '', $value)));
+                    return (string) \floatval(\str_replace(',', '.', \strval(\preg_replace('/[^0-9,.-]/', '', $value))));
                 };
 
             case 'int':
