@@ -115,6 +115,7 @@ abstract class Agenda
             // ref element
             if (\in_array($element, $this->_refElements)) {
                 $this->_addRefElement($xml, ($namespace ? $namespace . ':' : '') . $element, $this->_data[$element], $namespace);
+
                 continue;
             }
 
@@ -126,6 +127,7 @@ abstract class Agenda
                 $attrElement = $namespace ? $xml->children($namespace, true)->{$attrElement} : $xml->{$attrElement};
 
                 $attrElement->addAttribute(($attrNamespace ? $attrNamespace . ':' : '') . $attrName, \htmlspecialchars($this->_data[$element]), $this->_namespace($attrNamespace));
+
                 continue;
             }
 
@@ -142,6 +144,7 @@ abstract class Agenda
                 }
 
                 $this->_appendNode($xml, $this->_data[$element]->getXML());
+
                 continue;
             }
 
