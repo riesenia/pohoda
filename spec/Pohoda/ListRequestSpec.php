@@ -23,6 +23,15 @@ class ListRequestSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<lst:listCategoryRequest version="2.0" categoryVersion="2.0"><lst:requestCategory/></lst:listCategoryRequest>');
     }
 
+    public function it_creates_correct_xml_for_action_prices()
+    {
+        $this->beConstructedWith([
+            'type' => 'ActionPrice'
+        ], '123');
+
+        $this->getXML()->asXML()->shouldReturn('<lst:listActionPriceRequest version="2.0" actionPricesVersion="2.0"><lst:requestActionPrice/></lst:listActionPriceRequest>');
+    }
+
     public function it_creates_correct_xml_for_order()
     {
         $this->beConstructedWith([

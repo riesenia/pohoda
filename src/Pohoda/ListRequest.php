@@ -52,10 +52,10 @@ class ListRequest extends Agenda
     {
         $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', null, $this->_namespace($this->_data['namespace']));
         $xml->addAttribute('version', '2.0');
-        $xml->addAttribute(\lcfirst($this->_data['type']) . 'Version', '2.0');
+        $xml->addAttribute($this->_getLcFirstType() . 'Version', '2.0');
 
-        if (isset($this->_data[\lcfirst($this->_data['type']) . 'Type'])) {
-            $xml->addAttribute(\lcfirst($this->_data['type']) . 'Type', $this->_data[\lcfirst($this->_data['type']) . 'Type']);
+        if (isset($this->_data[$this->_getLcFirstType() . 'Type'])) {
+            $xml->addAttribute($this->_getLcFirstType() . 'Type', $this->_data[$this->_getLcFirstType() . 'Type']);
         }
 
         $request = $xml->addChild($this->_data['namespace'] . ':request' . $this->_data['type']);
@@ -101,5 +101,20 @@ class ListRequest extends Agenda
 
             return null;
         });
+    }
+
+    /**
+     * Get LC first type name.
+     *
+     * @return string
+     */
+    protected function _getLcFirstType(): string
+    {
+        // ActionPrice is custom
+        if ($this->_data['type'] == 'ActionPrice') {
+            return 'actionPrices';
+        }
+
+        return \lcfirst($this->_data['type']);
     }
 }
