@@ -224,7 +224,7 @@ class Pohoda
      *
      * @return mixed
      */
-    public function __call(string $method, array  $arguments)
+    public function __call(string $method, array $arguments)
     {
         // create<Agenda> method
         if (\preg_match('/create([A-Z][a-zA-Z0-9]*)/', $method, $matches)) {
