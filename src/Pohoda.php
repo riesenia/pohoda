@@ -71,6 +71,7 @@ class Pohoda
      * Constructor.
      *
      * @param string $ico
+     * @param string $appName
      */
     public function __construct($ico, $appName = 'Rshop Pohoda connector')
     {
