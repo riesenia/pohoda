@@ -17,6 +17,12 @@ Pridaním do *composer.json*:
 }
 ```
 
+Príkazom:
+
+```sh
+composer require 'riesenia/pohoda:~1.0'
+```
+
 ## Príklad importu objednávok
 
 Príklady pre import jednotlivých typov viď. *spec* folder.
