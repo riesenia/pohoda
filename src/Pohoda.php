@@ -54,7 +54,7 @@ class Pohoda
 
     /** @var string */
     protected $_ico;
-    
+
     /** @var string */
     protected $_appName;
 
