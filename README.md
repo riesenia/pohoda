@@ -17,7 +17,7 @@ Pridaním do *composer.json*:
 }
 ```
 
-Príkazem:
+Príkazom:
 
 ```sh
 composer require 'riesenia/pohoda:~1.0'
