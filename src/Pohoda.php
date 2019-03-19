@@ -56,7 +56,7 @@ class Pohoda
     protected $_ico;
 
     /** @var string */
-    protected $_appName;
+    protected $_application = 'Rshop Pohoda connector';
 
     /** @var bool */
     protected $_isInMemory;
@@ -71,12 +71,20 @@ class Pohoda
      * Constructor.
      *
      * @param string $ico
-     * @param string $appName
      */
-    public function __construct($ico, $appName = 'Rshop Pohoda connector')
+    public function __construct($ico)
     {
         $this->_ico = $ico;
-        $this->_appName = $appName;
+    }
+
+    /**
+     * Set the name of the application.
+     *
+     * @param string $name
+     */
+    public function setApplicationName(string $name)
+    {
+        $this->_application = $name;
     }
 
     /**
@@ -127,7 +135,7 @@ class Pohoda
 
         $this->_xmlWriter->writeAttribute('id', $id);
         $this->_xmlWriter->writeAttribute('ico', $this->_ico);
-        $this->_xmlWriter->writeAttribute('application', $this->_appName);
+        $this->_xmlWriter->writeAttribute('application', $this->_application);
         $this->_xmlWriter->writeAttribute('version', '2.0');
         $this->_xmlWriter->writeAttribute('note', $note);
 
