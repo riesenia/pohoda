@@ -20,7 +20,7 @@ class CurrencyHome extends Agenda
     use SetNamespaceTrait, SetNodeNameTrait;
 
     /** @var array */
-    protected $_elements = ['priceNone', 'priceLow', 'priceLowVAT', 'priceLowSum', 'priceHigh', 'priceHighVAT', 'priceHighSum'];
+    protected $_elements = ['priceNone', 'priceThird', 'priceThirdVAT', 'priceThirdSum', 'priceLow', 'priceLowVAT', 'priceLowSum', 'priceHigh', 'priceHighVAT', 'priceHighSum'];
 
     /**
      * {@inheritdoc}
@@ -52,6 +52,9 @@ class CurrencyHome extends Agenda
 
         // validate / format options
         $resolver->setNormalizer('priceNone', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('priceThird', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('priceThirdVAT', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('priceThirdSum', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('priceLow', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('priceLowVAT', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('priceLowSum', $resolver->getNormalizer('float'));
