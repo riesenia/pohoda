@@ -60,7 +60,7 @@ class Item extends Agenda
         $resolver->setNormalizer('unit', $resolver->getNormalizer('string10'));
         $resolver->setNormalizer('coefficient', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('payVAT', $resolver->getNormalizer('bool'));
-        $resolver->setAllowedValues('rateVAT', ['none', 'low', 'high']);
+        $resolver->setAllowedValues('rateVAT', ['none', 'third', 'low', 'high']);
         $resolver->setNormalizer('discountPercentage', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('code', $resolver->getNormalizer('string64'));
         $resolver->setNormalizer('note', $resolver->getNormalizer('string90'));

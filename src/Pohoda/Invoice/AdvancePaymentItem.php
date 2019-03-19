@@ -43,7 +43,7 @@ class AdvancePaymentItem extends Item
         // validate / format options
         $resolver->setNormalizer('quantity', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('payVAT', $resolver->getNormalizer('bool'));
-        $resolver->setAllowedValues('rateVAT', ['none', 'low', 'high']);
+        $resolver->setAllowedValues('rateVAT', ['none', 'third', 'low', 'high']);
         $resolver->setNormalizer('discountPercentage', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('note', $resolver->getNormalizer('string90'));
     }

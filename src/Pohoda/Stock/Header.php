@@ -112,8 +112,8 @@ class Header extends Agenda
         $resolver->setNormalizer('isSerialNumber', $resolver->getNormalizer('bool'));
         $resolver->setNormalizer('isInternet', $resolver->getNormalizer('bool'));
         $resolver->setNormalizer('isBatch', $resolver->getNormalizer('bool'));
-        $resolver->setAllowedValues('purchasingRateVAT', ['none', 'low', 'high']);
-        $resolver->setAllowedValues('sellingRateVAT', ['none', 'low', 'high']);
+        $resolver->setAllowedValues('purchasingRateVAT', ['none', 'third', 'low', 'high']);
+        $resolver->setAllowedValues('sellingRateVAT', ['none', 'third', 'low', 'high']);
         $resolver->setNormalizer('name', $resolver->getNormalizer('string90'));
         $resolver->setNormalizer('nameComplement', $resolver->getNormalizer('string90'));
         $resolver->setNormalizer('unit', $resolver->getNormalizer('string10'));
