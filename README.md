@@ -139,7 +139,7 @@ use Riesenia\Pohoda;
 
 $pohoda = new Pohoda('ICO');
 
-// Create request for deletion
+// create request for deletion
 $pohoda->open($filename, 'd_zas1', 'Delete stock');
 
 $stock = $pohoda->createStock([]);

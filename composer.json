@@ -14,9 +14,10 @@
     },
     "require-dev": {
         "bossa/phpspec2-expect": "~3.0",
-        "phpspec/phpspec": "~4.0",
-        "phpstan/phpstan": "~0.9",
-        "rshop/php-cs-fixer-config": "~1.0"
+        "friendsofphp/php-cs-fixer": "~2.0",
+        "phpspec/phpspec": "~5.0",
+        "phpstan/phpstan": "~0.11",
+        "rshop/php-cs-fixer-config": "~2.0"
     },
     "autoload": {
         "psr-4": {
