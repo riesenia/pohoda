@@ -63,7 +63,7 @@ class ListRequestSpec extends ObjectBehavior
     public function it_creates_correct_xml_for_address_book()
     {
         $this->beConstructedWith([
-            'type' => 'AddressBook'
+            'type' => 'Addressbook'
         ], '123');
 
         $this->getXML()->asXML()->shouldReturn('<lAdb:listAddressBookRequest version="2.0" addressBookVersion="2.0"><lAdb:requestAddressBook/></lAdb:listAddressBookRequest>');

@@ -74,6 +74,14 @@ class ListRequest extends Agenda
 
         // validate / format options
         $resolver->setRequired('type');
+        $resolver->setNormalizer('type', function ($options, $value) {
+            // Addressbook is custom
+            if ($value == 'Addressbook') {
+                $value = 'AddressBook';
+            }
+
+            return $value;
+        });
         $resolver->setDefault('namespace', function (Options $options) {
             if ($options['type'] == 'Stock') {
                 return 'lStk';
