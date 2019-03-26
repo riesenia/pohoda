@@ -33,7 +33,7 @@ use Riesenia\Pohoda;
 $pohoda = new Pohoda('ICO');
 
 // create file
-$pohoda->open($filename, 'Import orders');
+$pohoda->open($filename, 'i_obj1', 'Import orders');
 
 // create order
 $order = $pohoda->createOrder([
@@ -102,7 +102,7 @@ use Riesenia\Pohoda;
 $pohoda = new Pohoda('ICO');
 
 // create request for export
-$pohoda->open($filename, 'Export stock');
+$pohoda->open($filename, 'e_zas1', 'Export stock');
 
 $request = $pohoda->createListRequest([
     'type' => 'Stock'
@@ -139,7 +139,8 @@ use Riesenia\Pohoda;
 
 $pohoda = new Pohoda('ICO');
 
-$pohoda->open($filename, 'Delete stock');
+// Create request for deletion
+$pohoda->open($filename, 'd_zas1', 'Delete stock');
 
 $stock = $pohoda->createStock([]);
 
