@@ -17,7 +17,8 @@ use Riesenia\Pohoda\Common\SetNodeNameTrait;
 
 class CurrencyForeign extends Agenda
 {
-    use SetNamespaceTrait, SetNodeNameTrait;
+    use SetNamespaceTrait;
+    use SetNodeNameTrait;
 
     /** @var array */
     protected $_refElements = ['currency'];

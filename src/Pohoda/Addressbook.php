@@ -17,7 +17,8 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Addressbook extends Agenda
 {
-    use AddActionTypeTrait, AddParameterToHeaderTrait;
+    use AddActionTypeTrait;
+    use AddParameterToHeaderTrait;
 
     /** @var string */
     public static $importRoot = 'lAdb:addressbook';

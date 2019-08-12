@@ -17,7 +17,8 @@ use Riesenia\Pohoda\Common\SetNodeNameTrait;
 
 class CurrencyHome extends Agenda
 {
-    use SetNamespaceTrait, SetNodeNameTrait;
+    use SetNamespaceTrait;
+    use SetNodeNameTrait;
 
     /** @var array */
     protected $_elements = ['priceNone', 'priceThird', 'priceThirdVAT', 'priceThirdSum', 'priceLow', 'priceLowVAT', 'priceLowSum', 'priceHigh', 'priceHighVAT', 'priceHighSum'];

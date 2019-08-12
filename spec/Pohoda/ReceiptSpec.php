@@ -17,7 +17,7 @@ class ReceiptSpec extends ObjectBehavior
     public function let()
     {
         $this->beConstructedWith([
-            'date' => '2015-01-10',
+            'date' => new \DateTimeImmutable('2015-01-10'),
             'text' => 'Prijemka',
             'partnerIdentity' => [
                 'id' => 20

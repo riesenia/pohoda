@@ -17,7 +17,8 @@ use Riesenia\Pohoda\Common\SetNodeNameTrait;
 
 class Address extends Agenda
 {
-    use SetNamespaceTrait, SetNodeNameTrait;
+    use SetNamespaceTrait;
+    use SetNodeNameTrait;
 
     /** @var array */
     protected $_refElements = ['extId'];

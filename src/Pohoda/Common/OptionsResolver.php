@@ -14,6 +14,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver as SymfonyOptionsResolver;
 
 class OptionsResolver extends SymfonyOptionsResolver
 {
+    /**
+     * Date formats.
+     */
+    const DATE_FORMATS = [
+        'date' => 'Y-m-d',
+        'datetime' => 'Y-m-d\TH:i:s',
+        'time' => 'H:i:s'
+    ];
+
     /** @var array<string,\Closure> */
     protected $_loadedNormalizers = [];
 
@@ -62,9 +71,14 @@ class OptionsResolver extends SymfonyOptionsResolver
 
             case 'date':
             case 'datetime':
-                $format = $type == 'datetime' ? 'Y-m-d\TH:i:s' : 'Y-m-d';
+            case 'time':
+                $format = static::DATE_FORMATS[$type];
 
                 return function ($options, $value) use ($format) {
+                    if ($value instanceof \DateTimeInterface) {
+                        return $value->format($format);
+                    }
+
                     $time = \strtotime($value);
 
                     if (!$time) {
@@ -72,17 +86,6 @@ class OptionsResolver extends SymfonyOptionsResolver
                     }
 
                     return \date($format, $time);
-                };
-
-            case 'time':
-                return function ($options, $value) {
-                    $time = \strtotime($value);
-
-                    if (!$time) {
-                        throw new \DomainException('Not a valid time: ' . $value);
-                    }
-
-                    return \date('H:i:s', $time);
                 };
 
             case 'float':

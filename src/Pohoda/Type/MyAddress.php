@@ -17,7 +17,8 @@ use Riesenia\Pohoda\Common\SetNodeNameTrait;
 
 class MyAddress extends Agenda
 {
-    use SetNamespaceTrait, SetNodeNameTrait;
+    use SetNamespaceTrait;
+    use SetNodeNameTrait;
 
     /**
      * All elements.

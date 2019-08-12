@@ -19,7 +19,8 @@ use Riesenia\Pohoda\Order\Summary;
 
 class Order extends Agenda
 {
-    use AddActionTypeTrait, AddParameterToHeaderTrait;
+    use AddActionTypeTrait;
+    use AddParameterToHeaderTrait;
 
     /** @var string */
     public static $importRoot = 'lst:order';

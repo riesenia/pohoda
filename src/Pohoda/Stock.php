@@ -18,7 +18,8 @@ use Riesenia\Pohoda\Stock\Price;
 
 class Stock extends Agenda
 {
-    use AddActionTypeTrait, AddParameterToHeaderTrait;
+    use AddActionTypeTrait;
+    use AddParameterToHeaderTrait;
 
     /** @var string */
     public static $importRoot = 'lStk:stock';
