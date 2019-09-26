@@ -69,12 +69,21 @@ class OptionsResolver extends SymfonyOptionsResolver
                     return \mb_substr($value, 0, $param, 'utf-8');
                 };
 
+            case 'dateOrNull':
+            case 'datetimeOrNull':
+            case 'timeOrNull':
+                $nullable = true;
             case 'date':
             case 'datetime':
             case 'time':
                 $format = static::DATE_FORMATS[$type];
+                $nullable = $nullable ?? false;
 
-                return function ($options, $value) use ($format) {
+                return function ($options, $value) use ($format, $nullable) {
+                    if ($nullable && empty($value)) {
+                        return '';
+                    }
+                    
                     if ($value instanceof \DateTimeInterface) {
                         return $value->format($format);
                     }
