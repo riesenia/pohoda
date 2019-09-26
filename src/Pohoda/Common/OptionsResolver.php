@@ -73,6 +73,7 @@ class OptionsResolver extends SymfonyOptionsResolver
             case 'datetimeOrNull':
             case 'timeOrNull':
                 $nullable = true;
+                // no break
             case 'date':
             case 'datetime':
             case 'time':
