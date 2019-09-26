@@ -19,7 +19,7 @@ class AddressType extends Agenda
     protected $_refElements = ['country'];
 
     /** @var array */
-    protected $_elements = ['company', 'division', 'name', 'city', 'street', 'zip', 'ico', 'dic', 'icDph', 'country', 'phone', 'mobilPhone', 'fax', 'email'];
+    protected $_elements = ['company', 'division', 'name', 'city', 'street', 'zip', 'ico', 'dic', 'VATPayerType', 'icDph', 'country', 'phone', 'mobilPhone', 'fax', 'email'];
 
     /**
      * {@inheritdoc}
@@ -50,6 +50,7 @@ class AddressType extends Agenda
         $resolver->setNormalizer('zip', $resolver->getNormalizer('string15'));
         $resolver->setNormalizer('ico', $resolver->getNormalizer('string15'));
         $resolver->setNormalizer('dic', $resolver->getNormalizer('string18'));
+        $resolver->setAllowedValues('VATPayerType', ['payer', 'non-payer', '']);
         $resolver->setNormalizer('icDph', $resolver->getNormalizer('string18'));
         $resolver->setNormalizer('phone', $resolver->getNormalizer('string40'));
         $resolver->setNormalizer('mobilPhone', $resolver->getNormalizer('string24'));
