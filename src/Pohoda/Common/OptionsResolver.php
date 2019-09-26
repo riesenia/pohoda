@@ -84,7 +84,7 @@ class OptionsResolver extends SymfonyOptionsResolver
                     if ($nullable && empty($value)) {
                         return '';
                     }
-                    
+
                     if ($value instanceof \DateTimeInterface) {
                         return $value->format($format);
                     }
