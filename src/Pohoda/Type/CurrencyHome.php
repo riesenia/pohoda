@@ -21,7 +21,7 @@ class CurrencyHome extends Agenda
     use SetNodeNameTrait;
 
     /** @var array */
-    protected $_elements = ['priceNone', 'priceThird', 'priceThirdVAT', 'priceThirdSum', 'priceLow', 'priceLowVAT', 'priceLowSum', 'priceHigh', 'priceHighVAT', 'priceHighSum'];
+    protected $_elements = ['priceNone', 'price3', 'price3VAT', 'price3Sum', 'priceLow', 'priceLowVAT', 'priceLowSum', 'priceHigh', 'priceHighVAT', 'priceHighSum'];
 
     /**
      * {@inheritdoc}
@@ -53,9 +53,9 @@ class CurrencyHome extends Agenda
 
         // validate / format options
         $resolver->setNormalizer('priceNone', $resolver->getNormalizer('float'));
-        $resolver->setNormalizer('priceThird', $resolver->getNormalizer('float'));
-        $resolver->setNormalizer('priceThirdVAT', $resolver->getNormalizer('float'));
-        $resolver->setNormalizer('priceThirdSum', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('price3', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('price3VAT', $resolver->getNormalizer('float'));
+        $resolver->setNormalizer('price3Sum', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('priceLow', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('priceLowVAT', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('priceLowSum', $resolver->getNormalizer('float'));
