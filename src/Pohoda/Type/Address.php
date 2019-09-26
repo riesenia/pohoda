@@ -24,7 +24,12 @@ class Address extends Agenda
     protected $_refElements = ['extId'];
 
     /** @var array */
-    protected $_elements = ['id', 'extId', 'address', 'shipToAddress'];
+    protected $_elements = ['id', 'extId', 'address', 'addressLinkToAddress', 'shipToAddress'];
+    
+    /** @var array */
+	protected $_elementsAttributesMapper = [
+		'addressLinkToAddress' => ['address', 'linkToAddress', null],
+	];
 
     /**
      * {@inheritdoc}
