@@ -25,11 +25,11 @@ class Address extends Agenda
 
     /** @var array */
     protected $_elements = ['id', 'extId', 'address', 'addressLinkToAddress', 'shipToAddress'];
-    
+
     /** @var array */
-	protected $_elementsAttributesMapper = [
-		'addressLinkToAddress' => ['address', 'linkToAddress', null],
-	];
+    protected $_elementsAttributesMapper = [
+        'addressLinkToAddress' => ['address', 'linkToAddress', null],
+    ];
 
     /**
      * {@inheritdoc}
@@ -78,5 +78,6 @@ class Address extends Agenda
 
         // validate / format options
         $resolver->setNormalizer('id', $resolver->getNormalizer('int'));
+        $resolver->setNormalizer('addressLinkToAddress', $resolver->getNormalizer('bool'));
     }
 }
