@@ -73,7 +73,7 @@ abstract class Agenda
      */
     protected function _createXML(): \SimpleXMLElement
     {
-        return new \SimpleXMLElement('<?xml version="1.0" encoding="Windows-1250"?><root ' . \implode(' ', \array_map(function ($k, $v) {
+        return new \SimpleXMLElement('<?xml version="1.0" encoding="' . Pohoda::$encoding . '"?><root ' . \implode(' ', \array_map(function ($k, $v) {
             return 'xmlns:' . $k . '="' . $v . '"';
         }, \array_keys(Pohoda::$namespaces), Pohoda::$namespaces)) . '></root>');
     }
