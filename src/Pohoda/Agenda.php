@@ -184,7 +184,7 @@ abstract class Agenda
         foreach ($value as $key => $value) {
             if ($key === 'ids') {
                 $maxIdsLen = 19;
-                $value = mb_substr($value, 0, $maxIdsLen, Pohoda::$encoding);
+                $value = \mb_substr($value, 0, $maxIdsLen);
             }
             $node->addChild('typ:' . $key, \htmlspecialchars((string) $value), $this->_namespace('typ'));
         }
