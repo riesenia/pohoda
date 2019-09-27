@@ -54,7 +54,7 @@ class Pohoda
 
     /** @var string */
     public static $encoding = 'windows-1250';
-    
+
     /** @var string */
     protected $_ico;
 
