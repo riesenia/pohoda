@@ -53,6 +53,9 @@ class Pohoda
     ];
 
     /** @var string */
+    public static $encoding = 'windows-1250';
+    
+    /** @var string */
     protected $_ico;
 
     /** @var string */
@@ -130,7 +133,7 @@ class Pohoda
             }
         }
 
-        $this->_xmlWriter->startDocument('1.0', 'windows-1250');
+        $this->_xmlWriter->startDocument('1.0', self::$encoding);
         $this->_xmlWriter->startElementNs('dat', 'dataPack', null);
 
         $this->_xmlWriter->writeAttribute('id', $id);
