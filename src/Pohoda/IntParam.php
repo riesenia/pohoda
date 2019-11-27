@@ -16,7 +16,7 @@ use Riesenia\Pohoda\IntParam\Settings;
 class IntParam extends Agenda
 {
     /** @var string */
-    public static $importRoot = 'ipm:intParam';
+    public static $importRoot = 'lst:intParamDetail';
 
     /** @var array */
     protected $_elements = ['name', 'description', 'parameterType', 'parameterSettings'];
