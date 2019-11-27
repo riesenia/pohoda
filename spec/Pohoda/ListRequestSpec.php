@@ -69,6 +69,15 @@ class ListRequestSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<lAdb:listAddressBookRequest version="2.0" addressBookVersion="2.0"><lAdb:requestAddressBook/></lAdb:listAddressBookRequest>');
     }
 
+    public function it_creates_correct_xml_for_int_params()
+    {
+        $this->beConstructedWith([
+            'type' => 'IntParam'
+        ], '123');
+
+        $this->getXML()->asXML()->shouldReturn('<lst:listIntParamRequest version="2.0"><lst:requestIntParam/></lst:listIntParamRequest>');
+    }
+
     public function it_creates_correct_xml_for_invoice_with_user_filter_name()
     {
         $this->beConstructedWith([

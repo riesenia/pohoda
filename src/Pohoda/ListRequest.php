@@ -52,7 +52,11 @@ class ListRequest extends Agenda
     {
         $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', null, $this->_namespace($this->_data['namespace']));
         $xml->addAttribute('version', '2.0');
-        $xml->addAttribute($this->_getLcFirstType() . 'Version', '2.0');
+
+        // IntParam doesn't have the version attribute
+        if ($this->_data['type'] != 'IntParam') {
+            $xml->addAttribute($this->_getLcFirstType() . 'Version', '2.0');
+        }
 
         if (isset($this->_data[$this->_getLcFirstType() . 'Type'])) {
             $xml->addAttribute($this->_getLcFirstType() . 'Type', $this->_data[$this->_getLcFirstType() . 'Type']);
