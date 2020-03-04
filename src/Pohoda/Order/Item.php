@@ -24,7 +24,7 @@ class Item extends Agenda
     protected $_refElements = ['centre', 'activity', 'contract'];
 
     /** @var array */
-    protected $_elements = ['text', 'quantity', 'delivered', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'note', 'code', 'stockItem', 'centre', 'activity', 'contract'];
+    protected $_elements = ['text', 'quantity', 'delivered', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'percentVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'note', 'code', 'stockItem', 'centre', 'activity', 'contract'];
 
     /**
      * {@inheritdoc}
@@ -74,7 +74,8 @@ class Item extends Agenda
         $resolver->setNormalizer('unit', $resolver->getNormalizer('string10'));
         $resolver->setNormalizer('coefficient', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('payVAT', $resolver->getNormalizer('bool'));
-        $resolver->setAllowedValues('rateVAT', ['none', 'third', 'low', 'high']);
+        $resolver->setAllowedValues('rateVAT', ['none', 'high', 'low', 'third', 'historyHigh', 'historyLow', 'historyThird']);
+        $resolver->setNormalizer('percentVAT', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('discountPercentage', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('note', $resolver->getNormalizer('string90'));
         $resolver->setNormalizer('code', $resolver->getNormalizer('string64'));
