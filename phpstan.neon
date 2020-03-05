@@ -1,4 +1,9 @@
 parameters:
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
+        - '# has no return typehint specified\.$#'
         - '#Parameter \#2 \$value of method SimpleXMLElement::addChild\(\) expects string, null given\.#'
         - '#Parameter \#3 \$ns of method SimpleXMLElement::addChild\(\) expects string, string\|null given\.#'
+        - '#Parameter \#3 \$uri of method XMLWriter::startElementNs\(\) expects string, null given\.#'
+        - '#Parameter \#3 \$uri of method XMLWriter::writeAttributeNs\(\) expects string, null given\.#'
