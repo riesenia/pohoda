@@ -24,7 +24,7 @@ class Header extends Agenda
     protected $_refElements = ['number', 'paymentType', 'priceLevel', 'centre', 'activity', 'contract', 'regVATinEU', 'carrier'];
 
     /** @var array */
-    protected $_elements = ['orderType', 'number', 'numberOrder', 'date', 'dateDelivery', 'dateFrom', 'dateTo', 'text', 'partnerIdentity', 'myIdentity', 'paymentType', 'priceLevel', 'isExecuted', 'isReserved', 'centre', 'activity', 'contract', 'regVATinEU', 'note', 'carrier', 'intNote'];
+    protected $_elements = ['markRecord','orderType', 'number', 'numberOrder', 'date', 'dateDelivery', 'dateFrom', 'dateTo', 'text', 'partnerIdentity', 'myIdentity', 'paymentType', 'priceLevel', 'isExecuted', 'isReserved', 'centre', 'activity', 'contract', 'regVATinEU', 'note', 'carrier', 'intNote'];
 
     /**
      * {@inheritdoc}
@@ -74,6 +74,7 @@ class Header extends Agenda
         $resolver->setNormalizer('dateTo', $resolver->getNormalizer('date'));
         $resolver->setNormalizer('text', $resolver->getNormalizer('string240'));
         $resolver->setNormalizer('isExecuted', $resolver->getNormalizer('bool'));
+        $resolver->setNormalizer('markRecord', $resolver->getNormalizer('bool'));
         $resolver->setNormalizer('isReserved', $resolver->getNormalizer('bool'));
     }
 }
