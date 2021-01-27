@@ -199,7 +199,7 @@ abstract class Agenda
         $dom = \dom_import_simplexml($xml);
         $dom2 = \dom_import_simplexml($node);
 
-        if ($dom === false || $dom2 === false) {
+        if ($dom === false || $dom2 === false || !$dom->ownerDocument) {
             throw new \InvalidArgumentException('Invalid XML.');
         }
 

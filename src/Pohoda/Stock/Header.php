@@ -19,7 +19,7 @@ class Header extends Agenda
     use AddParameterTrait;
 
     /** @var array */
-    protected $_refElements = ['storage', 'typePrice', 'typeRP'];
+    protected $_refElements = ['storage', 'typePrice', 'typeRP', 'supplier'];
 
     /** @var array */
     protected $_elementsAttributesMapper = [
