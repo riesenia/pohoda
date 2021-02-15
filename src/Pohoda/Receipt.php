@@ -56,7 +56,7 @@ class Receipt extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('pri:prijemka', null, $this->_namespace('pri'));
+        $xml = $this->_createXML()->addChild('pri:prijemka', '', $this->_namespace('pri'));
         $xml->addAttribute('version', '2.0');
 
         $this->_addElements($xml, ['header', 'prijemkaDetail', 'summary'], 'pri');

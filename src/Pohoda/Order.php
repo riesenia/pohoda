@@ -75,7 +75,7 @@ class Order extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('ord:order', null, $this->_namespace('ord'));
+        $xml = $this->_createXML()->addChild('ord:order', '', $this->_namespace('ord'));
         $xml->addAttribute('version', '2.0');
 
         $this->_addElements($xml, ['actionType', 'header', 'orderDetail', 'summary'], 'ord');

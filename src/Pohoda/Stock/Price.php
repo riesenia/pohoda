@@ -20,7 +20,7 @@ class Price extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('stk:stockPriceItem', null, $this->_namespace('stk'));
+        $xml = $this->_createXML()->addChild('stk:stockPriceItem', '', $this->_namespace('stk'));
 
         return $this->_addRefElement($xml, 'stk:stockPrice', ['ids' => $this->_data['code'], 'price' => $this->_data['value']]);
     }

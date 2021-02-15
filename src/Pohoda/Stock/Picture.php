@@ -20,7 +20,7 @@ class Picture extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('stk:picture', null, $this->_namespace('stk'));
+        $xml = $this->_createXML()->addChild('stk:picture', '', $this->_namespace('stk'));
         $xml->addAttribute('default', $this->_data['default']);
 
         $this->_addElements($xml, ['filepath', 'description', 'order'], 'stk');

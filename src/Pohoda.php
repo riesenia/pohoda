@@ -134,7 +134,7 @@ class Pohoda
         }
 
         $this->_xmlWriter->startDocument('1.0', self::$encoding);
-        $this->_xmlWriter->startElementNs('dat', 'dataPack', '');
+        $this->_xmlWriter->startElementNs('dat', 'dataPack', null);
 
         $this->_xmlWriter->writeAttribute('id', $id);
         $this->_xmlWriter->writeAttribute('ico', $this->_ico);
@@ -143,7 +143,7 @@ class Pohoda
         $this->_xmlWriter->writeAttribute('note', $note);
 
         foreach (self::$namespaces as $k => $v) {
-            $this->_xmlWriter->writeAttributeNs('xmlns', $k, '', $v);
+            $this->_xmlWriter->writeAttributeNs('xmlns', $k, null, $v);
         }
 
         return true;
@@ -157,7 +157,7 @@ class Pohoda
      */
     public function addItem(string $id, Agenda $agenda)
     {
-        $this->_xmlWriter->startElementNs('dat', 'dataPackItem', '');
+        $this->_xmlWriter->startElementNs('dat', 'dataPackItem', null);
 
         $this->_xmlWriter->writeAttribute('id', $id);
         $this->_xmlWriter->writeAttribute('version', '2.0');

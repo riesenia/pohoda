@@ -36,7 +36,7 @@ class Storage extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('str:storage', null, $this->_namespace('str'));
+        $xml = $this->_createXML()->addChild('str:storage', '', $this->_namespace('str'));
         $xml->addAttribute('version', '2.0');
 
         $this->storageXML($xml);
@@ -51,7 +51,7 @@ class Storage extends Agenda
      */
     public function storageXML(\SimpleXMLElement $xml)
     {
-        $storage = $xml->addChild('str:itemStorage', null, $this->_namespace('str'));
+        $storage = $xml->addChild('str:itemStorage', '', $this->_namespace('str'));
         $storage->addAttribute('code', $this->_data['code']);
 
         if (isset($this->_data['name'])) {
@@ -59,7 +59,7 @@ class Storage extends Agenda
         }
 
         if (isset($this->_data['subStorages'])) {
-            $subStorages = $storage->addChild('str:subStorages', null, $this->_namespace('str'));
+            $subStorages = $storage->addChild('str:subStorages', '', $this->_namespace('str'));
 
             foreach ($this->_data['subStorages'] as $subStorage) {
                 $subStorage->storageXML($subStorages);

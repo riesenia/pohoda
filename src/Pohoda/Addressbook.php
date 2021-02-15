@@ -41,7 +41,7 @@ class Addressbook extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('adb:addressbook', null, $this->_namespace('adb'));
+        $xml = $this->_createXML()->addChild('adb:addressbook', '', $this->_namespace('adb'));
         $xml->addAttribute('version', '2.0');
 
         $this->_addElements($xml, ['actionType', 'header'], 'adb');

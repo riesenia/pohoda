@@ -3,4 +3,4 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '# has no return typehint specified\.$#'
-        - '#Parameter \#2 \$value of method SimpleXMLElement::addChild\(\) expects string, null given\.#'
+        - '#Parameter \#3 \$namespace of method XMLWriter::(startElementNs|writeAttributeNs)\(\) expects string, null given\.#'

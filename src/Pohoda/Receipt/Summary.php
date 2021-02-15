@@ -42,7 +42,7 @@ class Summary extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('pri:prijemkaSummary', null, $this->_namespace('pri'));
+        $xml = $this->_createXML()->addChild('pri:prijemkaSummary', '', $this->_namespace('pri'));
 
         $this->_addElements($xml, $this->_elements, 'pri');
 

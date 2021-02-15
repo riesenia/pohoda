@@ -26,7 +26,7 @@ class ShipToAddressType extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('typ:shipToAddress', null, $this->_namespace('typ'));
+        $xml = $this->_createXML()->addChild('typ:shipToAddress', '', $this->_namespace('typ'));
 
         $this->_addElements($xml, $this->_elements, 'typ');
 

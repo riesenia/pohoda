@@ -146,7 +146,7 @@ abstract class Agenda
 
             // array of Agenda objects
             if (\is_array($this->_data[$element])) {
-                $child = $namespace ? $xml->addChild($namespace . ':' . $element, null, $this->_namespace($namespace)) : $xml->addChild($element);
+                $child = $namespace ? $xml->addChild($namespace . ':' . $element, '', $this->_namespace($namespace)) : $xml->addChild($element);
 
                 foreach ($this->_data[$element] as $node) {
                     $this->_appendNode($child, $node->getXML());
@@ -171,7 +171,7 @@ abstract class Agenda
      */
     protected function _addRefElement(\SimpleXMLElement $xml, string $name, $value, string $namespace = null): \SimpleXMLElement
     {
-        $node = $namespace ? $xml->addChild($name, null, $this->_namespace($namespace)) : $xml->addChild($name);
+        $node = $namespace ? $xml->addChild($name, '', $this->_namespace($namespace)) : $xml->addChild($name);
 
         if (!\is_array($value)) {
             $value = ['ids' => $value];

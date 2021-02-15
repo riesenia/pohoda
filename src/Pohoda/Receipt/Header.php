@@ -43,7 +43,7 @@ class Header extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('pri:prijemkaHeader', null, $this->_namespace('pri'));
+        $xml = $this->_createXML()->addChild('pri:prijemkaHeader', '', $this->_namespace('pri'));
 
         $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'pri');
 

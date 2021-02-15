@@ -37,7 +37,7 @@ class UserList extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('lst:listUserCode', null, $this->_namespace('lst'));
+        $xml = $this->_createXML()->addChild('lst:listUserCode', '', $this->_namespace('lst'));
         $xml->addAttribute('version', '1.1');
         $xml->addAttribute('code', $this->_data['code']);
         $xml->addAttribute('name', $this->_data['name']);

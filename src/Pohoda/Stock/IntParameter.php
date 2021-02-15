@@ -20,7 +20,7 @@ class IntParameter extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('stk:intParameter', null, $this->_namespace('stk'));
+        $xml = $this->_createXML()->addChild('stk:intParameter', '', $this->_namespace('stk'));
 
         $this->_addElements($xml, ['intParameterID', 'intParameterType'], 'stk');
 

@@ -27,7 +27,7 @@ class ActionType extends Agenda
             throw new \LogicException('Namespace not set.');
         }
 
-        $xml = $this->_createXML()->addChild($this->_namespace . ':actionType', null, $this->_namespace($this->_namespace));
+        $xml = $this->_createXML()->addChild($this->_namespace . ':actionType', '', $this->_namespace($this->_namespace));
         $action = $xml->addChild($this->_namespace . ':' . ($this->_data['type'] == 'add/update' ? 'add' : $this->_data['type']));
 
         if ($this->_data['type'] == 'add/update') {
@@ -35,7 +35,7 @@ class ActionType extends Agenda
         }
 
         if ($this->_data['filter']) {
-            $filter = $action->addChild('ftr:filter', null, $this->_namespace('ftr'));
+            $filter = $action->addChild('ftr:filter', '', $this->_namespace('ftr'));
 
             if ($this->_data['agenda']) {
                 $filter->addAttribute('agenda', $this->_data['agenda']);

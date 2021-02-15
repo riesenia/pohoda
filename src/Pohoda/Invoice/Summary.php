@@ -42,7 +42,7 @@ class Summary extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('inv:invoiceSummary', null, $this->_namespace('inv'));
+        $xml = $this->_createXML()->addChild('inv:invoiceSummary', '', $this->_namespace('inv'));
 
         $this->_addElements($xml, $this->_elements, 'inv');
 

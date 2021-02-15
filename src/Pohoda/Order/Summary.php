@@ -42,7 +42,7 @@ class Summary extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('ord:orderSummary', null, $this->_namespace('ord'));
+        $xml = $this->_createXML()->addChild('ord:orderSummary', '', $this->_namespace('ord'));
 
         $this->_addElements($xml, $this->_elements, 'ord');
 

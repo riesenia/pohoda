@@ -42,7 +42,7 @@ class Summary extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('vyd:vydejkaSummary', null, $this->_namespace('vyd'));
+        $xml = $this->_createXML()->addChild('vyd:vydejkaSummary', '', $this->_namespace('vyd'));
 
         $this->_addElements($xml, $this->_elements, 'vyd');
 

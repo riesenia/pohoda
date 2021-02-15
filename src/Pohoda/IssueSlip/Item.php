@@ -52,7 +52,7 @@ class Item extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('vyd:vydejkaItem', null, $this->_namespace('vyd'));
+        $xml = $this->_createXML()->addChild('vyd:vydejkaItem', '', $this->_namespace('vyd'));
 
         $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'vyd');
 

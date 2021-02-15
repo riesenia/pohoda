@@ -43,7 +43,7 @@ class Header extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('adb:addressbookHeader', null, $this->_namespace('adb'));
+        $xml = $this->_createXML()->addChild('adb:addressbookHeader', '', $this->_namespace('adb'));
 
         $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'adb');
 
