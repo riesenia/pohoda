@@ -39,7 +39,7 @@ class StockItem extends Agenda
             throw new \LogicException('Node name not set.');
         }
 
-        $xml = $this->_createXML()->addChild($this->_namespace . ':' . $this->_nodeName, null, $this->_namespace($this->_namespace));
+        $xml = $this->_createXML()->addChild($this->_namespace . ':' . $this->_nodeName, '', $this->_namespace($this->_namespace));
 
         $this->_addElements($xml, $this->_elements, 'typ');
 

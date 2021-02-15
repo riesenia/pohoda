@@ -49,7 +49,7 @@ class Header extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('inv:invoiceHeader', null, $this->_namespace('inv'));
+        $xml = $this->_createXML()->addChild('inv:invoiceHeader', '', $this->_namespace('inv'));
 
         $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'inv');
 

@@ -109,7 +109,7 @@ class Invoice extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('inv:invoice', null, $this->_namespace('inv'));
+        $xml = $this->_createXML()->addChild('inv:invoice', '', $this->_namespace('inv'));
         $xml->addAttribute('version', '2.0');
 
         $this->_addElements($xml, ['links', 'header', 'invoiceDetail', 'summary'], 'inv');

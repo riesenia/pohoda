@@ -52,7 +52,7 @@ class Item extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('ord:orderItem', null, $this->_namespace('ord'));
+        $xml = $this->_createXML()->addChild('ord:orderItem', '', $this->_namespace('ord'));
 
         $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'ord');
 

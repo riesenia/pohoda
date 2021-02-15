@@ -26,7 +26,7 @@ class Filter extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('ftr:filter', null, $this->_namespace('ftr'));
+        $xml = $this->_createXML()->addChild('ftr:filter', '', $this->_namespace('ftr'));
 
         $this->_addElements($xml, $this->_elements, 'ftr');
 

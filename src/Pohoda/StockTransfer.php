@@ -56,7 +56,7 @@ class StockTransfer extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('pre:prevodka', null, $this->_namespace('pre'));
+        $xml = $this->_createXML()->addChild('pre:prevodka', '', $this->_namespace('pre'));
         $xml->addAttribute('version', '2.0');
 
         $this->_addElements($xml, ['header', 'prevodkaDetail'], 'pre');

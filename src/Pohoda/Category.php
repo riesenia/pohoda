@@ -39,7 +39,7 @@ class Category extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('ctg:categoryDetail', null, $this->_namespace('ctg'));
+        $xml = $this->_createXML()->addChild('ctg:categoryDetail', '', $this->_namespace('ctg'));
         $xml->addAttribute('version', '2.0');
 
         $this->categoryXML($xml);
@@ -54,12 +54,12 @@ class Category extends Agenda
      */
     public function categoryXML(\SimpleXMLElement $xml)
     {
-        $category = $xml->addChild('ctg:category', null, $this->_namespace('ctg'));
+        $category = $xml->addChild('ctg:category', '', $this->_namespace('ctg'));
 
         $this->_addElements($category, $this->_elements, 'ctg');
 
         if (isset($this->_data['subCategories'])) {
-            $subCategories = $category->addChild('ctg:subCategories', null, $this->_namespace('ctg'));
+            $subCategories = $category->addChild('ctg:subCategories', '', $this->_namespace('ctg'));
 
             foreach ($this->_data['subCategories'] as $subCategory) {
                 $subCategory->categoryXML($subCategories);

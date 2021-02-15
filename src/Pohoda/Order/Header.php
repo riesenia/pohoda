@@ -49,7 +49,7 @@ class Header extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('ord:orderHeader', null, $this->_namespace('ord'));
+        $xml = $this->_createXML()->addChild('ord:orderHeader', '', $this->_namespace('ord'));
 
         $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'ord');
 

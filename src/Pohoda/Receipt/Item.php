@@ -40,7 +40,7 @@ class Item extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('pri:prijemkaItem', null, $this->_namespace('pri'));
+        $xml = $this->_createXML()->addChild('pri:prijemkaItem', '', $this->_namespace('pri'));
 
         $this->_addElements($xml, $this->_elements, 'pri');
 

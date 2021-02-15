@@ -26,7 +26,7 @@ class Link extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('typ:link', null, $this->_namespace('typ'));
+        $xml = $this->_createXML()->addChild('typ:link', '', $this->_namespace('typ'));
 
         $this->_addElements($xml, $this->_elements, 'typ');
 

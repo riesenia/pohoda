@@ -26,7 +26,7 @@ class Settings extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('ipm:parameterSettings', null, $this->_namespace('ipm'));
+        $xml = $this->_createXML()->addChild('ipm:parameterSettings', '', $this->_namespace('ipm'));
 
         $this->_addElements($xml, $this->_elements, 'ipm');
 

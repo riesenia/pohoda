@@ -25,7 +25,7 @@ class AdvancePaymentItem extends Item
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('inv:invoiceAdvancePaymentItem', null, $this->_namespace('inv'));
+        $xml = $this->_createXML()->addChild('inv:invoiceAdvancePaymentItem', '', $this->_namespace('inv'));
 
         $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'inv');
 

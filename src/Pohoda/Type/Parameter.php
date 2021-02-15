@@ -23,7 +23,7 @@ class Parameter extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('typ:parameter', null, $this->_namespace('typ'));
+        $xml = $this->_createXML()->addChild('typ:parameter', '', $this->_namespace('typ'));
 
         $xml->addChild('typ:name', $this->_data['name']);
 

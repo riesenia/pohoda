@@ -23,7 +23,7 @@ class EstablishmentType extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('typ:establishment', null, $this->_namespace('typ'));
+        $xml = $this->_createXML()->addChild('typ:establishment', '', $this->_namespace('typ'));
 
         $this->_addElements($xml, $this->_elements, 'typ');
 

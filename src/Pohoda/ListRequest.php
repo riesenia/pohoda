@@ -50,7 +50,7 @@ class ListRequest extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', null, $this->_namespace($this->_data['namespace']));
+        $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', '', $this->_namespace($this->_data['namespace']));
         $xml->addAttribute('version', '2.0');
 
         // IntParam doesn't have the version attribute

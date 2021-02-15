@@ -20,7 +20,7 @@ class ItemUserCode extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('lst:itemUserCode', null, $this->_namespace('lst'));
+        $xml = $this->_createXML()->addChild('lst:itemUserCode', '', $this->_namespace('lst'));
         $xml->addAttribute('code', $this->_data['code']);
         $xml->addAttribute('name', $this->_data['name']);
 

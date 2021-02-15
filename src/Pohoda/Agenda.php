@@ -81,16 +81,12 @@ abstract class Agenda
     /**
      * Get namespace.
      *
-     * @param string|null $short
+     * @param string $short
      *
-     * @return string|null
+     * @return string
      */
-    protected function _namespace(string $short = null): ?string
+    protected function _namespace(string $short): string
     {
-        if ($short === null) {
-            return null;
-        }
-
         if (!isset(Pohoda::$namespaces[$short])) {
             throw new \OutOfRangeException('Invalid namespace.');
         }
@@ -126,7 +122,7 @@ abstract class Agenda
                 // get element
                 $attrElement = $namespace ? $xml->children($namespace, true)->{$attrElement} : $xml->{$attrElement};
 
-                $attrElement->addAttribute(($attrNamespace ? $attrNamespace . ':' : '') . $attrName, \htmlspecialchars($this->_data[$element]), $this->_namespace($attrNamespace));
+                $attrNamespace ? $attrElement->addAttribute($attrNamespace . ':' . $attrName, \htmlspecialchars($this->_data[$element]), $this->_namespace($attrNamespace)) : $attrElement->addAttribute($attrName, \htmlspecialchars($this->_data[$element]));
 
                 continue;
             }
@@ -150,7 +146,7 @@ abstract class Agenda
 
             // array of Agenda objects
             if (\is_array($this->_data[$element])) {
-                $child = $xml->addChild(($namespace ? $namespace . ':' : '') . $element, null, $this->_namespace($namespace));
+                $child = $namespace ? $xml->addChild($namespace . ':' . $element, '', $this->_namespace($namespace)) : $xml->addChild($element);
 
                 foreach ($this->_data[$element] as $node) {
                     $this->_appendNode($child, $node->getXML());
@@ -159,7 +155,7 @@ abstract class Agenda
                 continue;
             }
 
-            $xml->addChild(($namespace ? $namespace . ':' : '') . $element, \htmlspecialchars($this->_data[$element]), $this->_namespace($namespace));
+            $namespace ? $xml->addChild($namespace . ':' . $element, \htmlspecialchars($this->_data[$element]), $this->_namespace($namespace)) : $xml->addChild($element, \htmlspecialchars($this->_data[$element]));
         }
     }
 
@@ -175,7 +171,7 @@ abstract class Agenda
      */
     protected function _addRefElement(\SimpleXMLElement $xml, string $name, $value, string $namespace = null): \SimpleXMLElement
     {
-        $node = $xml->addChild($name, null, $this->_namespace($namespace));
+        $node = $namespace ? $xml->addChild($name, '', $this->_namespace($namespace)) : $xml->addChild($name);
 
         if (!\is_array($value)) {
             $value = ['ids' => $value];

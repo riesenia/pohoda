@@ -71,7 +71,7 @@ class IssueSlip extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('vyd:vydejka', null, $this->_namespace('vyd'));
+        $xml = $this->_createXML()->addChild('vyd:vydejka', '', $this->_namespace('vyd'));
         $xml->addAttribute('version', '2.0');
 
         $this->_addElements($xml, ['header', 'vydejkaDetail', 'summary'], 'vyd');
