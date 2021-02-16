@@ -49,7 +49,7 @@ class Header extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('int:intDocHeader', null, $this->_namespace('int'));
+        $xml = $this->_createXML()->addChild('int:intDocHeader', '', $this->_namespace('int'));
 
         $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'int');
 

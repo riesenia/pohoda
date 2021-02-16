@@ -71,7 +71,7 @@ class IntDoc extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('int:intDoc', null, $this->_namespace('int'));
+        $xml = $this->_createXML()->addChild('int:intDoc', '', $this->_namespace('int'));
         $xml->addAttribute('version', '2.0');
 
         $this->_addElements($xml, ['header', 'intDocDetail', 'summary'], 'int');

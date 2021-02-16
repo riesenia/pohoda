@@ -39,7 +39,7 @@ class Summary extends Agenda
 
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('int:intDocSummary', null, $this->_namespace('int'));
+        $xml = $this->_createXML()->addChild('int:intDocSummary', '', $this->_namespace('int'));
 
         $this->_addElements($xml, $this->_elements, 'int');
 
