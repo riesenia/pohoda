@@ -19,7 +19,7 @@ class Filter extends Agenda
     protected $_refElements = ['storage', 'store'];
 
     /** @var array */
-    protected $_elements = ['id', 'code', 'EAN', 'name', 'storage', 'store', 'internet', 'company', 'ico', 'dic', 'lastChanges'];
+    protected $_elements = ['id', 'code', 'EAN', 'name', 'storage', 'store', 'internet', 'company', 'ico', 'dic', 'lastChanges', 'dateFrom', 'dateTill'];
 
     /**
      * {@inheritdoc}
@@ -45,5 +45,7 @@ class Filter extends Agenda
         $resolver->setNormalizer('id', $resolver->getNormalizer('int'));
         $resolver->setNormalizer('internet', $resolver->getNormalizer('bool'));
         $resolver->setNormalizer('lastChanges', $resolver->getNormalizer('datetime'));
+        $resolver->setNormalizer('dateFrom', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('dateTill', $resolver->getNormalizer('date'));
     }
 }
