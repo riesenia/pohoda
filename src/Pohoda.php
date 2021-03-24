@@ -24,6 +24,7 @@ use Riesenia\Pohoda\Agenda;
  * @method \Riesenia\Pohoda\IssueSlip     createIssueSlip(array $data = [])
  * @method \Riesenia\Pohoda\ListRequest   createListRequest(array $data = [])
  * @method \Riesenia\Pohoda\Order         createOrder(array $data = [])
+ * @method \Riesenia\Pohoda\PrintRequest  createPrintRequest(array $data = [])
  * @method \Riesenia\Pohoda\Receipt       createReceipt(array $data = [])
  * @method \Riesenia\Pohoda\Stock         createStock(array $data = [])
  * @method \Riesenia\Pohoda\StockTransfer createStockTransfer(array $data = [])
@@ -48,6 +49,7 @@ class Pohoda
         'ord' => 'http://www.stormware.cz/schema/version_2/order.xsd',
         'pre' => 'http://www.stormware.cz/schema/version_2/prevodka.xsd',
         'pri' => 'http://www.stormware.cz/schema/version_2/prijemka.xsd',
+        'prn' => 'http://www.stormware.cz/schema/version_2/print.xsd',
         'str' => 'http://www.stormware.cz/schema/version_2/storage.xsd',
         'stk' => 'http://www.stormware.cz/schema/version_2/stock.xsd',
         'typ' => 'http://www.stormware.cz/schema/version_2/type.xsd',
