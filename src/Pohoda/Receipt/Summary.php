@@ -17,7 +17,7 @@ use Riesenia\Pohoda\Type\CurrencyHome;
 
 class Summary extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['roundingDocument', 'roundingVAT', 'homeCurrency', 'foreignCurrency'];
 
     /**

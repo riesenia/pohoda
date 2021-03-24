@@ -33,7 +33,7 @@ use Riesenia\Pohoda\Agenda;
  */
 class Pohoda
 {
-    /** @var array */
+    /** @var array<string,string> */
     public static $namespaces = [
         'adb' => 'http://www.stormware.cz/schema/version_2/addressbook.xsd',
         'con' => 'http://www.stormware.cz/schema/version_2/contract.xsd',

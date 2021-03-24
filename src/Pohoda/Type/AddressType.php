@@ -15,10 +15,10 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class AddressType extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['country'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['company', 'division', 'name', 'city', 'street', 'zip', 'ico', 'dic', 'VATPayerType', 'icDph', 'country', 'phone', 'mobilPhone', 'fax', 'email'];
 
     /**

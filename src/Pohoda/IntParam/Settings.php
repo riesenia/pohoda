@@ -15,10 +15,10 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Settings extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['currency'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['unit', 'length', 'currency', 'parameterList'];
 
     /**

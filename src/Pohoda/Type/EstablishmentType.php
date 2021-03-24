@@ -15,7 +15,7 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class EstablishmentType extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['company', 'city', 'street', 'zip'];
 
     /**

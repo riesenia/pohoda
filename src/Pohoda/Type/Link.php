@@ -15,10 +15,10 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Link extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['sourceDocument', 'settingsSourceDocument'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['sourceAgenda', 'sourceDocument', 'settingsSourceDocument'];
 
     /**

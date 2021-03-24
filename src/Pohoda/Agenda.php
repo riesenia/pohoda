@@ -27,7 +27,7 @@ abstract class Agenda
     /** @var array */
     protected $_data;
 
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = [];
 
     /** @var array */

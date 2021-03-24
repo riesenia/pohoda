@@ -15,7 +15,7 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Pdf extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['fileName'];
 
     /**

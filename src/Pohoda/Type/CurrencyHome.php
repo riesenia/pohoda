@@ -20,10 +20,10 @@ class CurrencyHome extends Agenda
     use SetNamespaceTrait;
     use SetNodeNameTrait;
 
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['round'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['priceNone', 'price3', 'price3VAT', 'price3Sum', 'priceLow', 'priceLowVAT', 'priceLowSum', 'priceHigh', 'priceHighVAT', 'priceHighSum', 'round'];
 
     /**

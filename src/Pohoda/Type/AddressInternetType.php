@@ -15,7 +15,7 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class AddressInternetType extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['company', 'title', 'surname', 'name', 'city', 'street', 'number', 'zip', 'ico', 'dic', 'icDph', 'phone', 'mobilPhone', 'fax', 'email', 'www'];
 
     /**

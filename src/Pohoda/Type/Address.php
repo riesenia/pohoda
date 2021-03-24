@@ -20,10 +20,10 @@ class Address extends Agenda
     use SetNamespaceTrait;
     use SetNodeNameTrait;
 
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['extId'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['id', 'extId', 'address', 'addressLinkToAddress', 'shipToAddress'];
 
     /** @var array */

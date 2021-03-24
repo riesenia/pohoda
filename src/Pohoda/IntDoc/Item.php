@@ -17,10 +17,10 @@ use Riesenia\Pohoda\Type\StockItem;
 
 class Item extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'percentVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'note', 'code', 'symPar', 'accounting', 'classificationVAT', 'classificationKVDPH', 'PDP', 'CodePDP', 'centre', 'activity', 'contract'];
 
     /**

@@ -15,10 +15,10 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class Filter extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['storage', 'store'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['id', 'code', 'EAN', 'name', 'storage', 'store', 'internet', 'company', 'ico', 'dic', 'lastChanges', 'dateFrom', 'dateTill'];
 
     /**

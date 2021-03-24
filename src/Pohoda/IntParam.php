@@ -18,7 +18,7 @@ class IntParam extends Agenda
     /** @var string */
     public static $importRoot = 'lst:intParamDetail';
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['name', 'description', 'parameterType', 'parameterSettings'];
 
     /**

@@ -19,10 +19,10 @@ class Desc extends Agenda
 {
     use AddParameterTrait;
 
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['number', 'responsiblePerson'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['number', 'datePlanStart', 'datePlanDelivery', 'dateStart', 'dateDelivery', 'dateWarranty', 'text', 'partnerIdentity', 'responsiblePerson', 'note'];
 
     /**

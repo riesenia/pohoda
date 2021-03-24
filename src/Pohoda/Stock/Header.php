@@ -18,7 +18,7 @@ class Header extends Agenda
 {
     use AddParameterTrait;
 
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['storage', 'typePrice', 'typeRP', 'supplier'];
 
     /** @var array */
@@ -27,7 +27,7 @@ class Header extends Agenda
         'sellingPricePayVAT' => ['sellingPrice', 'payVAT', null]
     ];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'storage', 'typePrice', 'purchasingPrice', 'purchasingPricePayVAT', 'sellingPrice', 'sellingPricePayVAT', 'limitMin', 'limitMax', 'mass', 'volume', 'supplier', 'orderName', 'orderQuantity', 'shortName', 'typeRP', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'];
 
     /** @var int */

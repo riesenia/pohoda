@@ -15,7 +15,7 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class PrinterSettings extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['report', 'printer', 'pdf'];
 
     /**

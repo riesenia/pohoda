@@ -20,10 +20,10 @@ class CurrencyForeign extends Agenda
     use SetNamespaceTrait;
     use SetNodeNameTrait;
 
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['currency'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['currency', 'rate', 'amount', 'priceSum'];
 
     /**

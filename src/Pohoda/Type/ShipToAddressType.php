@@ -15,10 +15,10 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class ShipToAddressType extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['country'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['company', 'division', 'name', 'city', 'street', 'zip', 'country', 'phone', 'email', 'defaultShipAddress'];
 
     /**

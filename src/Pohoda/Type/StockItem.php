@@ -20,10 +20,10 @@ class StockItem extends Agenda
     use SetNamespaceTrait;
     use SetNodeNameTrait;
 
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['store', 'stockItem'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['store', 'stockItem', 'serialNumber'];
 
     /**

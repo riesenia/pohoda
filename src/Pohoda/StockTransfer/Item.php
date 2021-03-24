@@ -16,7 +16,7 @@ use Riesenia\Pohoda\Type\StockItem;
 
 class Item extends Agenda
 {
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['quantity', 'stockItem', 'note'];
 
     /**

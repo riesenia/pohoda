@@ -19,10 +19,10 @@ class Header extends Agenda
 {
     use AddParameterTrait;
 
-    /** @var array */
+    /** @var string[] */
     protected $_refElements = ['centre', 'activity', 'contract', 'number'];
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['identity', 'region', 'phone', 'mobil', 'fax', 'email', 'web', 'ICQ', 'Skype', 'GPS', 'credit', 'priceIDS', 'maturity', 'paymentType', 'agreement', 'number', 'ost1', 'ost2', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'message', 'note', 'intNote', 'centre', 'activity', 'contract'];
 
     /**

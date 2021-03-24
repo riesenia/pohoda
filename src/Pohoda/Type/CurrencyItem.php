@@ -20,7 +20,7 @@ class CurrencyItem extends Agenda
     use SetNamespaceTrait;
     use SetNodeNameTrait;
 
-    /** @var array */
+    /** @var string[] */
     protected $_elements = ['unitPrice', 'price', 'priceVAT', 'priceSum'];
 
     /**
