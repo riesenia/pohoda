@@ -197,7 +197,7 @@ class Pohoda
     {
         $this->_xmlReader = new \XMLReader();
 
-        if (!$this->_xmlReader->open($filename)) {
+        if (!$this->_xmlReader->open($filename, self::$encoding)) {
             return false;
         }
 
