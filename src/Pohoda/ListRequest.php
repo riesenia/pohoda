@@ -81,7 +81,12 @@ class ListRequest extends Agenda
         $resolver->setNormalizer('type', function ($options, $value) {
             // Addressbook is custom
             if ($value == 'Addressbook') {
-                $value = 'AddressBook';
+                return 'AddressBook';
+            }
+
+            // IssueSlip is custom
+            if ($value == 'IssueSlip') {
+                return 'Vydejka';
             }
 
             return $value;

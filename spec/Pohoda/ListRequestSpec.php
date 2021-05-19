@@ -51,10 +51,19 @@ class ListRequestSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<lst:listInvoiceRequest version="2.0" invoiceVersion="2.0" invoiceType="issuedAdvanceInvoice"><lst:requestInvoice/></lst:listInvoiceRequest>');
     }
 
-    public function it_creates_correct_xml_for_issue_slip()
+    public function it_creates_correct_xml_for_vydejka()
     {
         $this->beConstructedWith([
             'type' => 'Vydejka'
+        ], '123');
+
+        $this->getXML()->asXML()->shouldReturn('<lst:listVydejkaRequest version="2.0" vydejkaVersion="2.0"><lst:requestVydejka/></lst:listVydejkaRequest>');
+    }
+
+    public function it_creates_correct_xml_for_issue_slip()
+    {
+        $this->beConstructedWith([
+            'type' => 'IssueSlip'
         ], '123');
 
         $this->getXML()->asXML()->shouldReturn('<lst:listVydejkaRequest version="2.0" vydejkaVersion="2.0"><lst:requestVydejka/></lst:listVydejkaRequest>');
