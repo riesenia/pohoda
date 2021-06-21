@@ -122,7 +122,7 @@ abstract class Agenda
                 // get element
                 $attrElement = $namespace ? $xml->children($namespace, true)->{$attrElement} : $xml->{$attrElement};
 
-                $attrNamespace ? $attrElement->addAttribute($attrNamespace . ':' . $attrName, \htmlspecialchars($this->_data[$element]), $this->_namespace($attrNamespace)) : $attrElement->addAttribute($attrName, \htmlspecialchars($this->_data[$element]));
+                $attrNamespace ? $attrElement->addAttribute($attrNamespace . ':' . $attrName, $this->_sanitize($this->_data[$element]), $this->_namespace($attrNamespace)) : $attrElement->addAttribute($attrName, $this->_sanitize($this->_data[$element]));
 
                 continue;
             }
@@ -155,7 +155,7 @@ abstract class Agenda
                 continue;
             }
 
-            $namespace ? $xml->addChild($namespace . ':' . $element, \htmlspecialchars($this->_data[$element]), $this->_namespace($namespace)) : $xml->addChild($element, \htmlspecialchars($this->_data[$element]));
+            $namespace ? $xml->addChild($namespace . ':' . $element, $this->_sanitize($this->_data[$element]), $this->_namespace($namespace)) : $xml->addChild($element, $this->_sanitize($this->_data[$element]));
         }
     }
 
@@ -178,10 +178,26 @@ abstract class Agenda
         }
 
         foreach ($value as $key => $value) {
-            $node->addChild('typ:' . $key, \htmlspecialchars((string) $value), $this->_namespace('typ'));
+            $node->addChild('typ:' . $key, $this->_sanitize($value), $this->_namespace('typ'));
         }
 
         return $node;
+    }
+
+    /**
+     * Sanitize value to XML.
+     *
+     * @param mixed $value
+     *
+     * @return string
+     */
+    protected function _sanitize($value): string
+    {
+        if (Pohoda::$sanitizeEncoding) {
+            $value = \iconv(Pohoda::$encoding, 'utf-8', (string) \iconv('utf-8', Pohoda::$encoding . '//translit', (string) $value));
+        }
+
+        return \htmlspecialchars((string) $value);
     }
 
     /**
