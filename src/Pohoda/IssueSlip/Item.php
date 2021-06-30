@@ -21,10 +21,10 @@ class Item extends Agenda
     use AddParameterTrait;
 
     /** @var string[] */
-    protected $_refElements = ['centre', 'activity', 'contract'];
+    protected $_refElements = ['typeServiceMOSS', 'centre', 'activity', 'contract'];
 
     /** @var string[] */
-    protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'note', 'code', 'stockItem', 'centre', 'activity', 'contract'];
+    protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'typeServiceMOSS', 'note', 'code', 'stockItem', 'centre', 'activity', 'contract'];
 
     /**
      * {@inheritdoc}

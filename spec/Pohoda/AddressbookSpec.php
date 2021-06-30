@@ -93,7 +93,7 @@ class AddressbookSpec extends ObjectBehavior
         $this->beConstructedWith([
             'identity' => [
                 'address' => [
-                    'name' => 'Călărași ñüé¿s',
+                    'name' => 'Călărași nüé¿s',
                     'city' => 'Dâmbovița'
                 ]
             ],
@@ -101,7 +101,7 @@ class AddressbookSpec extends ObjectBehavior
             'centre' => ['id' => 1]
         ], '123');
 
-        $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:addressbookHeader><adb:identity><typ:address><typ:name>Călărasi ~nüé?s</typ:name><typ:city>Dâmbovita</typ:city></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre></adb:addressbookHeader></adb:addressbook>');
+        $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:addressbookHeader><adb:identity><typ:address><typ:name>Călărasi nüé?s</typ:name><typ:city>Dâmbovita</typ:city></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre></adb:addressbookHeader></adb:addressbook>');
     }
 
     protected function _defaultHeader()
