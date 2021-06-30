@@ -70,23 +70,6 @@ class AddressbookSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:actionType><adb:delete><ftr:filter><ftr:company>COMPANY</ftr:company></ftr:filter></adb:delete></adb:actionType></adb:addressbook>');
     }
 
-    public function it_handles_special_characters_correctly()
-    {
-        Pohoda::$sanitizeEncoding = true;
-        $this->beConstructedWith([
-            'identity' => [
-                'address' => [
-                    'name' => 'Călărași ñüé¿s',
-                    'city' => 'Dâmbovița'
-                ]
-            ],
-            'phone' => '123',
-            'centre' => ['id' => 1]
-        ], '123');
-
-        $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:addressbookHeader><adb:identity><typ:address><typ:name>Călărasi ~nüé?s</typ:name><typ:city>Dâmbovita</typ:city></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre></adb:addressbookHeader></adb:addressbook>');
-    }
-
     public function it_leaves_special_characters_intact_by_default()
     {
         $this->beConstructedWith([
@@ -101,6 +84,24 @@ class AddressbookSpec extends ObjectBehavior
         ], '123');
 
         $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:addressbookHeader><adb:identity><typ:address><typ:name>Călărași ñüé¿s</typ:name><typ:city>Dâmbovița</typ:city></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre></adb:addressbookHeader></adb:addressbook>');
+    }
+
+    public function it_handles_special_characters_correctly()
+    {
+        Pohoda::$sanitizeEncoding = true;
+
+        $this->beConstructedWith([
+            'identity' => [
+                'address' => [
+                    'name' => 'Călărași ñüé¿s',
+                    'city' => 'Dâmbovița'
+                ]
+            ],
+            'phone' => '123',
+            'centre' => ['id' => 1]
+        ], '123');
+
+        $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:addressbookHeader><adb:identity><typ:address><typ:name>Călărasi ~nüé?s</typ:name><typ:city>Dâmbovita</typ:city></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre></adb:addressbookHeader></adb:addressbook>');
     }
 
     protected function _defaultHeader()
