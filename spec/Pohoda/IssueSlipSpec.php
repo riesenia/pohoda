@@ -94,6 +94,18 @@ class IssueSlipSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<vyd:vydejka version="2.0"><vyd:vydejkaHeader>' . $this->_defaultHeader() . '<vyd:parameters><typ:parameter><typ:name>VPrIsOn</typ:name><typ:booleanValue>true</typ:booleanValue></typ:parameter><typ:parameter><typ:name>VPrNum</typ:name><typ:numberValue>10.43</typ:numberValue></typ:parameter><typ:parameter><typ:name>RefVPrCountry</typ:name><typ:listValueRef><typ:ids>SK</typ:ids></typ:listValueRef><typ:list><typ:ids>Country</typ:ids></typ:list></typ:parameter><typ:parameter><typ:name>RefVPrCustomList</typ:name><typ:listValueRef><typ:id>5</typ:id></typ:listValueRef><typ:list><typ:id>6</typ:id></typ:list></typ:parameter></vyd:parameters></vyd:vydejkaHeader></vyd:vydejka>');
     }
 
+    public function it_can_link_to_order()
+    {
+        $this->addLink([
+            'sourceAgenda' => 'receivedOrder',
+            'sourceDocument' => [
+                'number' => '142100003'
+            ]
+        ]);
+
+        $this->getXML()->asXML()->shouldReturn('<vyd:vydejka version="2.0"><vyd:links><typ:link><typ:sourceAgenda>receivedOrder</typ:sourceAgenda><typ:sourceDocument><typ:number>142100003</typ:number></typ:sourceDocument></typ:link></vyd:links><vyd:vydejkaHeader>' . $this->_defaultHeader() . '</vyd:vydejkaHeader></vyd:vydejka>');
+    }
+
     protected function _defaultHeader()
     {
         return '<vyd:date>2015-01-10</vyd:date><vyd:dateOrder>2015-01-04</vyd:dateOrder><vyd:text>Vyd</vyd:text><vyd:partnerIdentity><typ:address><typ:name>NAME</typ:name><typ:ico>123</typ:ico></typ:address></vyd:partnerIdentity><vyd:intNote>Note</vyd:intNote>';

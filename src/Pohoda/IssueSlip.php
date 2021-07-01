@@ -15,6 +15,7 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\IssueSlip\Header;
 use Riesenia\Pohoda\IssueSlip\Item;
 use Riesenia\Pohoda\IssueSlip\Summary;
+use Riesenia\Pohoda\Type\Link;
 
 class IssueSlip extends Agenda
 {
@@ -32,6 +33,24 @@ class IssueSlip extends Agenda
         $data = ['header' => new Header($data, $ico, $resolveOptions)];
 
         parent::__construct($data, $ico, $resolveOptions);
+    }
+
+    /**
+     * Add link.
+     *
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function addLink(array $data): self
+    {
+        if (!isset($this->_data['links'])) {
+            $this->_data['links'] = [];
+        }
+
+        $this->_data['links'][] = new Link($data, $this->_ico);
+
+        return $this;
     }
 
     /**
@@ -74,7 +93,7 @@ class IssueSlip extends Agenda
         $xml = $this->_createXML()->addChild('vyd:vydejka', '', $this->_namespace('vyd'));
         $xml->addAttribute('version', '2.0');
 
-        $this->_addElements($xml, ['header', 'vydejkaDetail', 'summary'], 'vyd');
+        $this->_addElements($xml, ['links', 'header', 'vydejkaDetail', 'summary'], 'vyd');
 
         return $xml;
     }
