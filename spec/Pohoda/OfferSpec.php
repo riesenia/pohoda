@@ -12,7 +12,7 @@ namespace spec\Riesenia\Pohoda;
 
 use PhpSpec\ObjectBehavior;
 
-class OrderSpec extends ObjectBehavior
+class OfferSpec extends ObjectBehavior
 {
     public function let()
     {
@@ -47,7 +47,6 @@ class OrderSpec extends ObjectBehavior
         $this->addItem([
             'text' => 'NAME 1',
             'quantity' => 1,
-            'delivered' => 0,
             'rateVAT' => 'high',
             'homeCurrency' => [
                 'unitPrice' => 200

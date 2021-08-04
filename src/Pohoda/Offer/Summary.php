@@ -42,9 +42,9 @@ class Summary extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('ord:offerSummary', '', $this->_namespace('ord'));
+        $xml = $this->_createXML()->addChild('ofr:offerSummary', '', $this->_namespace('ofr'));
 
-        $this->_addElements($xml, $this->_elements, 'ord');
+        $this->_addElements($xml, $this->_elements, 'ofr');
 
         return $xml;
     }

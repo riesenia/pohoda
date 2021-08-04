@@ -49,9 +49,9 @@ class Header extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('ord:offerHeader', '', $this->_namespace('ord'));
+        $xml = $this->_createXML()->addChild('ofr:offerHeader', '', $this->_namespace('ofr'));
 
-        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'ord');
+        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'ofr');
 
         return $xml;
     }

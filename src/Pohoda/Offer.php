@@ -76,7 +76,7 @@ class Offer extends Agenda
         $xml = $this->_createXML()->addChild('ofr:offer', '', $this->_namespace('ofr'));
         $xml->addAttribute('version', '2.0');
 
-        $this->_addElements($xml, ['header', 'offerDetail', 'summary'], 'ord');
+        $this->_addElements($xml, ['header', 'offerDetail', 'summary'], 'ofr');
 
         return $xml;
     }
