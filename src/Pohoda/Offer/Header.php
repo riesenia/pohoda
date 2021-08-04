@@ -67,7 +67,6 @@ class Header extends Agenda
         // validate / format options
         $resolver->setDefault('offerType', 'receivedOffer');
         $resolver->setAllowedValues('offerType', ['receivedOffer', 'issuedOffer']);
-        $resolver->setNormalizer('numberOffer', $resolver->getNormalizer('string32'));
         $resolver->setNormalizer('date', $resolver->getNormalizer('date'));
         $resolver->setNormalizer('validTill', $resolver->getNormalizer('date'));
         $resolver->setNormalizer('text', $resolver->getNormalizer('string240'));
