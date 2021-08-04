@@ -70,7 +70,6 @@ class Item extends Agenda
         // validate / format options
         $resolver->setNormalizer('text', $resolver->getNormalizer('string90'));
         $resolver->setNormalizer('quantity', $resolver->getNormalizer('float'));
-        $resolver->setNormalizer('delivered', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('unit', $resolver->getNormalizer('string10'));
         $resolver->setNormalizer('coefficient', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('payVAT', $resolver->getNormalizer('bool'));
