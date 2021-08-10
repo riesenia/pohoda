@@ -81,6 +81,9 @@ class Pohoda
     /** @var \XMLReader */
     protected $_xmlReader;
 
+    /** @var string */
+    protected $_elementName;
+
     /**
      * Constructor.
      *
@@ -210,13 +213,11 @@ class Pohoda
 
         $fullName = __NAMESPACE__ . '\\Pohoda\\' . $name;
 
-        if (!\class_exists($fullName)) {
+        if (!\class_exists($fullName) || !\is_string($fullName::$importRoot)) {
             throw new \DomainException('Not allowed entity: ' . $name);
         }
 
-        while ($this->_xmlReader->read() && $this->_xmlReader->name !== $fullName::$importRoot) {
-            // skip to first element
-        }
+        $this->_elementName = $fullName::$importRoot;
 
         return true;
     }
@@ -228,19 +229,16 @@ class Pohoda
      */
     public function next()
     {
-        if (!$this->_xmlReader->name) {
-            return null;
+        while ($this->_xmlReader->nodeType != \XMLReader::ELEMENT || $this->_xmlReader->name !== $this->_elementName) {
+            if (!$this->_xmlReader->read()) {
+                return null;
+            }
         }
 
-        $name = $this->_xmlReader->name;
+        $xml = new \SimpleXMLElement($this->_xmlReader->readOuterXml());
+        $this->_xmlReader->read();
 
-        $node = new \SimpleXMLElement($this->_xmlReader->readOuterXml());
-
-        while ($this->_xmlReader->next() && $this->_xmlReader->name !== $name) {
-            // skip to next element
-        }
-
-        return $node;
+        return $xml;
     }
 
     /**
