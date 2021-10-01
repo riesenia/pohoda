@@ -98,6 +98,8 @@ class Pohoda
      * Set the name of the application.
      *
      * @param string $name
+     *
+     * @return void
      */
     public function setApplicationName(string $name)
     {
@@ -107,8 +109,8 @@ class Pohoda
     /**
      * Create and return instance of requested agenda.
      *
-     * @param string $name
-     * @param array  $data
+     * @param string              $name
+     * @param array<string,mixed> $data
      *
      * @return Agenda
      */
@@ -168,6 +170,8 @@ class Pohoda
      *
      * @param string $id
      * @param Agenda $agenda
+     *
+     * @return void
      */
     public function addItem(string $id, Agenda $agenda)
     {
@@ -244,8 +248,8 @@ class Pohoda
     /**
      * Handle dynamic method calls.
      *
-     * @param string $method
-     * @param array  $arguments
+     * @param string  $method
+     * @param mixed[] $arguments
      *
      * @return mixed
      */

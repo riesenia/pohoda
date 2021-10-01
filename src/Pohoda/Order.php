@@ -41,7 +41,7 @@ class Order extends Agenda
     /**
      * Add order item.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */
@@ -59,7 +59,7 @@ class Order extends Agenda
     /**
      * Add order summary.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */

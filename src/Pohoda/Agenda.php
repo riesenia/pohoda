@@ -24,13 +24,13 @@ abstract class Agenda
     /** @var string */
     protected $_ico;
 
-    /** @var array */
+    /** @var array<string,mixed> */
     protected $_data;
 
     /** @var string[] */
     protected $_refElements = [];
 
-    /** @var array */
+    /** @var array<string,array{string,string,string|null}> */
     protected $_elementsAttributesMapper = [];
 
     /** @var OptionsResolver[] */
@@ -39,9 +39,9 @@ abstract class Agenda
     /**
      * Construct agenda using provided data.
      *
-     * @param array  $data
-     * @param string $ico
-     * @param bool   $resolveOptions
+     * @param array<string,mixed> $data
+     * @param string              $ico
+     * @param bool                $resolveOptions
      */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
@@ -63,6 +63,8 @@ abstract class Agenda
      * Configure options for options resolver.
      *
      * @param OptionsResolver $resolver
+     *
+     * @return void
      */
     abstract protected function _configureOptions(OptionsResolver $resolver);
 
@@ -98,8 +100,10 @@ abstract class Agenda
      * Add batch elements.
      *
      * @param \SimpleXMLElement $xml
-     * @param array             $elements
+     * @param string[]          $elements
      * @param string|null       $namespace
+     *
+     * @return void
      */
     protected function _addElements(\SimpleXMLElement $xml, array $elements, string $namespace = null)
     {
@@ -205,6 +209,8 @@ abstract class Agenda
      *
      * @param \SimpleXMLElement $xml
      * @param \SimpleXMLElement $node
+     *
+     * @return void
      */
     protected function _appendNode(\SimpleXMLElement $xml, \SimpleXMLElement $node)
     {
@@ -221,9 +227,9 @@ abstract class Agenda
     /**
      * Resolve options.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
-     * @return array
+     * @return array<string,mixed>
      */
     protected function _resolveOptions(array $data): array
     {

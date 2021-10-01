@@ -36,7 +36,7 @@ class Receipt extends Agenda
     /**
      * Add item.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */

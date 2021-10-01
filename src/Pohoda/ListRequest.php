@@ -20,7 +20,7 @@ class ListRequest extends Agenda
     /**
      * Add filter.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */

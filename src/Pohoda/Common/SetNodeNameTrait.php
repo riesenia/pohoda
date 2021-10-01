@@ -19,6 +19,8 @@ trait SetNodeNameTrait
      * Set node name.
      *
      * @param string $nodeName
+     *
+     * @return void
      */
     public function setNodeName(string $nodeName)
     {

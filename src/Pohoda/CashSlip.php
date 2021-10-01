@@ -37,7 +37,7 @@ class CashSlip extends Agenda
     /**
      * Add item.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */
@@ -55,7 +55,7 @@ class CashSlip extends Agenda
     /**
      * Add summary.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */

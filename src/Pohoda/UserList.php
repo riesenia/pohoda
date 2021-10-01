@@ -21,15 +21,19 @@ class UserList extends Agenda
     /**
      * Add item user code.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
+     *
+     * @return $this
      */
-    public function addItemUserCode(array $data)
+    public function addItemUserCode(array $data): self
     {
         if (!isset($this->_data['itemUserCodes'])) {
             $this->_data['itemUserCodes'] = [];
         }
 
         $this->_data['itemUserCodes'][] = new ItemUserCode($data, $this->_ico);
+
+        return $this;
     }
 
     /**

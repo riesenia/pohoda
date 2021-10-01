@@ -24,14 +24,18 @@ class Category extends Agenda
      * Add subcategory.
      *
      * @param self $category
+     *
+     * @return $this
      */
-    public function addSubcategory(self $category)
+    public function addSubcategory(self $category): self
     {
         if (!isset($this->_data['subCategories'])) {
             $this->_data['subCategories'] = [];
         }
 
         $this->_data['subCategories'][] = $category;
+
+        return $this;
     }
 
     /**
@@ -51,6 +55,8 @@ class Category extends Agenda
      * Attach category to XML element.
      *
      * @param \SimpleXMLElement $xml
+     *
+     * @return void
      */
     public function categoryXML(\SimpleXMLElement $xml)
     {

@@ -39,7 +39,7 @@ class Invoice extends Agenda
     /**
      * Add link.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */
@@ -57,7 +57,7 @@ class Invoice extends Agenda
     /**
      * Add invoice item.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */
@@ -75,7 +75,7 @@ class Invoice extends Agenda
     /**
      * Add advance payment item.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */
@@ -93,7 +93,7 @@ class Invoice extends Agenda
     /**
      * Add invoice summary.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */

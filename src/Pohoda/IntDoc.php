@@ -37,7 +37,7 @@ class IntDoc extends Agenda
     /**
      * Add intDoc item.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */
@@ -55,7 +55,7 @@ class IntDoc extends Agenda
     /**
      * Add intDoc summary.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */

@@ -39,7 +39,7 @@ class Offer extends Agenda
     /**
      * Add offer item.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */
@@ -57,7 +57,7 @@ class Offer extends Agenda
     /**
      * Add offer summary.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */

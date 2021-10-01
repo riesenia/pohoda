@@ -20,11 +20,7 @@ class MyAddress extends Agenda
     use SetNamespaceTrait;
     use SetNodeNameTrait;
 
-    /**
-     * All elements.
-     *
-     * @var array
-     */
+    /** @var string[] */
     protected $_elements = ['address', 'establishment'];
 
     /**

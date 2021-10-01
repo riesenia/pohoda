@@ -93,7 +93,7 @@ class Stock extends Agenda
     /**
      * Add int parameter.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */

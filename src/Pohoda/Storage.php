@@ -21,14 +21,18 @@ class Storage extends Agenda
      * Add substorage.
      *
      * @param self $storage
+     *
+     * @return $this
      */
-    public function addSubstorage(self $storage)
+    public function addSubstorage(self $storage): self
     {
         if (!isset($this->_data['subStorages'])) {
             $this->_data['subStorages'] = [];
         }
 
         $this->_data['subStorages'][] = $storage;
+
+        return $this;
     }
 
     /**
@@ -48,6 +52,8 @@ class Storage extends Agenda
      * Attach storage to XML element.
      *
      * @param \SimpleXMLElement $xml
+     *
+     * @return void
      */
     public function storageXML(\SimpleXMLElement $xml)
     {

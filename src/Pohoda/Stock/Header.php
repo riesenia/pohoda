@@ -21,7 +21,7 @@ class Header extends Agenda
     /** @var string[] */
     protected $_refElements = ['storage', 'typePrice', 'typeRP', 'supplier'];
 
-    /** @var array */
+    /** {@inheritDoc} */
     protected $_elementsAttributesMapper = [
         'purchasingPricePayVAT' => ['purchasingPrice', 'payVAT', null],
         'sellingPricePayVAT' => ['sellingPrice', 'payVAT', null]
@@ -40,6 +40,8 @@ class Header extends Agenda
      * @param string   $description
      * @param int|null $order
      * @param bool     $default
+     *
+     * @return void
      */
     public function addImage(string $filepath, string $description = '', int $order = null, bool $default = false)
     {
@@ -59,6 +61,8 @@ class Header extends Agenda
      * Add category.
      *
      * @param int $categoryId
+     *
+     * @return void
      */
     public function addCategory(int $categoryId)
     {
@@ -74,7 +78,9 @@ class Header extends Agenda
     /**
      * Add int parameter.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
+     *
+     * @return void
      */
     public function addIntParameter(array $data)
     {

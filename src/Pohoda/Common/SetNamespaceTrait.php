@@ -19,6 +19,8 @@ trait SetNamespaceTrait
      * Set namespace.
      *
      * @param string $namespace
+     *
+     * @return void
      */
     public function setNamespace(string $namespace)
     {

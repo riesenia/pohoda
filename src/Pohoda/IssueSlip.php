@@ -38,7 +38,7 @@ class IssueSlip extends Agenda
     /**
      * Add link.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */
@@ -56,7 +56,7 @@ class IssueSlip extends Agenda
     /**
      * Add item.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */
@@ -74,7 +74,7 @@ class IssueSlip extends Agenda
     /**
      * Add summary.
      *
-     * @param array $data
+     * @param array<string,mixed> $data
      *
      * @return $this
      */
