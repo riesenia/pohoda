@@ -23,8 +23,14 @@ class StockItem extends Agenda
     /** @var string[] */
     protected $_refElements = ['store', 'stockItem'];
 
+    /** {@inheritDoc} */
+    protected $_elementsAttributesMapper = [
+        'insertAttachStock' => ['stockItem', 'insertAttachStock', null],
+        'applyUserSettingsFilterOnTheStore' => ['stockItem', 'applyUserSettingsFilterOnTheStore', null]
+    ];
+
     /** @var string[] */
-    protected $_elements = ['store', 'stockItem', 'serialNumber'];
+    protected $_elements = ['store', 'stockItem', 'insertAttachStock', 'applyUserSettingsFilterOnTheStore', 'serialNumber'];
 
     /**
      * {@inheritdoc}
@@ -55,6 +61,8 @@ class StockItem extends Agenda
         $resolver->setDefined($this->_elements);
 
         // validate / format options
+        $resolver->setNormalizer('insertAttachStock', $resolver->getNormalizer('bool'));
+        $resolver->setNormalizer('applyUserSettingsFilterOnTheStore', $resolver->getNormalizer('bool'));
         $resolver->setNormalizer('serialNumber', $resolver->getNormalizer('string40'));
     }
 }
