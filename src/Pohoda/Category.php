@@ -17,6 +17,9 @@ class Category extends Agenda
     /** @var string */
     public static $importRoot = 'ctg:category';
 
+    /** @var bool */
+    public static $importRecursive = true;
+
     /** @var string[] */
     protected $_elements = ['name', 'description', 'sequence', 'displayed', 'picture', 'note'];
 

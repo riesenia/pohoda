@@ -21,6 +21,9 @@ use Riesenia\Pohoda\Common\OptionsResolver;
  */
 abstract class Agenda
 {
+    /** @var bool */
+    public static $importRecursive = false;
+
     /** @var string */
     protected $_ico;
 

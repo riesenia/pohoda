@@ -84,6 +84,9 @@ class Pohoda
     /** @var string */
     protected $_elementName;
 
+    /** @var bool */
+    protected $_importRecursive;
+
     /**
      * Constructor.
      *
@@ -222,6 +225,7 @@ class Pohoda
         }
 
         $this->_elementName = $fullName::$importRoot;
+        $this->_importRecursive = $fullName::$importRecursive;
 
         return true;
     }
@@ -240,7 +244,7 @@ class Pohoda
         }
 
         $xml = new \SimpleXMLElement($this->_xmlReader->readOuterXml());
-        $this->_xmlReader->read();
+        $this->_importRecursive ? $this->_xmlReader->next() : $this->_xmlReader->read();
 
         return $xml;
     }

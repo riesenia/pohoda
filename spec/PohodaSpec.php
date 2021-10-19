@@ -91,4 +91,79 @@ class PohodaSpec extends ObjectBehavior
         // test dataPackItem properties
         expect((string) $xml->children('dat', true)->dataPackItem->attributes()['id'])->toBe('ITEM_ID');
     }
+
+    public function it_processes_recursive_export_correctly()
+    {
+        $tmpFile = \tempnam(\sys_get_temp_dir(), 'xml');
+
+        \file_put_contents($tmpFile, '<?xml version="1.0" encoding="Windows-1250"?>
+        <rsp:responsePack version="2.0" id="002" state="ok" note="" xmlns:rsp="http://www.stormware.cz/schema/version_2/response.xsd" xmlns:lst="http://www.stormware.cz/schema/version_2/list.xsd" xmlns:ctg="http://www.stormware.cz/schema/version_2/category.xsd">
+            <rsp:responsePackItem version="2.0" id="a56" state="ok">
+                <lst:listCategory version="2.0" state="ok">
+                    <lst:categoryDetail version="2.0">
+                        <ctg:category>
+                            <ctg:id>1</ctg:id>
+                            <ctg:name>Kategorie-A</ctg:name>
+                            <ctg:description/>
+                            <ctg:sequence>0</ctg:sequence>
+                            <ctg:displayed>true</ctg:displayed>
+                            <ctg:picture/>
+                            <ctg:note/>
+                            <ctg:internetParams>
+                                <ctg:idInternetParams>3</ctg:idInternetParams>
+                            </ctg:internetParams>
+                            <ctg:subCategories>
+                                <ctg:category>
+                                    <ctg:id>2</ctg:id>
+                                    <ctg:name>Kategorie-B</ctg:name>
+                                    <ctg:description>testovaci kategorie B</ctg:description>
+                                    <ctg:sequence>1</ctg:sequence>
+                                    <ctg:displayed>true</ctg:displayed>
+                                    <ctg:picture/>
+                                    <ctg:note/>
+                                    <ctg:internetParams>
+                                        <ctg:idInternetParams>1</ctg:idInternetParams>
+                                    </ctg:internetParams>
+                                </ctg:category>
+                                <ctg:category>
+                                    <ctg:id>3</ctg:id>
+                                    <ctg:name>Kategorie-C</ctg:name>
+                                    <ctg:description>testovaci kategorie C</ctg:description>
+                                    <ctg:sequence>2</ctg:sequence>
+                                    <ctg:displayed>true</ctg:displayed>
+                                    <ctg:picture/>
+                                    <ctg:note/>
+                                    <ctg:internetParams>
+                                        <ctg:idInternetParams>2</ctg:idInternetParams>
+                                    </ctg:internetParams>
+                                </ctg:category>
+                            </ctg:subCategories>
+                        </ctg:category>
+                        <ctg:category>
+                            <ctg:id>4</ctg:id>
+                            <ctg:name>Kategorie-D</ctg:name>
+                            <ctg:description>testovaci kategorie D</ctg:description>
+                            <ctg:sequence>0</ctg:sequence>
+                            <ctg:displayed>true</ctg:displayed>
+                            <ctg:picture/>
+                            <ctg:note/>
+                            <ctg:internetParams>
+                                <ctg:idInternetParams/>
+                            </ctg:internetParams>
+                        </ctg:category>
+                    </lst:categoryDetail>
+                </lst:listCategory>
+            </rsp:responsePackItem>
+        </rsp:responsePack>');
+
+        $this->loadCategory($tmpFile);
+
+        // read only root elements
+        $c = $this->next();
+        expect((string) $c->getWrappedObject()->children('ctg', true)->name)->toBe('Kategorie-A');
+        $c = $this->next();
+        expect((string) $c->getWrappedObject()->children('ctg', true)->name)->toBe('Kategorie-D');
+        $c = $this->next();
+        expect($c->getWrappedObject())->toBe(null);
+    }
 }
