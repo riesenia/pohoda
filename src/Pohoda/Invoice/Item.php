@@ -24,7 +24,7 @@ class Item extends Agenda
     protected $_refElements = ['typeServiceMOSS', 'accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract'];
 
     /** @var string[] */
-    protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'percentVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'typeServiceMOSS', 'note', 'code', 'guarantee', 'guaranteeType', 'stockItem', 'accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract', 'expirationDate'];
+    protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'percentVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'typeServiceMOSS', 'note', 'code', 'guarantee', 'guaranteeType', 'stockItem', 'accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract', 'expirationDate', 'PDP'];
 
     /**
      * {@inheritdoc}
@@ -81,5 +81,6 @@ class Item extends Agenda
         $resolver->setNormalizer('guarantee', $resolver->getNormalizer('int'));
         $resolver->setAllowedValues('guaranteeType', ['none', 'hour', 'day', 'month', 'year', 'life']);
         $resolver->setNormalizer('expirationDate', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('PDP', $resolver->getNormalizer('bool'));
     }
 }
