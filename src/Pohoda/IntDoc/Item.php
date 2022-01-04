@@ -21,7 +21,7 @@ class Item extends Agenda
     protected $_refElements = ['typeServiceMOSS', 'accounting', 'classificationVAT', 'classificationKVDPH', 'centre', 'activity', 'contract'];
 
     /** @var string[] */
-    protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'percentVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'typeServiceMOSS', 'note', 'code', 'symPar', 'accounting', 'classificationVAT', 'classificationKVDPH', 'PDP', 'CodePDP', 'centre', 'activity', 'contract'];
+    protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'percentVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'typeServiceMOSS', 'note', 'code', 'symPar', 'accounting', 'classificationVAT', 'classificationKVDPH', 'PDP', 'CodePDP', 'centre', 'activity', 'contract', 'PDP'];
 
     /**
      * {@inheritdoc}
@@ -78,5 +78,6 @@ class Item extends Agenda
         $resolver->setNormalizer('symPar', $resolver->getNormalizer('string20'));
         $resolver->setNormalizer('PDP', $resolver->getNormalizer('bool'));
         $resolver->setNormalizer('CodePDP', $resolver->getNormalizer('string4'));
+        $resolver->setNormalizer('PDP', $resolver->getNormalizer('bool'));
     }
 }
