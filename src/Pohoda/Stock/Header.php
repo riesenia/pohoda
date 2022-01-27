@@ -28,10 +28,28 @@ class Header extends Agenda
     ];
 
     /** @var string[] */
-    protected $_elements = ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'storage', 'typePrice', 'purchasingPrice', 'purchasingPricePayVAT', 'sellingPrice', 'sellingPricePayVAT', 'limitMin', 'limitMax', 'mass', 'volume', 'supplier', 'orderName', 'orderQuantity', 'shortName', 'typeRP', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note'];
+    protected $_elements = ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'storage', 'typePrice', 'purchasingPrice', 'purchasingPricePayVAT', 'sellingPrice', 'sellingPricePayVAT', 'limitMin', 'limitMax', 'mass', 'volume', 'supplier', 'orderName', 'orderQuantity', 'shortName', 'typeRP', 'guaranteeType', 'guarantee', 'producer', 'description', 'description2', 'note', 'intrastat', 'recyclingContrib'];
 
     /** @var int */
     protected $_imagesCounter = 0;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $data, string $ico, bool $resolveOptions = true)
+    {
+        // process intrastat
+        if (isset($data['intrastat'])) {
+            $data['intrastat'] = new Intrastat($data['intrastat'], $ico, $resolveOptions);
+        }
+
+        // process recyclingContrib
+        if (isset($data['recyclingContrib'])) {
+            $data['recyclingContrib'] = new RecyclingContrib($data['recyclingContrib'], $ico, $resolveOptions);
+        }
+
+        parent::__construct($data, $ico, $resolveOptions);
+    }
 
     /**
      * Add image.

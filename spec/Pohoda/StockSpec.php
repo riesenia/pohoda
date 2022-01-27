@@ -25,7 +25,17 @@ class StockSpec extends ObjectBehavior
             'storage' => 'STORAGE',
             'typePrice' => ['id' => 1],
             'sellingPrice' => 12.7,
-            'sellingPricePayVAT' => true
+            'sellingPricePayVAT' => true,
+            'intrastat' => [
+                'goodsCode' => '123',
+                'unit' => 'ZZZ',
+                'coefficient' => 0,
+                'country' => 'CN'
+            ],
+            'recyclingContrib' => [
+                'recyclingContribType' => 'X',
+                'coefficientOfRecyclingContrib' => 1
+            ]
         ], '123');
     }
 
@@ -109,6 +119,6 @@ class StockSpec extends ObjectBehavior
 
     protected function _defaultHeader()
     {
-        return '<stk:stockType>card</stk:stockType><stk:code>CODE</stk:code><stk:isSales>false</stk:isSales><stk:isSerialNumber>false</stk:isSerialNumber><stk:isInternet>true</stk:isInternet><stk:name>NAME</stk:name><stk:storage><typ:ids>STORAGE</typ:ids></stk:storage><stk:typePrice><typ:id>1</typ:id></stk:typePrice><stk:sellingPrice payVAT="true">12.7</stk:sellingPrice>';
+        return '<stk:stockType>card</stk:stockType><stk:code>CODE</stk:code><stk:isSales>false</stk:isSales><stk:isSerialNumber>false</stk:isSerialNumber><stk:isInternet>true</stk:isInternet><stk:name>NAME</stk:name><stk:storage><typ:ids>STORAGE</typ:ids></stk:storage><stk:typePrice><typ:id>1</typ:id></stk:typePrice><stk:sellingPrice payVAT="true">12.7</stk:sellingPrice><stk:intrastat><stk:goodsCode>123</stk:goodsCode><stk:unit>ZZZ</stk:unit><stk:coefficient>0</stk:coefficient><stk:country>CN</stk:country></stk:intrastat><stk:recyclingContrib><stk:recyclingContribType><typ:ids>X</typ:ids></stk:recyclingContribType><stk:coefficientOfRecyclingContrib>1</stk:coefficientOfRecyclingContrib></stk:recyclingContrib>';
     }
 }
