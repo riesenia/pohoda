@@ -51,10 +51,15 @@ class ListRequest extends Agenda
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', '', $this->_namespace($this->_data['namespace']));
-        $xml->addAttribute('version', '2.0');
+        if ( $this->_data['type'] == 'Storage') {
+            $xml->addAttribute('version', '1.0');
+        } else {
+            $xml->addAttribute('version', '2.0');
+        }
+
 
         // IntParam doesn't have the version attribute
-        if ($this->_data['type'] != 'IntParam') {
+        if ($this->_data['type'] != 'IntParam' && $this->_data['type'] != 'Storage') {
             $xml->addAttribute($this->_getLcFirstType() . 'Version', '2.0');
         }
 
@@ -62,8 +67,10 @@ class ListRequest extends Agenda
             $xml->addAttribute($this->_getLcFirstType() . 'Type', $this->_data[$this->_getLcFirstType() . 'Type']);
         }
 
-        $request = $xml->addChild($this->_data['namespace'] . ':request' . $this->_data['type']);
-        $this->_addElements($request, ['filter', 'userFilterName'], 'ftr');
+        if ( $this->_data['type'] != 'Storage') {
+            $request = $xml->addChild($this->_data['namespace'] . ':request' . $this->_data['type']);
+            $this->_addElements($request, ['filter', 'userFilterName'], 'ftr');
+        }
 
         return $xml;
     }

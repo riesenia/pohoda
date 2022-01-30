@@ -90,4 +90,13 @@ class Category extends Agenda
         $resolver->setNormalizer('sequence', $resolver->getNormalizer('int'));
         $resolver->setNormalizer('displayed', $resolver->getNormalizer('bool'));
     }
+
+    public function addInternetParam($idInternetParam) {
+        if (!isset($this->_data['internetParams'])) {
+            $data = ['internetParams' => $idInternetParam];
+            $this->_data['internetParams'] = new InternetParams($data, $this->_ico, false);
+        }
+
+        $this->_data['internetParams']->addItem($idInternetParam);
+    }
 }

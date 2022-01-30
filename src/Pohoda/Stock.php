@@ -112,7 +112,7 @@ class Stock extends Agenda
         $xml = $this->_createXML()->addChild('stk:stock', '', $this->_namespace('stk'));
         $xml->addAttribute('version', '2.0');
 
-        $this->_addElements($xml, ['actionType', 'header', 'stockPriceItem'], 'stk');
+        $this->_addElements($xml, ['actionType', 'header', 'stockDetail', 'stockPriceItem'], 'stk');
 
         return $xml;
     }
