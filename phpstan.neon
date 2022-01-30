@@ -1,6 +1,6 @@
 parameters:
-    level: max
-    paths:
-        - src
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
+        - '# has no return typehint specified\.$#'
         - '#Parameter \#3 \$namespace of method XMLWriter::(startElementNs|writeAttributeNs)\(\) expects string, null given\.#'

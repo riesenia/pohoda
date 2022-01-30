@@ -51,17 +51,6 @@ class Receipt extends Agenda
         return $this;
     }
 
-   public function addAccessoryChargesItem(array $data): self
-    {
-        if (!isset($this->_data['prijemkaDetail'])) {
-            $this->_data['prijemkaDetail'] = [];
-        }
-
-        $this->_data['prijemkaDetail'][] = new AccessoryChargesItem($data, $this->_ico);
-
-        return $this;
-    }
-
     /**
      * {@inheritdoc}
      */
