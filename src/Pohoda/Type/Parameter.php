@@ -68,8 +68,15 @@ class Parameter extends Agenda
         $resolver->setRequired('type');
         $resolver->setAllowedValues('type', ['text', 'memo', 'currency', 'boolean', 'number', 'datetime', 'integer', 'list']);
         $resolver->setNormalizer('value', function ($options, $value) use ($resolver) {
+            $normalizer = $options['type'];
+
+            // date for datetime
+            if ($normalizer == 'datetime') {
+                $normalizer = 'date';
+            }
+
             try {
-                return \call_user_func($resolver->getNormalizer($options['type']), [], $value);
+                return \call_user_func($resolver->getNormalizer($normalizer), [], $value);
             } catch (\Exception $e) {
                 return \is_array($value) ? $value : (string) $value;
             }
