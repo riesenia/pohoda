@@ -20,6 +20,7 @@ use Riesenia\Pohoda\Agenda;
  * @method \Riesenia\Pohoda\Category      createCategory(array $data = [])
  * @method \Riesenia\Pohoda\Contract      createContract(array $data = [])
  * @method \Riesenia\Pohoda\IntDoc        createIntDoc(array $data = [])
+ * @method \Riesenia\Pohoda\Enquiry       createIntDoc(array $data = [])
  * @method \Riesenia\Pohoda\IntParam      createIntParam(array $data = [])
  * @method \Riesenia\Pohoda\Invoice       createInvoice(array $data = [])
  * @method \Riesenia\Pohoda\IssueSlip     createIssueSlip(array $data = [])
@@ -42,6 +43,7 @@ class Pohoda
         'ctg' => 'http://www.stormware.cz/schema/version_2/category.xsd',
         'dat' => 'http://www.stormware.cz/schema/version_2/data.xsd',
         'ftr' => 'http://www.stormware.cz/schema/version_2/filter.xsd',
+        'enq' => 'http://www.stormware.cz/schema/version_2/enquiry.xsd',
         'int' => 'http://www.stormware.cz/schema/version_2/intDoc.xsd',
         'inv' => 'http://www.stormware.cz/schema/version_2/invoice.xsd',
         'ipm' => 'http://www.stormware.cz/schema/version_2/intParam.xsd',
