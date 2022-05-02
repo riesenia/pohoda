@@ -50,20 +50,28 @@ class ListRequest extends Agenda
      */
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', '', $this->_namespace($this->_data['namespace']));
-        $xml->addAttribute('version', '2.0');
+        // UserList is custom
+        if ($this->_data['type'] == 'UserList') {
+            $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':listUserCodeRequest', '', $this->_namespace($this->_data['namespace']));
+            $xml->addAttribute('version', '1.1');
+            $xml->addAttribute('listVersion', '1.1');
+        } else {
+            $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', '', $this->_namespace($this->_data['namespace']));
+            $xml->addAttribute('version', '2.0');
 
-        // IntParam doesn't have the version attribute
-        if ($this->_data['type'] != 'IntParam') {
-            $xml->addAttribute($this->_getLcFirstType() . 'Version', '2.0');
+            // IntParam doesn't have the version attribute
+            if ($this->_data['type'] != 'IntParam') {
+                $xml->addAttribute($this->_getLcFirstType() . 'Version', '2.0');
+            }
+
+            if (isset($this->_data[$this->_getLcFirstType() . 'Type'])) {
+                $xml->addAttribute($this->_getLcFirstType() . 'Type', $this->_data[$this->_getLcFirstType() . 'Type']);
+            }
+
+            $request = $xml->addChild($this->_data['namespace'] . ':request' . $this->_data['type']);
+
+            $this->_addElements($request, ['filter', 'userFilterName'], 'ftr');
         }
-
-        if (isset($this->_data[$this->_getLcFirstType() . 'Type'])) {
-            $xml->addAttribute($this->_getLcFirstType() . 'Type', $this->_data[$this->_getLcFirstType() . 'Type']);
-        }
-
-        $request = $xml->addChild($this->_data['namespace'] . ':request' . $this->_data['type']);
-        $this->_addElements($request, ['filter', 'userFilterName'], 'ftr');
 
         return $xml;
     }

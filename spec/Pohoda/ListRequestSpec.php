@@ -87,6 +87,15 @@ class ListRequestSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<lst:listIntParamRequest version="2.0"><lst:requestIntParam/></lst:listIntParamRequest>');
     }
 
+    public function it_creates_correct_xml_for_user_lists()
+    {
+        $this->beConstructedWith([
+            'type' => 'UserList'
+        ], '123');
+
+        $this->getXML()->asXML()->shouldReturn('<lst:listUserCodeRequest version="1.1" listVersion="1.1"/>');
+    }
+
     public function it_creates_correct_xml_for_invoice_with_user_filter_name()
     {
         $this->beConstructedWith([
