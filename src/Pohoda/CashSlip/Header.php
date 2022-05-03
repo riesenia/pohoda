@@ -10,15 +10,11 @@ declare(strict_types=1);
 
 namespace Riesenia\Pohoda\CashSlip;
 
-use Riesenia\Pohoda\Agenda;
-use Riesenia\Pohoda\Common\AddParameterTrait;
 use Riesenia\Pohoda\Common\OptionsResolver;
-use Riesenia\Pohoda\Type\Address;
+use Riesenia\Pohoda\Document\Header as DocumentHeader;
 
-class Header extends Agenda
+class Header extends DocumentHeader
 {
-    use AddParameterTrait;
-
     /** @var string[] */
     protected $_refElements = ['number', 'accounting', 'paymentType', 'priceLevel', 'centre', 'activity', 'contract', 'kasa'];
 
@@ -28,35 +24,9 @@ class Header extends Agenda
     /**
      * {@inheritdoc}
      */
-    public function __construct(array $data, string $ico, bool $resolveOptions = true)
-    {
-        // process partner identity
-        if (isset($data['partnerIdentity'])) {
-            $data['partnerIdentity'] = new Address($data['partnerIdentity'], $ico, $resolveOptions);
-        }
-
-        parent::__construct($data, $ico, $resolveOptions);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getXML(): \SimpleXMLElement
-    {
-        $xml = $this->_createXML()->addChild('pro:prodejkaHeader', '', $this->_namespace('pro'));
-
-        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'pro');
-
-        return $xml;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
-        // available options
-        $resolver->setDefined($this->_elements);
+        parent::_configureOptions($resolver);
 
         // validate / format options
         $resolver->setDefault('prodejkaType', 'saleVoucher');

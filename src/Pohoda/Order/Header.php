@@ -10,16 +10,11 @@ declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Order;
 
-use Riesenia\Pohoda\Agenda;
-use Riesenia\Pohoda\Common\AddParameterTrait;
 use Riesenia\Pohoda\Common\OptionsResolver;
-use Riesenia\Pohoda\Type\Address;
-use Riesenia\Pohoda\Type\MyAddress;
+use Riesenia\Pohoda\Document\Header as DocumentHeader;
 
-class Header extends Agenda
+class Header extends DocumentHeader
 {
-    use AddParameterTrait;
-
     /** @var string[] */
     protected $_refElements = ['number', 'paymentType', 'priceLevel', 'centre', 'activity', 'contract', 'regVATinEU', 'MOSS', 'evidentiaryResourcesMOSS', 'carrier'];
 
@@ -29,40 +24,9 @@ class Header extends Agenda
     /**
      * {@inheritdoc}
      */
-    public function __construct(array $data, string $ico, bool $resolveOptions = true)
-    {
-        // process partner identity
-        if (isset($data['partnerIdentity'])) {
-            $data['partnerIdentity'] = new Address($data['partnerIdentity'], $ico, $resolveOptions);
-        }
-
-        // process my identity
-        if (isset($data['myIdentity'])) {
-            $data['myIdentity'] = new MyAddress($data['myIdentity'], $ico, $resolveOptions);
-        }
-
-        parent::__construct($data, $ico, $resolveOptions);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getXML(): \SimpleXMLElement
-    {
-        $xml = $this->_createXML()->addChild('ord:orderHeader', '', $this->_namespace('ord'));
-
-        $this->_addElements($xml, \array_merge($this->_elements, ['parameters']), 'ord');
-
-        return $xml;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
-        // available options
-        $resolver->setDefined($this->_elements);
+        parent::_configureOptions($resolver);
 
         // validate / format options
         $resolver->setDefault('orderType', 'receivedOrder');

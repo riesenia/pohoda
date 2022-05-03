@@ -10,12 +10,10 @@ declare(strict_types=1);
 
 namespace Riesenia\Pohoda\IssueSlip;
 
-use Riesenia\Pohoda\Agenda;
 use Riesenia\Pohoda\Common\OptionsResolver;
-use Riesenia\Pohoda\Type\CurrencyForeign;
-use Riesenia\Pohoda\Type\CurrencyHome;
+use Riesenia\Pohoda\Document\Summary as DocumentSummary;
 
-class Summary extends Agenda
+class Summary extends DocumentSummary
 {
     /** @var string[] */
     protected $_elements = ['roundingDocument', 'roundingVAT', 'homeCurrency', 'foreignCurrency'];
@@ -23,39 +21,9 @@ class Summary extends Agenda
     /**
      * {@inheritdoc}
      */
-    public function __construct(array $data, string $ico, bool $resolveOptions = true)
-    {
-        // process home currency
-        if (isset($data['homeCurrency'])) {
-            $data['homeCurrency'] = new CurrencyHome($data['homeCurrency'], $ico, $resolveOptions);
-        }
-        // process foreign currency
-        if (isset($data['foreignCurrency'])) {
-            $data['foreignCurrency'] = new CurrencyForeign($data['foreignCurrency'], $ico, $resolveOptions);
-        }
-
-        parent::__construct($data, $ico, $resolveOptions);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getXML(): \SimpleXMLElement
-    {
-        $xml = $this->_createXML()->addChild('vyd:vydejkaSummary', '', $this->_namespace('vyd'));
-
-        $this->_addElements($xml, $this->_elements, 'vyd');
-
-        return $xml;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
-        // available options
-        $resolver->setDefined($this->_elements);
+        parent::_configureOptions($resolver);
 
         // validate / format options
         $resolver->setAllowedValues('roundingDocument', ['none', 'math2one', 'math2half', 'math2tenth', 'up2one', 'up2half', 'up2tenth', 'down2one', 'down2half', 'down2tenth']);

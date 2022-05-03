@@ -10,31 +10,14 @@ declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
 
-use Riesenia\Pohoda\Common\AddParameterToHeaderTrait;
-use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\Invoice\AdvancePaymentItem;
-use Riesenia\Pohoda\Invoice\Header;
 use Riesenia\Pohoda\Invoice\Item;
-use Riesenia\Pohoda\Invoice\Summary;
 use Riesenia\Pohoda\Type\Link;
 
-class Invoice extends Agenda
+class Invoice extends Document
 {
-    use AddParameterToHeaderTrait;
-
     /** @var string */
     public static $importRoot = 'lst:invoice';
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(array $data, string $ico, bool $resolveOptions = true)
-    {
-        // pass to header
-        $data = ['header' => new Header($data, $ico, $resolveOptions)];
-
-        parent::__construct($data, $ico, $resolveOptions);
-    }
 
     /**
      * Add link.
@@ -50,24 +33,6 @@ class Invoice extends Agenda
         }
 
         $this->_data['links'][] = new Link($data, $this->_ico);
-
-        return $this;
-    }
-
-    /**
-     * Add invoice item.
-     *
-     * @param array<string,mixed> $data
-     *
-     * @return $this
-     */
-    public function addItem(array $data): self
-    {
-        if (!isset($this->_data['invoiceDetail'])) {
-            $this->_data['invoiceDetail'] = [];
-        }
-
-        $this->_data['invoiceDetail'][] = new Item($data, $this->_ico);
 
         return $this;
     }
@@ -91,38 +56,26 @@ class Invoice extends Agenda
     }
 
     /**
-     * Add invoice summary.
-     *
-     * @param array<string,mixed> $data
-     *
-     * @return $this
+     * {@inheritdoc}
      */
-    public function addSummary(array $data): self
+    protected function _getDocumentElements(): array
     {
-        $this->_data['summary'] = new Summary($data, $this->_ico);
-
-        return $this;
+        return \array_merge(['links'], parent::_getDocumentElements());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getXML(): \SimpleXMLElement
+    protected function _getDocumentNamespace(): string
     {
-        $xml = $this->_createXML()->addChild('inv:invoice', '', $this->_namespace('inv'));
-        $xml->addAttribute('version', '2.0');
-
-        $this->_addElements($xml, ['links', 'header', 'invoiceDetail', 'summary'], 'inv');
-
-        return $xml;
+        return 'inv';
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
+    protected function _getDocumentName(): string
     {
-        // available options
-        $resolver->setDefined(['header']);
+        return 'invoice';
     }
 }

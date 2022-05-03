@@ -10,30 +10,12 @@ declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
 
-use Riesenia\Pohoda\Common\AddParameterToHeaderTrait;
-use Riesenia\Pohoda\Common\OptionsResolver;
-use Riesenia\Pohoda\IssueSlip\Header;
-use Riesenia\Pohoda\IssueSlip\Item;
-use Riesenia\Pohoda\IssueSlip\Summary;
 use Riesenia\Pohoda\Type\Link;
 
-class IssueSlip extends Agenda
+class IssueSlip extends Document
 {
-    use AddParameterToHeaderTrait;
-
     /** @var string */
     public static $importRoot = 'lst:vydejka';
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(array $data, string $ico, bool $resolveOptions = true)
-    {
-        // pass to header
-        $data = ['header' => new Header($data, $ico, $resolveOptions)];
-
-        parent::__construct($data, $ico, $resolveOptions);
-    }
 
     /**
      * Add link.
@@ -54,56 +36,26 @@ class IssueSlip extends Agenda
     }
 
     /**
-     * Add item.
-     *
-     * @param array<string,mixed> $data
-     *
-     * @return $this
+     * {@inheritdoc}
      */
-    public function addItem(array $data): self
+    protected function _getDocumentElements(): array
     {
-        if (!isset($this->_data['vydejkaDetail'])) {
-            $this->_data['vydejkaDetail'] = [];
-        }
-
-        $this->_data['vydejkaDetail'][] = new Item($data, $this->_ico);
-
-        return $this;
-    }
-
-    /**
-     * Add summary.
-     *
-     * @param array<string,mixed> $data
-     *
-     * @return $this
-     */
-    public function addSummary(array $data): self
-    {
-        $this->_data['summary'] = new Summary($data, $this->_ico);
-
-        return $this;
+        return \array_merge(['links'], parent::_getDocumentElements());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getXML(): \SimpleXMLElement
+    protected function _getDocumentNamespace(): string
     {
-        $xml = $this->_createXML()->addChild('vyd:vydejka', '', $this->_namespace('vyd'));
-        $xml->addAttribute('version', '2.0');
-
-        $this->_addElements($xml, ['links', 'header', 'vydejkaDetail', 'summary'], 'vyd');
-
-        return $xml;
+        return 'vyd';
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
+    protected function _getDocumentName(): string
     {
-        // available options
-        $resolver->setDefined(['header']);
+        return 'vydejka';
     }
 }

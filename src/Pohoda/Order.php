@@ -11,16 +11,10 @@ declare(strict_types=1);
 namespace Riesenia\Pohoda;
 
 use Riesenia\Pohoda\Common\AddActionTypeTrait;
-use Riesenia\Pohoda\Common\AddParameterToHeaderTrait;
-use Riesenia\Pohoda\Common\OptionsResolver;
-use Riesenia\Pohoda\Order\Header;
-use Riesenia\Pohoda\Order\Item;
-use Riesenia\Pohoda\Order\Summary;
 
-class Order extends Agenda
+class Order extends Document
 {
     use AddActionTypeTrait;
-    use AddParameterToHeaderTrait;
 
     /** @var string */
     public static $importRoot = 'lst:order';
@@ -28,67 +22,24 @@ class Order extends Agenda
     /**
      * {@inheritdoc}
      */
-    public function __construct(array $data, string $ico, bool $resolveOptions = true)
+    protected function _getDocumentElements(): array
     {
-        // pass to header
-        if ($data) {
-            $data = ['header' => new Header($data, $ico, $resolveOptions)];
-        }
-
-        parent::__construct($data, $ico, $resolveOptions);
-    }
-
-    /**
-     * Add order item.
-     *
-     * @param array<string,mixed> $data
-     *
-     * @return $this
-     */
-    public function addItem(array $data): self
-    {
-        if (!isset($this->_data['orderDetail'])) {
-            $this->_data['orderDetail'] = [];
-        }
-
-        $this->_data['orderDetail'][] = new Item($data, $this->_ico);
-
-        return $this;
-    }
-
-    /**
-     * Add order summary.
-     *
-     * @param array<string,mixed> $data
-     *
-     * @return $this
-     */
-    public function addSummary(array $data): self
-    {
-        $this->_data['summary'] = new Summary($data, $this->_ico);
-
-        return $this;
+        return \array_merge(['actionType'], parent::_getDocumentElements());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getXML(): \SimpleXMLElement
+    protected function _getDocumentNamespace(): string
     {
-        $xml = $this->_createXML()->addChild('ord:order', '', $this->_namespace('ord'));
-        $xml->addAttribute('version', '2.0');
-
-        $this->_addElements($xml, ['actionType', 'header', 'orderDetail', 'summary'], 'ord');
-
-        return $xml;
+        return 'ord';
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
+    protected function _getDocumentName(): string
     {
-        // available options
-        $resolver->setDefined(['header']);
+        return 'order';
     }
 }
