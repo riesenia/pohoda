@@ -1,6 +1,5 @@
 # Pohoda XML
 
-[![Build Status](https://img.shields.io/travis/riesenia/pohoda/master.svg?style=flat-square)](https://app.travis-ci.com/riesenia/pohoda)
 [![Build Status](https://github.com/riesenia/pohoda/workflows/Test/badge.svg)](https://github.com/riesenia/pohoda/actions)
 [![Latest Version](https://img.shields.io/packagist/v/riesenia/pohoda.svg?style=flat-square)](https://packagist.org/packages/riesenia/pohoda)
 [![Total Downloads](https://img.shields.io/packagist/dt/riesenia/pohoda.svg?style=flat-square)](https://packagist.org/packages/riesenia/pohoda)
