@@ -86,24 +86,6 @@ class AddressbookSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:addressbookHeader><adb:identity><typ:address><typ:name>Călărași ñüé¿s</typ:name><typ:city>Dâmbovița</typ:city></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre></adb:addressbookHeader></adb:addressbook>');
     }
 
-    public function it_handles_special_characters_correctly()
-    {
-        Pohoda::$sanitizeEncoding = true;
-
-        $this->beConstructedWith([
-            'identity' => [
-                'address' => [
-                    'name' => 'Călărași nüé¿s',
-                    'city' => 'Dâmbovița'
-                ]
-            ],
-            'phone' => '123',
-            'centre' => ['id' => 1]
-        ], '123');
-
-        $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:addressbookHeader><adb:identity><typ:address><typ:name>Călărasi nüé?s</typ:name><typ:city>Dâmbovita</typ:city></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre></adb:addressbookHeader></adb:addressbook>');
-    }
-
     protected function _defaultHeader()
     {
         return '<adb:identity><typ:address><typ:name>NAME</typ:name><typ:ico>123</typ:ico></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre>';
