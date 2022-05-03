@@ -2,5 +2,3 @@ parameters:
     level: max
     paths:
         - src
-    ignoreErrors:
-        - '#Parameter \#3 \$namespace of method XMLWriter::(startElementNs|writeAttributeNs)\(\) expects string, null given\.#'
