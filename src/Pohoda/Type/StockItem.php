@@ -13,12 +13,10 @@ namespace Riesenia\Pohoda\Type;
 use Riesenia\Pohoda\Agenda;
 use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\Common\SetNamespaceTrait;
-use Riesenia\Pohoda\Common\SetNodeNameTrait;
 
 class StockItem extends Agenda
 {
     use SetNamespaceTrait;
-    use SetNodeNameTrait;
 
     /** @var string[] */
     protected $_refElements = ['store', 'stockItem'];
@@ -31,26 +29,6 @@ class StockItem extends Agenda
 
     /** @var string[] */
     protected $_elements = ['store', 'stockItem', 'insertAttachStock', 'applyUserSettingsFilterOnTheStore', 'serialNumber'];
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getXML(): \SimpleXMLElement
-    {
-        if ($this->_namespace === null) {
-            throw new \LogicException('Namespace not set.');
-        }
-
-        if ($this->_nodeName === null) {
-            throw new \LogicException('Node name not set.');
-        }
-
-        $xml = $this->_createXML()->addChild($this->_namespace . ':' . $this->_nodeName, '', $this->_namespace($this->_namespace));
-
-        $this->_addElements($xml, $this->_elements, 'typ');
-
-        return $xml;
-    }
 
     /**
      * {@inheritdoc}
