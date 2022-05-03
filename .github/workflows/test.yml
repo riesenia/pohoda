@@ -32,6 +32,8 @@ jobs:
 
     - name: Install phpstan
       run: composer require --dev phpstan/phpstan:~0.12
+      if: ${{ matrix.php-version == '8.0' }}
 
     - name: Run phpstan
       run: vendor/bin/phpstan analyse -c phpstan.neon
+      if: ${{ matrix.php-version == '8.0' }}
