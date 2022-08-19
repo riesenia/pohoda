@@ -12,24 +12,14 @@ namespace Riesenia\Pohoda\Order;
 
 use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\Document\Header as DocumentHeader;
-use Riesenia\Pohoda\Type\ExtId;
 
 class Header extends DocumentHeader
 {
     /** @var string[] */
-    protected $_refElements = ['number', 'paymentType', 'priceLevel', 'centre', 'activity', 'contract', 'regVATinEU', 'MOSS', 'evidentiaryResourcesMOSS', 'carrier'];
+    protected $_refElements = ['extId', 'number', 'paymentType', 'priceLevel', 'centre', 'activity', 'contract', 'regVATinEU', 'MOSS', 'evidentiaryResourcesMOSS', 'carrier'];
 
     /** @var string[] */
     protected $_elements = ['extId', 'orderType', 'number', 'numberOrder', 'date', 'dateDelivery', 'dateFrom', 'dateTo', 'text', 'partnerIdentity', 'myIdentity', 'paymentType', 'priceLevel', 'isExecuted', 'isReserved', 'centre', 'activity', 'contract', 'regVATinEU', 'MOSS', 'evidentiaryResourcesMOSS', 'accountingPeriodMOSS', 'note', 'carrier', 'intNote', 'markRecord'];
-
-    public function __construct(array $data, string $ico, bool $resolveOptions = true)
-    {
-        if (isset($data['extId'])) {
-            $data['extId'] = new ExtId($data['extId'], $ico, $resolveOptions);
-        }
-
-        parent::__construct($data, $ico, $resolveOptions);
-    }
 
     /**
      * {@inheritdoc}
