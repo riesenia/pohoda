@@ -16,6 +16,7 @@ use Riesenia\Pohoda\Agenda;
  * Factory for Pohoda objects.
  *
  * @method \Riesenia\Pohoda\Addressbook   createAddressbook(array $data = [])
+ * @method \Riesenia\Pohoda\Bank          createBank(array $data = [])
  * @method \Riesenia\Pohoda\CashSlip      createCashSlip(array $data = [])
  * @method \Riesenia\Pohoda\Category      createCategory(array $data = [])
  * @method \Riesenia\Pohoda\Contract      createContract(array $data = [])
@@ -38,6 +39,7 @@ class Pohoda
     /** @var array<string,string> */
     public static $namespaces = [
         'adb' => 'http://www.stormware.cz/schema/version_2/addressbook.xsd',
+        'bnk' => 'http://www.stormware.cz/schema/version_2/bank.xsd',
         'con' => 'http://www.stormware.cz/schema/version_2/contract.xsd',
         'ctg' => 'http://www.stormware.cz/schema/version_2/category.xsd',
         'dat' => 'http://www.stormware.cz/schema/version_2/data.xsd',
