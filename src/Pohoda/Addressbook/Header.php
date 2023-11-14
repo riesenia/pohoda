@@ -20,7 +20,7 @@ class Header extends Agenda
     use AddParameterTrait;
 
     /** @var string[] */
-    protected $_refElements = ['centre', 'activity', 'contract', 'number', 'accountingReceivedInvoice', 'accountingIssuedInvoice', 'classificationVATReceivedInvoice', 'classificationVATIssuedInvoice', 'classificationKVDPHReceivedInvoice', 'classificationKVDPHIssuedInvoice', 'accountForInvoicing', 'foreignCurrency'];
+    protected $_refElements = ['paymentType', 'centre', 'activity', 'contract', 'number', 'accountingReceivedInvoice', 'accountingIssuedInvoice', 'classificationVATReceivedInvoice', 'classificationVATIssuedInvoice', 'classificationKVDPHReceivedInvoice', 'classificationKVDPHIssuedInvoice', 'accountForInvoicing', 'foreignCurrency'];
 
     /** @var string[] */
     protected $_elements = ['identity', 'region', 'phone', 'mobil', 'fax', 'email', 'web', 'ICQ', 'Skype', 'GPS', 'credit', 'priceIDS', 'maturity', 'maturityCommitments', 'paymentType', 'agreement', 'number', 'ost1', 'ost2', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'markRecord', 'message', 'note', 'intNote', 'accountingReceivedInvoice', 'accountingIssuedInvoice', 'classificationVATReceivedInvoice', 'classificationVATIssuedInvoice', 'classificationKVDPHReceivedInvoice', 'classificationKVDPHIssuedInvoice', 'accountForInvoicing', 'foreignCurrency', 'centre', 'activity', 'contract', 'adGroup'];
@@ -71,7 +71,6 @@ class Header extends Agenda
         $resolver->setNormalizer('credit', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('priceIDS', $resolver->getNormalizer('string10'));
         $resolver->setNormalizer('maturity', $resolver->getNormalizer('int'));
-        $resolver->setAllowedValues('paymentType', ['draft', 'cash', 'postal', 'delivery', 'creditcard', 'advance', 'encashment', 'cheque', 'compensation']);
         $resolver->setNormalizer('agreement', $resolver->getNormalizer('string12'));
         $resolver->setNormalizer('ost1', $resolver->getNormalizer('string8'));
         $resolver->setNormalizer('ost2', $resolver->getNormalizer('string8'));
