@@ -32,6 +32,7 @@ use Riesenia\Pohoda\Agenda;
  * @method \Riesenia\Pohoda\Stock         createStock(array $data = [])
  * @method \Riesenia\Pohoda\StockTransfer createStockTransfer(array $data = [])
  * @method \Riesenia\Pohoda\Storage       createStorage(array $data = [])
+ * @method \Riesenia\Pohoda\Supplier      createSupplier(array $data = [])
  * @method \Riesenia\Pohoda\UserList      createUserList(array $data = [])
  */
 class Pohoda
@@ -58,6 +59,7 @@ class Pohoda
         'pro' => 'http://www.stormware.cz/schema/version_2/prodejka.xsd',
         'str' => 'http://www.stormware.cz/schema/version_2/storage.xsd',
         'stk' => 'http://www.stormware.cz/schema/version_2/stock.xsd',
+        'sup' => 'http://www.stormware.cz/schema/version_2/supplier.xsd',
         'typ' => 'http://www.stormware.cz/schema/version_2/type.xsd',
         'vyd' => 'http://www.stormware.cz/schema/version_2/vydejka.xsd'
     ];
