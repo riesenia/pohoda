@@ -15,6 +15,7 @@ use Riesenia\Pohoda\Common\AddParameterToHeaderTrait;
 use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\Stock\Header;
 use Riesenia\Pohoda\Stock\Price;
+use Riesenia\Pohoda\Stock\StockItem;
 
 class Stock extends Agenda
 {
@@ -38,6 +39,24 @@ class Stock extends Agenda
     }
 
     /**
+     * Add stock item.
+     *
+     * @param array<string,mixed> $data
+     *
+     * @return $this
+     */
+    public function addStockItem(array $data): self
+    {
+        if (!isset($this->_data['stockDetail'])) {
+            $this->_data['stockDetail'] = [];
+        }
+
+        $this->_data['stockDetail'][] = new StockItem($data, $this->_ico);
+
+        return $this;
+    }
+
+    /**
      * Add price.
      *
      * @param string $code
@@ -52,8 +71,8 @@ class Stock extends Agenda
         }
 
         $this->_data['stockPriceItem'][] = new Price([
-            'code' => $code,
-            'value' => $value
+            'ids' => $code,
+            'price' => $value
         ], $this->_ico);
 
         return $this;
@@ -112,7 +131,7 @@ class Stock extends Agenda
         $xml = $this->_createXML()->addChild('stk:stock', '', $this->_namespace('stk'));
         $xml->addAttribute('version', '2.0');
 
-        $this->_addElements($xml, ['actionType', 'header', 'stockPriceItem'], 'stk');
+        $this->_addElements($xml, ['actionType', 'header', 'stockDetail', 'stockPriceItem'], 'stk');
 
         return $xml;
     }

@@ -22,7 +22,7 @@ class Price extends Agenda
     {
         $xml = $this->_createXML()->addChild('stk:stockPriceItem', '', $this->_namespace('stk'));
 
-        return $this->_addRefElement($xml, 'stk:stockPrice', ['ids' => $this->_data['code'], 'price' => $this->_data['value']]);
+        return $this->_addRefElement($xml, 'stk:stockPrice', $this->_data);
     }
 
     /**
@@ -31,6 +31,6 @@ class Price extends Agenda
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
-        $resolver->setDefined(['code', 'value']);
+        $resolver->setDefined(['ids', 'price']);
     }
 }
