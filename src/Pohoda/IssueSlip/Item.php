@@ -19,7 +19,7 @@ class Item extends DocumentItem
     protected $_refElements = ['typeServiceMOSS', 'centre', 'activity', 'contract'];
 
     /** @var string[] */
-    protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'typeServiceMOSS', 'note', 'code', 'stockItem', 'centre', 'activity', 'contract'];
+    protected $_elements = ['text', 'quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'percentVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'typeServiceMOSS', 'note', 'code', 'stockItem', 'centre', 'activity', 'contract'];
 
     /**
      * {@inheritdoc}
@@ -34,7 +34,8 @@ class Item extends DocumentItem
         $resolver->setNormalizer('unit', $resolver->getNormalizer('string10'));
         $resolver->setNormalizer('coefficient', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('payVAT', $resolver->getNormalizer('bool'));
-        $resolver->setAllowedValues('rateVAT', ['none', 'third', 'low', 'high']);
+        $resolver->setAllowedValues('rateVAT', ['none', 'high', 'low', 'third', 'historyHigh', 'historyLow', 'historyThird']);
+        $resolver->setNormalizer('percentVAT', $resolver->getNormalizer('int'));
         $resolver->setNormalizer('discountPercentage', $resolver->getNormalizer('float'));
         $resolver->setNormalizer('note', $resolver->getNormalizer('string90'));
         $resolver->setNormalizer('code', $resolver->getNormalizer('string64'));
