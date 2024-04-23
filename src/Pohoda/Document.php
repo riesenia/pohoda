@@ -13,9 +13,6 @@ namespace Riesenia\Pohoda;
 use Riesenia\Pohoda\Common\AddParameterToHeaderTrait;
 use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\Document\Part;
-use Riesenia\Pohoda\Offer\Header;
-use Riesenia\Pohoda\Offer\Item;
-use Riesenia\Pohoda\Offer\Summary;
 
 abstract class Document extends Agenda
 {
@@ -35,7 +32,7 @@ abstract class Document extends Agenda
     }
 
     /**
-     * Add offer item.
+     * Add document item.
      *
      * @param array<string,mixed> $data
      *
@@ -55,7 +52,7 @@ abstract class Document extends Agenda
     }
 
     /**
-     * Add offer summary.
+     * Add document summary.
      *
      * @param array<string,mixed> $data
      *
