@@ -97,6 +97,11 @@ class ListRequest extends Agenda
                 return 'Vydejka';
             }
 
+            // CashSlip is custom
+            if ($value == 'CashSlip') {
+                return 'Prodejka';
+            }
+
             return $value;
         });
         $resolver->setDefault('namespace', function (Options $options) {
