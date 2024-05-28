@@ -39,7 +39,7 @@ abstract class Document extends Agenda
      *
      * @param array<string,mixed> $data
      *
-     * @return Riesenia\Pohoda\Document\Part
+     * @return Part
      */
     public function addItem(array $data): Part
     {
