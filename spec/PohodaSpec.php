@@ -12,7 +12,9 @@ namespace spec\Riesenia;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Riesenia\Pohoda;
 use Riesenia\Pohoda\Stock;
+use Riesenia\Pohoda\ValueTransformer;
 
 class PohodaSpec extends ObjectBehavior
 {
@@ -165,5 +167,55 @@ class PohodaSpec extends ObjectBehavior
         expect((string) $c->getWrappedObject()->children('ctg', true)->name)->toBe('Kategorie-D');
         $c = $this->next();
         expect($c->getWrappedObject())->toBe(null);
+    }
+
+    public function it_runs_transformers_properly() {
+        $stock = new Stock([
+            'code' => 'code1',
+            'name' => 'name2',
+            'storage' => 'storage3',
+            'typePrice' => ['id' => 4]
+        ], '123');
+
+        Pohoda::$transformers = [new Capitalizer()];
+
+        $this->open(null, 'ABC')->shouldReturn(true);
+        $this->addItem('item_id', $stock);
+
+        $xml = \simplexml_load_string($this->close()->getWrappedObject());
+
+        expect((string) $xml->xpath('//stk:code')[0])->toBe('CODE1');
+        expect((string) $xml->xpath('//stk:name')[0])->toBe('NAME2');
+        expect((string) $xml->xpath('//typ:ids')[0])->toBe('STORAGE3');
+
+        // Don't add transformers to other tests
+        Pohoda::$transformers = [];
+    }
+
+    public function it_handles_static_arrays_correctly() {
+        $stock = new Stock([
+            'code' => 'code1',
+            'name' => 'name2',
+            'storage' => 'storage3',
+            'typePrice' => ['id' => 4]
+        ], '123');
+
+        Pohoda::$sanitizeEncoding = true;
+
+        $this->open(null, 'ABC')->shouldReturn(true);
+        $this->addItem('item_id', $stock);
+        expect(count(Pohoda::$transformers))->toBe(0);
+        $this->close();
+
+        // Don't sanitize in any other test
+        Pohoda::$sanitizeEncoding = false;
+    }
+}
+
+class Capitalizer implements \Riesenia\Pohoda\ValueTransformer
+{
+    public function transform(string $value): string
+    {
+        return \strtoupper($value);
     }
 }
