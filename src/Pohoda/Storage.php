@@ -58,6 +58,7 @@ class Storage extends Agenda
     public function storageXML(\SimpleXMLElement $xml)
     {
         $storage = $xml->addChild('str:itemStorage', '', $this->_namespace('str'));
+        // TODO: We usually sanitize attributes. Should we do the same here?
         $storage->addAttribute('code', $this->_data['code']);
 
         if (isset($this->_data['name'])) {

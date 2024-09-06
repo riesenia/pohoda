@@ -21,6 +21,7 @@ class ItemUserCode extends Agenda
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('lst:itemUserCode', '', $this->_namespace('lst'));
+        // TODO: We usually sanitize attributes. Should we do the same here?
         $xml->addAttribute('code', $this->_data['code']);
         $xml->addAttribute('name', $this->_data['name']);
 

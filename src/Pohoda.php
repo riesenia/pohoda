@@ -70,6 +70,15 @@ class Pohoda
     /** @var bool */
     public static $sanitizeEncoding = false;
 
+    /** 
+     * A set of transformers that will be used when serializing data.
+     * 
+     * Transformers are used lazily, only when serializing data and values are fed through the transforms in the order they are defined.
+     * 
+     * @var ValueTransformer[] 
+     */
+    public static array $transformers = [];
+
     /** @var string */
     protected $_ico;
 
@@ -95,6 +104,7 @@ class Pohoda
      * Constructor.
      *
      * @param string $ico
+     * @param ValueTransformer[] $transformers
      */
     public function __construct($ico)
     {

@@ -129,7 +129,8 @@ abstract class Agenda
                 // get element
                 $attrElement = $namespace ? $xml->children($namespace, true)->{$attrElement} : $xml->{$attrElement};
 
-                $attrNamespace ? $attrElement->addAttribute($attrNamespace . ':' . $attrName, $this->_sanitize($this->_data[$element]), $this->_namespace($attrNamespace)) : $attrElement->addAttribute($attrName, $this->_sanitize($this->_data[$element]));
+                $sanitized = $this->_sanitize($this->_data[$element]);
+                $attrNamespace ? $attrElement->addAttribute($attrNamespace . ':' . $attrName, $sanitized, $this->_namespace($attrNamespace)) : $attrElement->addAttribute($attrName, $sanitized);
 
                 continue;
             }
@@ -162,7 +163,8 @@ abstract class Agenda
                 continue;
             }
 
-            $namespace ? $xml->addChild($namespace . ':' . $element, $this->_sanitize($this->_data[$element]), $this->_namespace($namespace)) : $xml->addChild($element, $this->_sanitize($this->_data[$element]));
+            $sanitized = $this->_sanitize($this->_data[$element]);
+            $namespace ? $xml->addChild($namespace . ':' . $element, $sanitized, $this->_namespace($namespace)) : $xml->addChild($element, $sanitized);
         }
     }
 
@@ -200,11 +202,13 @@ abstract class Agenda
      */
     protected function _sanitize($value): string
     {
+        $value = $this->multiple_transform((string)$value, Pohoda::$transformers);
+
         if (Pohoda::$sanitizeEncoding) {
             $value = \iconv(Pohoda::$encoding, 'utf-8', (string) \iconv('utf-8', Pohoda::$encoding . '//translit', (string) $value));
         }
 
-        return \htmlspecialchars((string) $value);
+        return \htmlspecialchars($value);
     }
 
     /**
@@ -244,5 +248,18 @@ abstract class Agenda
         }
 
         return self::$_resolvers[$class]->resolve($data);
+    }
+
+    /**
+     * Transform value using multiple transformers.
+     * 
+     * @param string $value
+     * @param ValueTransformer[] $transformers
+     */
+    private static function multiple_transform(string $value, array $transformers): string
+    {
+        return array_reduce($transformers, function (string $value, ValueTransformer $transformer): string {
+            return $transformer->transform($value);
+        }, $value);
     }
 }

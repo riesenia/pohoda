@@ -43,6 +43,7 @@ class UserList extends Agenda
     {
         $xml = $this->_createXML()->addChild('lst:listUserCode', '', $this->_namespace('lst'));
         $xml->addAttribute('version', '1.1');
+        // TODO: We usually sanitize attributes. Should we do the same here?
         $xml->addAttribute('code', $this->_data['code']);
         $xml->addAttribute('name', $this->_data['name']);
 
