@@ -202,11 +202,14 @@ abstract class Agenda
      */
     protected function _sanitize($value): string
     {
-        $value = $this->multiple_transform((string)$value, Pohoda::$transformers);
+        $transformers = Pohoda::$transformers;
 
         if (Pohoda::$sanitizeEncoding) {
-            $value = \iconv(Pohoda::$encoding, 'utf-8', (string) \iconv('utf-8', Pohoda::$encoding . '//translit', (string) $value));
+            $transformers[] = new ValueTransformer\EncodingTransformer('utf-8', Pohoda::$encoding . '//translit');
+            $transformers[] = new ValueTransformer\EncodingTransformer(Pohoda::$encoding, 'utf-8');
         }
+     
+        $value = $this->multiple_transform((string)$value, $transformers);
 
         return \htmlspecialchars($value);
     }
