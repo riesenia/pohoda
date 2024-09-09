@@ -73,9 +73,7 @@ class Pohoda
     /**
      * A set of transformers that will be used when serializing data.
      *
-     * Transformers are used lazily, only when serializing data and values are fed through the transforms in the order they are defined.
-     *
-     * @var Pohoda\ValueTransformer[]
+     * @var \Riesenia\Pohoda\ValueTransformer\ValueTransformer[]
      */
     public static $transformers = [];
 

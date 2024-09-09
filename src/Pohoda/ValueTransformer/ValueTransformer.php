@@ -8,17 +8,12 @@
 
 declare(strict_types=1);
 
-namespace Riesenia\Pohoda;
+namespace Riesenia\Pohoda\ValueTransformer;
 
-/**
- * A type used to transform values into xml data while the're being serialized.
- */
 interface ValueTransformer
 {
     /**
-     * Transform data into xml data.
-     *
-     * This function should generally be pure and not have any side effects.
+     * Transform data in xml nodes.
      *
      * @param string $value
      */

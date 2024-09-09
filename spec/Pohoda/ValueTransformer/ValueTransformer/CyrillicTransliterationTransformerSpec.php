@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace spec\Riesenia\Pohoda\ValueTransformer;
+namespace spec\Riesenia\Pohoda\ValueTransformer\ValueTransformer;
 
 use PhpSpec\ObjectBehavior;
 use Riesenia\Pohoda\ValueTransformer\CyrillicTransliterationTransformer;

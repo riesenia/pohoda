@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace Riesenia\Pohoda\ValueTransformer;
 
-use Riesenia\Pohoda\ValueTransformer;
-
 /**
- * A transformer that just returns the same value as was passed in.
+ * A transformer that returns the input value unchanged.
+ *
+ * This transformer performs no modifications and simply passes the original value through.
  */
 class IdentityTransformer implements ValueTransformer
 {

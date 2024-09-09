@@ -10,18 +10,17 @@ declare(strict_types=1);
 
 namespace Riesenia\Pohoda\ValueTransformer;
 
-use Riesenia\Pohoda\ValueTransformer;
-
 /**
  * A transformer that converts the encoding of a string.
  *
- * Since most transformers will expect utf-8 formated strings, this transformer should either be the last to run or be immediately
- * by another EncodingTransformer that will convert the string back to utf-8.
+ * Since most transformers will expect UTF-8 formatted strings, this transformer should either be the last
+ * to run or be immediately followed by another one that will convert the string back to UTF-8.
  */
 class EncodingTransformer implements ValueTransformer
 {
     /** @var string */
     private $fromEncoding;
+
     /** @var string */
     private $toEncoding;
 

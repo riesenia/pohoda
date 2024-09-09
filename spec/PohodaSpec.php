@@ -14,7 +14,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Riesenia\Pohoda;
 use Riesenia\Pohoda\Stock;
-use Riesenia\Pohoda\ValueTransformer;
+use Riesenia\Pohoda\ValueTransformer\ValueTransformer;
 
 class PohodaSpec extends ObjectBehavior
 {

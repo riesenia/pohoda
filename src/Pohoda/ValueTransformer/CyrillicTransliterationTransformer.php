@@ -11,8 +11,11 @@ declare(strict_types=1);
 
 namespace Riesenia\Pohoda\ValueTransformer;
 
-use Normalizer;
-use Riesenia\Pohoda\ValueTransformer;
+/**
+ * A transformer that rewrites Cyrillic script to its Latin alphabet equivalent.
+ *
+ * Note: This transformation is a phonetic representation and does not provide a translation of the text.
+ */
 
 class CyrillicTransliterationTransformer implements ValueTransformer
 {
@@ -21,11 +24,9 @@ class CyrillicTransliterationTransformer implements ValueTransformer
      */
     public function transform(string $value): string
     {
-        $normalized = Normalizer::normalize($value, Normalizer::FORM_C);
+        $normalized = \Normalizer::normalize($value, \Normalizer::FORM_C);
 
         if ($normalized === false) {
-            // If normalization failed the text probably isn't valid utf-8
-            // Since we can't really do anything about it let's just bail.
             return $value;
         }
 
@@ -38,8 +39,6 @@ class CyrillicTransliterationTransformer implements ValueTransformer
         $chars = \preg_split('//u', $normalized, -1, PREG_SPLIT_NO_EMPTY);
 
         if ($chars === false) {
-            // As far as I know preg_split can only fail when the regex pattern
-            // doesn't compile. If so something else has gone wrong. Let's bail.
             return $value;
         }
 

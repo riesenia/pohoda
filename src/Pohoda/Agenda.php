@@ -12,6 +12,8 @@ namespace Riesenia\Pohoda;
 
 use Riesenia\Pohoda;
 use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\ValueTransformer\EncodingTransformer;
+use Riesenia\Pohoda\ValueTransformer\ValueTransformer;
 
 /**
  * Base class for Pohoda objects.
@@ -205,8 +207,8 @@ abstract class Agenda
         $transformers = Pohoda::$transformers;
 
         if (Pohoda::$sanitizeEncoding) {
-            $transformers[] = new ValueTransformer\EncodingTransformer('utf-8', Pohoda::$encoding . '//translit');
-            $transformers[] = new ValueTransformer\EncodingTransformer(Pohoda::$encoding, 'utf-8');
+            $transformers[] = new EncodingTransformer('utf-8', Pohoda::$encoding . '//translit');
+            $transformers[] = new EncodingTransformer(Pohoda::$encoding, 'utf-8');
         }
 
         $value = \array_reduce($transformers, function (string $value, ValueTransformer $transformer): string {
