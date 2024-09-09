@@ -208,11 +208,10 @@ abstract class Agenda
             $transformers[] = new ValueTransformer\EncodingTransformer('utf-8', Pohoda::$encoding . '//translit');
             $transformers[] = new ValueTransformer\EncodingTransformer(Pohoda::$encoding, 'utf-8');
         }
-     
-        $value = array_reduce($transformers, function (string $value, ValueTransformer $transformer): string {
+
+        $value = \array_reduce($transformers, function (string $value, ValueTransformer $transformer): string {
             return $transformer->transform($value);
         }, (string) $value);
-
 
         return \htmlspecialchars($value);
     }

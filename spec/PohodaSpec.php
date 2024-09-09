@@ -169,7 +169,8 @@ class PohodaSpec extends ObjectBehavior
         expect($c->getWrappedObject())->toBe(null);
     }
 
-    public function it_runs_transformers_properly() {
+    public function it_runs_transformers_properly()
+    {
         $stock = new Stock([
             'code' => 'code1',
             'name' => 'name2',
@@ -192,7 +193,8 @@ class PohodaSpec extends ObjectBehavior
         Pohoda::$transformers = [];
     }
 
-    public function it_handles_static_arrays_correctly() {
+    public function it_handles_static_arrays_correctly()
+    {
         $stock = new Stock([
             'code' => 'code1',
             'name' => 'name2',
@@ -204,7 +206,7 @@ class PohodaSpec extends ObjectBehavior
 
         $this->open(null, 'ABC')->shouldReturn(true);
         $this->addItem('item_id', $stock);
-        expect(count(Pohoda::$transformers))->toBe(0);
+        expect(\count(Pohoda::$transformers))->toBe(0);
         $this->close();
 
         // Don't sanitize in any other test

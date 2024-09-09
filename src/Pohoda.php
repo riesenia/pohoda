@@ -70,12 +70,12 @@ class Pohoda
     /** @var bool */
     public static $sanitizeEncoding = false;
 
-    /** 
+    /**
      * A set of transformers that will be used when serializing data.
-     * 
+     *
      * Transformers are used lazily, only when serializing data and values are fed through the transforms in the order they are defined.
-     * 
-     * @var ValueTransformer[] 
+     *
+     * @var Pohoda\ValueTransformer[]
      */
     public static $transformers = [];
 
@@ -137,7 +137,7 @@ class Pohoda
         if (!\class_exists($fullName)) {
             throw new \DomainException('Not allowed entity: ' . $name);
         }
-        
+
         return new $fullName($data, $this->_ico);
     }
 

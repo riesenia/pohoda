@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file is part of riesenia/pohoda package.
+ *
+ * Licensed under the MIT License
+ * (c) RIESENIA.com
+ */
+
+declare(strict_types=1);
 
 namespace spec\Riesenia\Pohoda\ValueTransformer;
 
@@ -7,17 +15,17 @@ use Riesenia\Pohoda\ValueTransformer\CyrillicTransliterationTransformer;
 
 class CyrillicTransliterationTransformerSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType(CyrillicTransliterationTransformer::class);
     }
 
-    function it_transforms_cyrillic_characters()
+    public function it_transforms_cyrillic_characters()
     {
         $this->transform('Привет мир!')->shouldReturn('Privet mir!');
     }
 
-    function it_keeps_czech_characters()
+    public function it_keeps_czech_characters()
     {
         $this->transform('Příliš žluťoučký kůň úpěl ďábelské ódy')->shouldReturn('Příliš žluťoučký kůň úpěl ďábelské ódy');
     }

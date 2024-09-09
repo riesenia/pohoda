@@ -5,6 +5,7 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
+
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -16,8 +17,10 @@ interface ValueTransformer
 {
     /**
      * Transform data into xml data.
-     * 
+     *
      * This function should generally be pure and not have any side effects.
+     *
+     * @param string $value
      */
     public function transform(string $value): string;
 }

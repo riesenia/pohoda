@@ -5,20 +5,24 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
+
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\ValueTransformer;
+
 use Riesenia\Pohoda\ValueTransformer;
 
 /**
  * A transformer that converts the encoding of a string.
- * 
+ *
  * Since most transformers will expect utf-8 formated strings, this transformer should either be the last to run or be immediately
  * by another EncodingTransformer that will convert the string back to utf-8.
  */
 class EncodingTransformer implements ValueTransformer
 {
+    /** @var string */
     private $fromEncoding;
+    /** @var string */
     private $toEncoding;
 
     /**
@@ -36,6 +40,12 @@ class EncodingTransformer implements ValueTransformer
      */
     public function transform(string $value): string
     {
-        return iconv($this->fromEncoding, $this->toEncoding, $value);
+        $result = \iconv($this->fromEncoding, $this->toEncoding, $value);
+
+        if ($result === false) {
+            return $value;
+        }
+
+        return $result;
     }
 }
