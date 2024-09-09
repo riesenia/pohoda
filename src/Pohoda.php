@@ -77,7 +77,7 @@ class Pohoda
      * 
      * @var ValueTransformer[] 
      */
-    public static array $transformers = [];
+    public static $transformers = [];
 
     /** @var string */
     protected $_ico;
