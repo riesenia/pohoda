@@ -16,7 +16,6 @@ namespace Riesenia\Pohoda\ValueTransformer;
  *
  * Note: This transformation is a phonetic representation and does not provide a translation of the text.
  */
-
 class CyrillicTransliterationTransformer implements ValueTransformer
 {
     /**
