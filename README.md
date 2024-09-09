@@ -152,3 +152,61 @@ $pohoda->addItem($code, $stock);
 
 $pohoda->close();
 ```
+
+## Príklad automatická konverzia na veľké písmo
+
+Pomocou rozhrania ValueTransformer môžeme implementovať transformátor, ktorý zmení všetky textové údaje na veľké písmena.
+
+```php
+use Riesenia\Pohoda;
+
+class Capitalizer implements \Riesenia\Pohoda\ValueTransformer
+{
+    public function transform(string $value): string
+    {
+        return \strtoupper($value);
+    }
+}
+
+// Register the capitalizer to be used to capitalize values
+Pohoda::transformers[] = new Capitalizer();
+
+$pohoda = new Pohoda('ICO');
+
+// create file
+$pohoda->open($filename, 'i_obj1', 'Import orders');
+
+// create order
+$order = $pohoda->createOrder([
+    'numberOrder' => $order_number,
+    'isReserved' => true,
+    'date' => $created,
+    'text' => '...',
+    'partnerIdentity' => [
+        'address' => [
+            'name' => $billing_name,
+            'street' => $billing_street,
+            'city' => $billing_city,
+            'zip' => $billing_zip,
+            'email' => $email,
+            'phone' => $phone
+        ],
+        'shipToAddress' => [
+            'name' => $shipping_name,
+            'street' => $shipping_street,
+            'city' => $shipping_city,
+            'zip' => $shipping_zip,
+            'email' => $email,
+            'phone' => $phone
+        ]
+    ]
+]);
+
+// add order to import (identified by $order_number)
+$pohoda->addItem($order_number, $order);
+
+// finish import file
+$pohoda->close();
+
+// When exporting the xml all values will end up capitalized.
+```

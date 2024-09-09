@@ -129,7 +129,8 @@ abstract class Agenda
                 // get element
                 $attrElement = $namespace ? $xml->children($namespace, true)->{$attrElement} : $xml->{$attrElement};
 
-                $attrNamespace ? $attrElement->addAttribute($attrNamespace . ':' . $attrName, $this->_sanitize($this->_data[$element]), $this->_namespace($attrNamespace)) : $attrElement->addAttribute($attrName, $this->_sanitize($this->_data[$element]));
+                $sanitized = $this->_sanitize($this->_data[$element]);
+                $attrNamespace ? $attrElement->addAttribute($attrNamespace . ':' . $attrName, $sanitized, $this->_namespace($attrNamespace)) : $attrElement->addAttribute($attrName, $sanitized);
 
                 continue;
             }
@@ -162,7 +163,8 @@ abstract class Agenda
                 continue;
             }
 
-            $namespace ? $xml->addChild($namespace . ':' . $element, $this->_sanitize($this->_data[$element]), $this->_namespace($namespace)) : $xml->addChild($element, $this->_sanitize($this->_data[$element]));
+            $sanitized = $this->_sanitize($this->_data[$element]);
+            $namespace ? $xml->addChild($namespace . ':' . $element, $sanitized, $this->_namespace($namespace)) : $xml->addChild($element, $sanitized);
         }
     }
 
@@ -200,11 +202,18 @@ abstract class Agenda
      */
     protected function _sanitize($value): string
     {
+        $transformers = Pohoda::$transformers;
+
         if (Pohoda::$sanitizeEncoding) {
-            $value = \iconv(Pohoda::$encoding, 'utf-8', (string) \iconv('utf-8', Pohoda::$encoding . '//translit', (string) $value));
+            $transformers[] = new ValueTransformer\EncodingTransformer('utf-8', Pohoda::$encoding . '//translit');
+            $transformers[] = new ValueTransformer\EncodingTransformer(Pohoda::$encoding, 'utf-8');
         }
 
-        return \htmlspecialchars((string) $value);
+        $value = \array_reduce($transformers, function (string $value, ValueTransformer $transformer): string {
+            return $transformer->transform($value);
+        }, (string) $value);
+
+        return \htmlspecialchars($value);
     }
 
     /**
