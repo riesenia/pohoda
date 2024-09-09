@@ -104,7 +104,6 @@ class Pohoda
      * Constructor.
      *
      * @param string $ico
-     * @param ValueTransformer[] $transformers
      */
     public function __construct($ico)
     {
@@ -138,7 +137,7 @@ class Pohoda
         if (!\class_exists($fullName)) {
             throw new \DomainException('Not allowed entity: ' . $name);
         }
-
+        
         return new $fullName($data, $this->_ico);
     }
 

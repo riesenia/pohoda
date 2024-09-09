@@ -212,7 +212,7 @@ class PohodaSpec extends ObjectBehavior
     }
 }
 
-class Capitalizer implements \Riesenia\Pohoda\ValueTransformer
+class Capitalizer implements ValueTransformer
 {
     public function transform(string $value): string
     {

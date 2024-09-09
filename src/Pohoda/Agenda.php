@@ -209,7 +209,10 @@ abstract class Agenda
             $transformers[] = new ValueTransformer\EncodingTransformer(Pohoda::$encoding, 'utf-8');
         }
      
-        $value = $this->multiple_transform((string)$value, $transformers);
+        $value = array_reduce($transformers, function (string $value, ValueTransformer $transformer): string {
+            return $transformer->transform($value);
+        }, (string) $value);
+
 
         return \htmlspecialchars($value);
     }
@@ -251,18 +254,5 @@ abstract class Agenda
         }
 
         return self::$_resolvers[$class]->resolve($data);
-    }
-
-    /**
-     * Transform value using multiple transformers.
-     * 
-     * @param string $value
-     * @param ValueTransformer[] $transformers
-     */
-    private static function multiple_transform(string $value, array $transformers): string
-    {
-        return array_reduce($transformers, function (string $value, ValueTransformer $transformer): string {
-            return $transformer->transform($value);
-        }, $value);
     }
 }
