@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
 
-// TODO: bikeshed the name before the next verions releases
 /**
  * A type used to transform values into xml data while the're being serialized.
  */
