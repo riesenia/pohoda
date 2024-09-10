@@ -169,7 +169,7 @@ class Capitalizer implements \Riesenia\Pohoda\ValueTransformer\ValueTransformer
 }
 
 // Register the capitalizer to be used to capitalize values
-Pohoda::transformers[] = new Capitalizer();
+Pohoda::$transformers[] = new Capitalizer();
 
 $pohoda = new Pohoda('ICO');
 
