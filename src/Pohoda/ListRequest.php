@@ -12,6 +12,7 @@ namespace Riesenia\Pohoda;
 
 use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\ListRequest\Filter;
+use Riesenia\Pohoda\ListRequest\RestrictionData;
 use Riesenia\Pohoda\ListRequest\UserFilterName;
 use Symfony\Component\OptionsResolver\Options;
 
@@ -27,6 +28,20 @@ class ListRequest extends Agenda
     public function addFilter(array $data): self
     {
         $this->_data['filter'] = new Filter($data, $this->_ico);
+
+        return $this;
+    }
+
+    /**
+     * Add restriction data.
+     *
+     * @param array<string,mixed> $data
+     *
+     * @return $this
+     */
+    public function addRestrictionData(array $data): self
+    {
+        $this->_data['restrictionData'] = new RestrictionData($data, $this->_ico);
 
         return $this;
     }
@@ -69,6 +84,10 @@ class ListRequest extends Agenda
             }
 
             $request = $xml->addChild($this->_data['namespace'] . ':request' . $this->_data['type']);
+
+            if (isset($this->_data['restrictionData'])) {
+                $this->_addElements($xml, ['restrictionData'], 'lst');
+            }
 
             $this->_addElements($request, ['filter', 'userFilterName'], 'ftr');
         }
