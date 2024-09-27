@@ -113,4 +113,16 @@ class ListRequestSpec extends ObjectBehavior
 
         $this->addFilter(['storage' => ['ids' => 'MAIN'], 'lastChanges' => '2018-04-29 14:30'])->getXML()->asXML()->shouldReturn('<lStk:listStockRequest version="2.0" stockVersion="2.0"><lStk:requestStock><ftr:filter><ftr:storage><typ:ids>MAIN</typ:ids></ftr:storage><ftr:lastChanges>2018-04-29T14:30:00</ftr:lastChanges></ftr:filter></lStk:requestStock></lStk:listStockRequest>');
     }
+
+    public function it_creates_proper_restriction_data()
+    {
+        $this->beConstructedWith(
+            ['type' => 'Invoice'],
+            '123'
+        );
+
+        $this->addRestrictionData(['liquidation' => true]);
+
+        $this->getXml()->asXML()->shouldReturn('<lst:listInvoiceRequest version="2.0" invoiceVersion="2.0" invoiceType="issuedInvoice"><lst:requestInvoice/><lst:restrictionData><lst:liquidation>true</lst:liquidation></lst:restrictionData></lst:listInvoiceRequest>');
+    }
 }
