@@ -36,9 +36,9 @@ abstract class Document extends Agenda
      *
      * @param array<string,mixed> $data
      *
-     * @return $this
+     * @return Part
      */
-    public function addItem(array $data): self
+    public function addItem(array $data): Part
     {
         $key = $this->_getDocumentName() . 'Detail';
 
@@ -46,9 +46,10 @@ abstract class Document extends Agenda
             $this->_data[$key] = [];
         }
 
-        $this->_data[$key][] = $this->_getDocumentPart('Item', $data, $this->_ico);
+        $part = $this->_getDocumentPart('Item', $data, $this->_ico);
+        $this->_data[$key][] = $part;
 
-        return $this;
+        return $part;
     }
 
     /**

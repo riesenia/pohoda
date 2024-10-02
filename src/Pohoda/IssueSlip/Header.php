@@ -19,7 +19,7 @@ class Header extends DocumentHeader
     protected $_refElements = ['number', 'priceLevel', 'paymentType', 'centre', 'activity', 'contract', 'carrier', 'regVATinEU', 'MOSS', 'evidentiaryResourcesMOSS'];
 
     /** @var string[] */
-    protected $_elements = ['number', 'date', 'numberOrder', 'dateOrder', 'text', 'partnerIdentity', 'acc', 'symPar', 'priceLevel', 'paymentType', 'isExecuted', 'isDelivered', 'centre', 'activity', 'contract', 'carrier', 'regVATinEU', 'MOSS', 'evidentiaryResourcesMOSS', 'accountingPeriodMOSS', 'note', 'intNote'];
+    protected $_elements = ['number', 'date', 'numberOrder', 'dateOrder', 'text', 'partnerIdentity', 'acc', 'symPar', 'priceLevel', 'paymentType', 'isExecuted', 'isDelivered', 'centre', 'activity', 'contract', 'carrier', 'regVATinEU', 'MOSS', 'evidentiaryResourcesMOSS', 'accountingPeriodMOSS', 'note', 'intNote', 'histRate'];
 
     /**
      * {@inheritdoc}
@@ -37,5 +37,6 @@ class Header extends DocumentHeader
         $resolver->setNormalizer('symPar', $resolver->getNormalizer('string20'));
         $resolver->setNormalizer('isExecuted', $resolver->getNormalizer('bool'));
         $resolver->setNormalizer('isDelivered', $resolver->getNormalizer('bool'));
+        $resolver->setNormalizer('histRate', $resolver->getNormalizer('bool'));
     }
 }
