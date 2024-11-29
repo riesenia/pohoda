@@ -39,8 +39,12 @@ class OptionsResolver extends SymfonyOptionsResolver
             return $this->_loadedNormalizers[$type];
         }
 
-        if (\strpos($type, 'string') === 0) {
+        if (\substr($type, 0, 6) === 'string') {
+            // strings have length
             $normalizer = $this->_createNormalizer('string', (int) \substr($type, 6));
+        } elseif (\substr($type, 0, 1) === '?') {
+            // types can be nullable
+            $normalizer = $this->_createNormalizer(\substr($type, 1), true);
         } else {
             $normalizer = $this->_createNormalizer($type);
         }
@@ -66,6 +70,7 @@ class OptionsResolver extends SymfonyOptionsResolver
                     // remove new lines
                     $value = \str_replace(["\r\n", "\r", "\n"], ' ', $value);
 
+                    // param is used for string length
                     return \mb_substr($value, 0, $param, 'utf-8');
                 };
 
@@ -74,7 +79,12 @@ class OptionsResolver extends SymfonyOptionsResolver
             case 'time':
                 $format = static::DATE_FORMATS[$type];
 
-                return function ($options, $value) use ($format) {
+                return function ($options, $value) use ($param, $format) {
+                    // param is used for nullable
+                    if ($param && !$value) {
+                        return '';
+                    }
+
                     if ($value instanceof \DateTimeInterface) {
                         return $value->format($format);
                     }

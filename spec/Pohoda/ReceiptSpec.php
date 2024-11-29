@@ -18,6 +18,7 @@ class ReceiptSpec extends ObjectBehavior
     {
         $this->beConstructedWith([
             'date' => new \DateTimeImmutable('2015-01-10'),
+            'dateOfReceipt' => '',
             'text' => 'Prijemka',
             'partnerIdentity' => [
                 'id' => 20
@@ -77,6 +78,6 @@ class ReceiptSpec extends ObjectBehavior
 
     protected function _defaultHeader()
     {
-        return '<pri:date>2015-01-10</pri:date><pri:text>Prijemka</pri:text><pri:partnerIdentity><typ:id>20</typ:id></pri:partnerIdentity><pri:activity><typ:id>1</typ:id></pri:activity><pri:intNote>Note</pri:intNote>';
+        return '<pri:date>2015-01-10</pri:date><pri:dateOfReceipt/><pri:text>Prijemka</pri:text><pri:partnerIdentity><typ:id>20</typ:id></pri:partnerIdentity><pri:activity><typ:id>1</typ:id></pri:activity><pri:intNote>Note</pri:intNote>';
     }
 }
