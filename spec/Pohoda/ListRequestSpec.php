@@ -41,6 +41,31 @@ class ListRequestSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<lst:listOrderRequest version="2.0" orderVersion="2.0" orderType="receivedOrder"><lst:requestOrder/></lst:listOrderRequest>');
     }
 
+    public function it_creates_correct_xml_for_order_with_complex_filter()
+    {
+        $this->beConstructedWith([
+            'type' => 'Order'
+        ], '123');
+
+        $this->addFilter([
+            'extId' => [
+                'ids' => '2022041186',
+                'exSystemName' => 'Riešenia',
+            ],
+            'selectedNumbers' => [
+                'number' => [
+                    'numberRequested' => '2022041186',
+                ],
+            ],
+            'selectedCompanys' => [
+                'company' => ['Riešenia, spol. s r.o.'],
+            ],
+            'selectedIco' => [
+                'ico' => [35948345],
+            ],
+        ])->getXML()->asXML()->shouldReturn('<lst:listOrderRequest version="2.0" orderVersion="2.0" orderType="receivedOrder"><lst:requestOrder><ftr:filter><ftr:extId><typ:ids>2022041186</typ:ids><typ:exSystemName>Riešenia</typ:exSystemName></ftr:extId><ftr:selectedNumbers><ftr:number><typ:numberRequested>2022041186</typ:numberRequested></ftr:number></ftr:selectedNumbers><ftr:selectedCompanys><ftr:company>Riešenia, spol. s r.o.</ftr:company></ftr:selectedCompanys><ftr:selectedIco><ftr:ico>35948345</ftr:ico></ftr:selectedIco></ftr:filter></lst:requestOrder></lst:listOrderRequest>');
+    }
+
     public function it_creates_correct_xml_for_advance_invoice()
     {
         $this->beConstructedWith([
