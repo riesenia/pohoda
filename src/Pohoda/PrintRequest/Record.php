@@ -12,6 +12,7 @@ namespace Riesenia\Pohoda\PrintRequest;
 
 use Riesenia\Pohoda\Agenda;
 use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Filter\QueryFilter;
 
 class Record extends Agenda
 {
@@ -22,6 +23,9 @@ class Record extends Agenda
     {
         // process filter
         $data['filter'] = new Filter($data['filter'], $ico, $resolveOptions);
+
+        // process query filter (SQL)
+        $data['queryFilter'] = new QueryFilter($data['queryFilter'], $ico, $resolveOptions);
 
         parent::__construct($data, $ico, $resolveOptions);
     }
@@ -34,7 +38,7 @@ class Record extends Agenda
         $xml = $this->_createXML()->addChild('prn:record', '', $this->_namespace('prn'));
         $xml->addAttribute('agenda', $this->_data['agenda']);
 
-        $this->_addElements($xml, ['filter'], 'prn');
+        $this->_addElements($xml, ['filter', 'queryFilter'], 'prn');
 
         return $xml;
     }
@@ -45,7 +49,7 @@ class Record extends Agenda
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
-        $resolver->setDefined(['agenda', 'filter']);
+        $resolver->setDefined(['agenda', 'filter', 'queryFilter']);
 
         $resolver->setRequired('agenda');
         $resolver->setRequired('filter');
