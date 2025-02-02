@@ -39,7 +39,8 @@ class QueryFilter extends Agenda
         $resolver->setDefined($this->_elements);
 
         // validate / format options
-        $resolver->setNormalizer('filter', $resolver->getNormalizer('string'));
+        $resolver->setRequired('filter');
+        $resolver->setNormalizer('filter', $resolver->getNormalizer('string255'));
         $resolver->setNormalizer('textName', $resolver->getNormalizer('string200'));
     }
 }
