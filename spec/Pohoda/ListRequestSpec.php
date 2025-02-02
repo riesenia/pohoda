@@ -105,6 +105,18 @@ class ListRequestSpec extends ObjectBehavior
         $this->addUserFilterName('CustomFilter')->getXML()->asXML()->shouldReturn('<lst:listInvoiceRequest version="2.0" invoiceVersion="2.0" invoiceType="issuedInvoice"><lst:requestInvoice><ftr:userFilterName>CustomFilter</ftr:userFilterName></lst:requestInvoice></lst:listInvoiceRequest>');
     }
 
+    public function it_creates_correct_xml_for_invoice_with_query_filter()
+    {
+        $this->beConstructedWith([
+            'type' => 'Invoice'
+        ], '123');
+
+        $this->addQueryFilter([
+            'filter' => '(FA.DatSave>=CONVERT(DATETIME, \'01/31/2025 16:30:00\', 101) OR FA.DatLikv>=CONVERT(DATETIME, \'01/31/2025\', 101))',
+            'textName' => '(Uloženo >= 2025-01-31 16:30:00; Likv. >= 2025-01-31)',
+        ])->getXML()->asXML()->shouldReturn('<lst:listInvoiceRequest version="2.0" invoiceVersion="2.0" invoiceType="issuedInvoice"><lst:requestInvoice><ftr:queryFilter><ftr:filter>(FA.DatSave&gt;=CONVERT(DATETIME, \'01/31/2025 16:30:00\', 101) OR FA.DatLikv&gt;=CONVERT(DATETIME, \'01/31/2025\', 101))</ftr:filter><ftr:textName>(Uloženo &gt;= 2025-01-31 16:30:00; Likv. &gt;= 2025-01-31)</ftr:textName></ftr:queryFilter></lst:requestInvoice></lst:listInvoiceRequest>');
+    }
+
     public function it_creates_correct_xml_for_stock_with_complex_filter()
     {
         $this->beConstructedWith([
