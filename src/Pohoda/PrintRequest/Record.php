@@ -22,10 +22,14 @@ class Record extends Agenda
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process filter
-        $data['filter'] = new Filter($data['filter'], $ico, $resolveOptions);
+        if (isset($data['filter'])) {
+            $data['filter'] = new Filter($data['filter'], $ico, $resolveOptions);
+        }
 
         // process query filter (SQL)
-        $data['queryFilter'] = new QueryFilter($data['queryFilter'], $ico, $resolveOptions);
+        if (isset($data['queryFilter'])) {
+            $data['queryFilter'] = new QueryFilter($data['queryFilter'], $ico, $resolveOptions);
+        }
 
         parent::__construct($data, $ico, $resolveOptions);
     }
@@ -52,6 +56,5 @@ class Record extends Agenda
         $resolver->setDefined(['agenda', 'filter', 'queryFilter']);
 
         $resolver->setRequired('agenda');
-        $resolver->setRequired('filter');
     }
 }
