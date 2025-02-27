@@ -12,6 +12,7 @@ namespace Riesenia\Pohoda;
 
 use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\ListRequest\Filter;
+use Riesenia\Pohoda\ListRequest\Limit;
 use Riesenia\Pohoda\ListRequest\RestrictionData;
 use Riesenia\Pohoda\ListRequest\StockRestrictionData;
 use Riesenia\Pohoda\ListRequest\UserFilterName;
@@ -66,6 +67,21 @@ class ListRequest extends Agenda
     }
 
     /**
+     * Add limit.
+     *
+     * @param array<string,mixed> $data
+     *
+     * @return $this
+     */
+    public function addLimit(array $data): self
+    {
+        $data['namespace'] = $this->_data['namespace'];
+        $this->_data['limit'] = new Limit($data, $this->_ico);
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getXML(): \SimpleXMLElement
@@ -92,6 +108,10 @@ class ListRequest extends Agenda
 
             if (isset($this->_data['restrictionData'])) {
                 $this->_addElements($xml, ['restrictionData'], 'lst');
+            }
+
+            if (isset($this->_data['limit'])) {
+                $this->_addElements($xml, ['limit'], $this->_data['namespace']);
             }
 
             $this->_addElements($request, ['filter', 'userFilterName'], 'ftr');
