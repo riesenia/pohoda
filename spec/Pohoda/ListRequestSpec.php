@@ -125,4 +125,23 @@ class ListRequestSpec extends ObjectBehavior
 
         $this->getXml()->asXML()->shouldReturn('<lst:listInvoiceRequest version="2.0" invoiceVersion="2.0" invoiceType="issuedInvoice"><lst:requestInvoice/><lst:restrictionData><lst:liquidation>true</lst:liquidation></lst:restrictionData></lst:listInvoiceRequest>');
     }
+
+    public function it_creates_proper_stock_restriction_data()
+    {
+        $this->beConstructedWith(
+            ['type' => 'Stock'],
+            '123'
+        );
+
+        $this->addRestrictionData([
+            'relatedFiles' => true,
+            'stockAttach' => false,
+            'attachments' => false,
+            'alternativeStocks' => false,
+            'stockItem' => false,
+            'stockSerialNumber' => false,
+        ]);
+
+        $this->getXml()->asXML()->shouldReturn('<lStk:listStockRequest version="2.0" stockVersion="2.0"><lStk:requestStock/><lStk:restrictionData><lStk:attachments>false</lStk:attachments><lStk:stockItem>false</lStk:stockItem><lStk:stockAttach>false</lStk:stockAttach><lStk:stockSerialNumber>false</lStk:stockSerialNumber><lStk:relatedFiles>true</lStk:relatedFiles><lStk:alternativeStocks>false</lStk:alternativeStocks></lStk:restrictionData></lStk:listStockRequest>');
+    }
 }

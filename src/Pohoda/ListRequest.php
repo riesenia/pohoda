@@ -13,6 +13,7 @@ namespace Riesenia\Pohoda;
 use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\ListRequest\Filter;
 use Riesenia\Pohoda\ListRequest\RestrictionData;
+use Riesenia\Pohoda\ListRequest\StockRestrictionData;
 use Riesenia\Pohoda\ListRequest\UserFilterName;
 use Symfony\Component\OptionsResolver\Options;
 
@@ -41,7 +42,11 @@ class ListRequest extends Agenda
      */
     public function addRestrictionData(array $data): self
     {
-        $this->_data['restrictionData'] = new RestrictionData($data, $this->_ico);
+        if ($this->_data['type'] == 'Stock') {
+            $this->_data['restrictionData'] = new StockRestrictionData($data, $this->_ico);
+        } else {
+            $this->_data['restrictionData'] = new RestrictionData($data, $this->_ico);
+        }
 
         return $this;
     }
