@@ -91,6 +91,10 @@ class ListRequest extends Agenda
             $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':listUserCodeRequest', '', $this->_namespace($this->_data['namespace']));
             $xml->addAttribute('version', '1.1');
             $xml->addAttribute('listVersion', '1.1');
+
+            if (isset($this->_data['limit'])) {
+                $this->_addElements($xml, ['limit'], $this->_data['namespace']);
+            }
         } else {
             $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', '', $this->_namespace($this->_data['namespace']));
             $xml->addAttribute('version', '2.0');
@@ -104,14 +108,14 @@ class ListRequest extends Agenda
                 $xml->addAttribute($this->_getLcFirstType() . 'Type', $this->_data[$this->_getLcFirstType() . 'Type']);
             }
 
+            if (isset($this->_data['limit'])) {
+                $this->_addElements($xml, ['limit'], $this->_data['namespace']);
+            }
+
             $request = $xml->addChild($this->_data['namespace'] . ':request' . $this->_data['type']);
 
             if (isset($this->_data['restrictionData'])) {
                 $this->_addElements($xml, ['restrictionData'], 'lst');
-            }
-
-            if (isset($this->_data['limit'])) {
-                $this->_addElements($xml, ['limit'], $this->_data['namespace']);
             }
 
             $this->_addElements($request, ['filter', 'userFilterName'], 'ftr');

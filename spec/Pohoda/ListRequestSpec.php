@@ -154,7 +154,7 @@ class ListRequestSpec extends ObjectBehavior
 
         $this->addLimit(['count' => 10]);
 
-        $this->getXml()->asXML()->shouldReturn('<lst:listInvoiceRequest version="2.0" invoiceVersion="2.0" invoiceType="issuedInvoice"><lst:requestInvoice/><lst:limit><ftr:count>10</ftr:count></lst:limit></lst:listInvoiceRequest>');
+        $this->getXml()->asXML()->shouldReturn('<lst:listInvoiceRequest version="2.0" invoiceVersion="2.0" invoiceType="issuedInvoice"><lst:limit><ftr:count>10</ftr:count></lst:limit><lst:requestInvoice/></lst:listInvoiceRequest>');
     }
 
     public function it_creates_proper_stock_limit()
@@ -169,6 +169,6 @@ class ListRequestSpec extends ObjectBehavior
             'idFrom' => 50,
         ]);
 
-        $this->getXml()->asXML()->shouldReturn('<lStk:listStockRequest version="2.0" stockVersion="2.0"><lStk:requestStock/><lStk:limit><ftr:idFrom>50</ftr:idFrom><ftr:count>10</ftr:count></lStk:limit></lStk:listStockRequest>');
+        $this->getXml()->asXML()->shouldReturn('<lStk:listStockRequest version="2.0" stockVersion="2.0"><lStk:limit><ftr:idFrom>50</ftr:idFrom><ftr:count>10</ftr:count></lStk:limit><lStk:requestStock/></lStk:listStockRequest>');
     }
 }
