@@ -12,7 +12,9 @@ namespace Riesenia\Pohoda;
 
 use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\ListRequest\Filter;
+use Riesenia\Pohoda\ListRequest\Limit;
 use Riesenia\Pohoda\ListRequest\RestrictionData;
+use Riesenia\Pohoda\ListRequest\StockRestrictionData;
 use Riesenia\Pohoda\ListRequest\UserFilterName;
 use Symfony\Component\OptionsResolver\Options;
 
@@ -41,7 +43,11 @@ class ListRequest extends Agenda
      */
     public function addRestrictionData(array $data): self
     {
-        $this->_data['restrictionData'] = new RestrictionData($data, $this->_ico);
+        if ($this->_data['type'] == 'Stock') {
+            $this->_data['restrictionData'] = new StockRestrictionData($data, $this->_ico);
+        } else {
+            $this->_data['restrictionData'] = new RestrictionData($data, $this->_ico);
+        }
 
         return $this;
     }
@@ -61,6 +67,21 @@ class ListRequest extends Agenda
     }
 
     /**
+     * Add limit.
+     *
+     * @param array<string,mixed> $data
+     *
+     * @return $this
+     */
+    public function addLimit(array $data): self
+    {
+        $data['namespace'] = $this->_data['namespace'];
+        $this->_data['limit'] = new Limit($data, $this->_ico);
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getXML(): \SimpleXMLElement
@@ -70,6 +91,10 @@ class ListRequest extends Agenda
             $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':listUserCodeRequest', '', $this->_namespace($this->_data['namespace']));
             $xml->addAttribute('version', '1.1');
             $xml->addAttribute('listVersion', '1.1');
+
+            if (isset($this->_data['limit'])) {
+                $this->_addElements($xml, ['limit'], $this->_data['namespace']);
+            }
         } else {
             $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', '', $this->_namespace($this->_data['namespace']));
             $xml->addAttribute('version', '2.0');
@@ -81,6 +106,10 @@ class ListRequest extends Agenda
 
             if (isset($this->_data[$this->_getLcFirstType() . 'Type'])) {
                 $xml->addAttribute($this->_getLcFirstType() . 'Type', $this->_data[$this->_getLcFirstType() . 'Type']);
+            }
+
+            if (isset($this->_data['limit'])) {
+                $this->_addElements($xml, ['limit'], $this->_data['namespace']);
             }
 
             $request = $xml->addChild($this->_data['namespace'] . ':request' . $this->_data['type']);
