@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Riesenia\Pohoda;
 
 use Riesenia\Pohoda\Common\OptionsResolver;
+use Riesenia\Pohoda\Filter\QueryFilter;
 use Riesenia\Pohoda\ListRequest\Filter;
 use Riesenia\Pohoda\ListRequest\Limit;
 use Riesenia\Pohoda\ListRequest\RestrictionData;
@@ -30,6 +31,20 @@ class ListRequest extends Agenda
     public function addFilter(array $data): self
     {
         $this->_data['filter'] = new Filter($data, $this->_ico);
+
+        return $this;
+    }
+
+    /**
+     * Add query filter (SQL).
+     *
+     * @param array<string,mixed> $data
+     *
+     * @return $this
+     */
+    public function addQueryFilter(array $data): self
+    {
+        $this->_data['queryFilter'] = new QueryFilter($data, $this->_ico);
 
         return $this;
     }
@@ -118,7 +133,7 @@ class ListRequest extends Agenda
                 $this->_addElements($xml, ['restrictionData'], 'lst');
             }
 
-            $this->_addElements($request, ['filter', 'userFilterName'], 'ftr');
+            $this->_addElements($request, ['filter', 'queryFilter', 'userFilterName'], 'ftr');
         }
 
         return $xml;
