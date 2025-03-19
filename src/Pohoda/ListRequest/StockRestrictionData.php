@@ -16,21 +16,7 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 class StockRestrictionData extends Agenda
 {
     /** @var string[] */
-    protected $_elements = [
-        'categories',
-        'pictures',
-        'attachments',
-        'intParameters',
-        'stockItem',
-        'stockPriceItem',
-        'stockParameters',
-        'stockAttach',
-        'stockSerialNumber',
-        'relatedStocks',
-        'relatedFiles',
-        'relatedLinks',
-        'alternativeStocks',
-    ];
+    protected $_elements = ['categories', 'pictures', 'attachments', 'intParameters', 'stockItem', 'stockPriceItem', 'stockParameters', 'stockAttach', 'stockSerialNumber', 'relatedStocks', 'relatedFiles', 'relatedLinks', 'alternativeStocks'];
 
     /**
      * {@inheritdoc}

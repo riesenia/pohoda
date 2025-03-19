@@ -36,7 +36,6 @@ class Limit extends Agenda
      */
     protected function _configureOptions(OptionsResolver $resolver)
     {
-        // available options
         $resolver->setDefined($this->_elements);
         $resolver->setDefault('namespace', function (Options $options) {
             return $options['namespace'];

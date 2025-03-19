@@ -151,7 +151,7 @@ class ListRequestSpec extends ObjectBehavior
             'attachments' => false,
             'alternativeStocks' => false,
             'stockItem' => false,
-            'stockSerialNumber' => false,
+            'stockSerialNumber' => false
         ]);
 
         $this->getXml()->asXML()->shouldReturn('<lStk:listStockRequest version="2.0" stockVersion="2.0"><lStk:requestStock/><lStk:restrictionData><lStk:attachments>false</lStk:attachments><lStk:stockItem>false</lStk:stockItem><lStk:stockAttach>false</lStk:stockAttach><lStk:stockSerialNumber>false</lStk:stockSerialNumber><lStk:relatedFiles>true</lStk:relatedFiles><lStk:alternativeStocks>false</lStk:alternativeStocks></lStk:restrictionData></lStk:listStockRequest>');
@@ -178,7 +178,7 @@ class ListRequestSpec extends ObjectBehavior
 
         $this->addLimit([
             'count' => 10,
-            'idFrom' => 50,
+            'idFrom' => 50
         ]);
 
         $this->getXml()->asXML()->shouldReturn('<lStk:listStockRequest version="2.0" stockVersion="2.0"><lStk:limit><ftr:idFrom>50</ftr:idFrom><ftr:count>10</ftr:count></lStk:limit><lStk:requestStock/></lStk:listStockRequest>');
