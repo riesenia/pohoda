@@ -13,9 +13,12 @@ namespace Riesenia\Pohoda\Document;
 use Riesenia\Pohoda\Common\OptionsResolver;
 use Riesenia\Pohoda\Type\CurrencyItem;
 use Riesenia\Pohoda\Type\StockItem;
+use Riesenia\Pohoda\Common\AddParameterTrait;
 
 abstract class Item extends Part
 {
+    use AddParameterTrait;
+
     /**
      * {@inheritdoc}
      */
