@@ -143,7 +143,7 @@ class ListRequest extends Agenda
      * {@inheritdoc}
      */
 	protected function _configureOptions(OptionsResolver $resolver): void {
-		$resolver->setDefined(['type', 'namespace', 'orderType', 'invoiceType']);
+		$resolver->setDefined(['type', 'namespace', 'orderType', 'invoiceType', 'offerType']);
 		$resolver->setRequired('type');
 		$resolver->setNormalizer('type', function ($options, $value) {
 			// Addressbook is custom
