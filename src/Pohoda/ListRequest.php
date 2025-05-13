@@ -142,59 +142,59 @@ class ListRequest extends Agenda
     /**
      * {@inheritdoc}
      */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined(['type', 'namespace', 'orderType', 'invoiceType']);
+	protected function _configureOptions(OptionsResolver $resolver): void {
+		$resolver->setDefined(['type', 'namespace', 'orderType', 'invoiceType']);
+		$resolver->setRequired('type');
+		$resolver->setNormalizer('type', function ($options, $value) {
+			// Addressbook is custom
+			if ($value === 'Addressbook') {
+				return 'AddressBook';
+			}
 
-        // validate / format options
-        $resolver->setRequired('type');
-        $resolver->setNormalizer('type', function ($options, $value) {
-            // Addressbook is custom
-            if ($value == 'Addressbook') {
-                return 'AddressBook';
-            }
+			// IssueSlip is custom
+			if ($value === 'IssueSlip') {
+				return 'Vydejka';
+			}
 
-            // IssueSlip is custom
-            if ($value == 'IssueSlip') {
-                return 'Vydejka';
-            }
+			// CashSlip is custom
+			if ($value === 'CashSlip') {
+				return 'Prodejka';
+			}
 
-            // CashSlip is custom
-            if ($value == 'CashSlip') {
-                return 'Prodejka';
-            }
+			return $value;
+		});
+		$resolver->setDefault('namespace', function (Options $options) {
+			if ($options['type'] === 'Stock') {
+				return 'lStk';
+			}
 
-            return $value;
-        });
-        $resolver->setDefault('namespace', function (Options $options) {
-            if ($options['type'] == 'Stock') {
-                return 'lStk';
-            }
+			if ($options['type'] === 'AddressBook') {
+				return 'lAdb';
+			}
 
-            if ($options['type'] == 'AddressBook') {
-                return 'lAdb';
-            }
+			if ($options['type'] === 'Contract') {
+				return 'lCon';
+			}
 
-            return 'lst';
-        });
-        $resolver->setAllowedValues('orderType', [null, 'receivedOrder', 'issuedOrder']);
-        $resolver->setDefault('orderType', function (Options $options) {
-            if ($options['type'] == 'Order') {
-                return 'receivedOrder';
-            }
+			return 'lst';
+		});
+		$resolver->setAllowedValues('orderType', [null, 'receivedOrder', 'issuedOrder']);
+		$resolver->setDefault('orderType', function (Options $options) {
+			if ($options['type'] === 'Order') {
+				return 'receivedOrder';
+			}
 
-            return null;
-        });
-        $resolver->setAllowedValues('invoiceType', [null, 'issuedInvoice', 'issuedCreditNotice', 'issuedDebitNote', 'issuedAdvanceInvoice', 'receivable', 'issuedProformaInvoice', 'penalty', 'issuedCorrectiveTax', 'receivedInvoice', 'receivedCreditNotice', 'receivedDebitNote', 'receivedAdvanceInvoice', 'commitment', 'receivedProformaInvoice', 'receivedCorrectiveTax']);
-        $resolver->setDefault('invoiceType', function (Options $options) {
-            if ($options['type'] == 'Invoice') {
-                return 'issuedInvoice';
-            }
+			return null;
+		});
+		$resolver->setAllowedValues('invoiceType', [null, 'issuedInvoice', 'issuedCreditNotice', 'issuedDebitNote', 'issuedAdvanceInvoice', 'receivable', 'issuedProformaInvoice', 'penalty', 'issuedCorrectiveTax', 'receivedInvoice', 'receivedCreditNotice', 'receivedDebitNote', 'receivedAdvanceInvoice', 'commitment', 'receivedProformaInvoice', 'receivedCorrectiveTax']);
+		$resolver->setDefault('invoiceType', function (Options $options) {
+			if ($options['type'] === 'Invoice') {
+				return 'issuedInvoice';
+			}
 
-            return null;
-        });
-    }
+			return null;
+		});
+	}
 
     /**
      * Get LC first type name.
