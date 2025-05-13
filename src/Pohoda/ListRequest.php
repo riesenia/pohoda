@@ -178,6 +178,15 @@ class ListRequest extends Agenda
 
 			return 'lst';
 		});
+
+		$resolver->setAllowedValues('offerType', [null, 'issuedOffer', 'receivedOffer']);
+		$resolver->setDefault('offerType', function (Options $options) {
+			if ($options['type'] === 'Offer') {
+				return 'receivedOffer';
+			}
+
+			return null;
+		});
 		$resolver->setAllowedValues('orderType', [null, 'receivedOrder', 'issuedOrder']);
 		$resolver->setDefault('orderType', function (Options $options) {
 			if ($options['type'] === 'Order') {
