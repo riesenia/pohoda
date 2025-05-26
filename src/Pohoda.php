@@ -15,6 +15,7 @@ use Riesenia\Pohoda\Agenda;
 /**
  * Factory for Pohoda objects.
  *
+ * @method \Riesenia\Pohoda\AccountingListRequest createAccountingListRequest(array $data = [])
  * @method \Riesenia\Pohoda\Addressbook   createAddressbook(array $data = [])
  * @method \Riesenia\Pohoda\Bank          createBank(array $data = [])
  * @method \Riesenia\Pohoda\CashSlip      createCashSlip(array $data = [])
