@@ -136,7 +136,7 @@ class ListRequest extends Agenda {
 	 * {@inheritdoc}
 	 */
 	protected function _configureOptions(OptionsResolver $resolver): void {
-		$resolver->setDefined(['type', 'namespace', 'orderType', 'invoiceType', 'offerType', 'enquiryType', 'stockType']);
+		$resolver->setDefined(['type', 'namespace', 'orderType', 'invoiceType', 'offerType', 'enquiryType']);
 		$resolver->setRequired('type');
 		$resolver->setNormalizer('type', function ($options, $value) {
 			// Addressbook is custom
@@ -200,14 +200,6 @@ class ListRequest extends Agenda {
 		$resolver->setDefault('invoiceType', function (Options $options) {
 			if ($options['type'] === 'Invoice') {
 				return 'issuedInvoice';
-			}
-
-			return null;
-		});
-		$resolver->setAllowedValues('stockType', [null, 'card', 'text', 'service', 'package', 'set', 'product']);
-		$resolver->setDefault('stockType', function (Options $options) {
-			if ($options['type'] === 'Stock') {
-				return 'card';
 			}
 
 			return null;
