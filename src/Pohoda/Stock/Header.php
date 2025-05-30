@@ -28,7 +28,7 @@ class Header extends Agenda
     ];
 
     /** @var string[] */
-    protected $_elements = ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'storage', 'typePrice', 'purchasingPrice', 'purchasingPricePayVAT', 'sellingPrice', 'sellingPricePayVAT', 'limitMin', 'limitMax', 'mass', 'volume', 'supplier', 'orderName', 'orderQuantity', 'shortName', 'typeRP', 'guaranteeType', 'guarantee', 'producer', 'typeServiceMOSS', 'description', 'description2', 'note', 'intrastat', 'recyclingContrib'];
+    protected $_elements = ['stockType', 'code', 'EAN', 'PLU', 'isSales', 'isSerialNumber', 'isInternet', 'isBatch', 'purchasingRateVAT', 'sellingRateVAT', 'name', 'nameComplement', 'unit', 'unit2', 'unit3', 'coefficient2', 'coefficient3', 'storage', 'typePrice', 'purchasingPrice', 'purchasingPricePayVAT', 'sellingPrice', 'sellingPricePayVAT', 'limitMin', 'limitMax', 'mass', 'volume', 'supplier', 'orderName', 'orderQuantity', 'shortName', 'typeRP', 'guaranteeType', 'guarantee', 'producer', 'typeServiceMOSS', 'description', 'description2', 'note', 'intrastat', 'recyclingContrib', 'relatedLinks'];
 
     /** @var int */
     protected $_imagesCounter = 0;
@@ -90,6 +90,26 @@ class Header extends Agenda
 
         $this->_data['categories'][] = new Category([
             'idCategory' => $categoryId
+        ], $this->_ico);
+    }
+
+    /**
+     * Add related link.
+     *
+     * @param string   $url
+     * @param string   $description
+     *
+     * @return void
+     */
+    public function addRelatedLink(string $url, string $description = '')
+    {
+        if (!isset($this->_data['relatedLinks'])) {
+            $this->_data['relatedLinks'] = [];
+        }
+
+        $this->_data['relatedLinks'][] = new RelatedLink([
+            'addressURL' => $url,
+            'description' => $description
         ], $this->_ico);
     }
 
