@@ -19,195 +19,205 @@ use Riesenia\Pohoda\ListRequest\StockRestrictionData;
 use Riesenia\Pohoda\ListRequest\UserFilterName;
 use Symfony\Component\OptionsResolver\Options;
 
-class ListRequest extends Agenda
-{
-    /**
-     * Add filter.
-     *
-     * @param array<string,mixed> $data
-     *
-     * @return $this
-     */
-    public function addFilter(array $data): self
-    {
-        $this->_data['filter'] = new Filter($data, $this->_ico);
+class ListRequest extends Agenda {
+	/**
+	 * Add filter.
+	 *
+	 * @param array<string,mixed> $data
+	 *
+	 * @return $this
+	 */
+	public function addFilter(array $data): self {
+		$this->_data['filter'] = new Filter($data, $this->_ico);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Add query filter (SQL).
-     *
-     * @param array<string,mixed> $data
-     *
-     * @return $this
-     */
-    public function addQueryFilter(array $data): self
-    {
-        $this->_data['queryFilter'] = new QueryFilter($data, $this->_ico);
+	/**
+	 * Add query filter (SQL).
+	 *
+	 * @param array<string,mixed> $data
+	 *
+	 * @return $this
+	 */
+	public function addQueryFilter(array $data): self {
+		$this->_data['queryFilter'] = new QueryFilter($data, $this->_ico);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Add restriction data.
-     *
-     * @param array<string,mixed> $data
-     *
-     * @return $this
-     */
-    public function addRestrictionData(array $data): self
-    {
-        if ($this->_data['type'] == 'Stock') {
-            $this->_data['restrictionData'] = new StockRestrictionData($data, $this->_ico);
-        } else {
-            $this->_data['restrictionData'] = new RestrictionData($data, $this->_ico);
-        }
+	/**
+	 * Add restriction data.
+	 *
+	 * @param array<string,mixed> $data
+	 *
+	 * @return $this
+	 */
+	public function addRestrictionData(array $data): self {
+		if ($this->_data['type'] == 'Stock') {
+			$this->_data['restrictionData'] = new StockRestrictionData($data, $this->_ico);
+		} else {
+			$this->_data['restrictionData'] = new RestrictionData($data, $this->_ico);
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Add user filter name.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function addUserFilterName(string $name): self
-    {
-        $this->_data['userFilterName'] = new UserFilterName(['userFilterName' => $name], $this->_ico);
+	/**
+	 * Add user filter name.
+	 *
+	 * @param string $name
+	 *
+	 * @return $this
+	 */
+	public function addUserFilterName(string $name): self {
+		$this->_data['userFilterName'] = new UserFilterName(['userFilterName' => $name], $this->_ico);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Add limit.
-     *
-     * @param array<string,mixed> $data
-     *
-     * @return $this
-     */
-    public function addLimit(array $data): self
-    {
-        $data['namespace'] = $this->_data['namespace'];
-        $this->_data['limit'] = new Limit($data, $this->_ico);
+	/**
+	 * Add limit.
+	 *
+	 * @param array<string,mixed> $data
+	 *
+	 * @return $this
+	 */
+	public function addLimit(array $data): self {
+		$data['namespace'] = $this->_data['namespace'];
+		$this->_data['limit'] = new Limit($data, $this->_ico);
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getXML(): \SimpleXMLElement
-    {
-        // UserList is custom
-        if ($this->_data['type'] == 'UserList') {
-            $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':listUserCodeRequest', '', $this->_namespace($this->_data['namespace']));
-            $xml->addAttribute('version', '1.1');
-            $xml->addAttribute('listVersion', '1.1');
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getXML(): \SimpleXMLElement {
+		// UserList is custom
+		if ($this->_data['type'] == 'UserList') {
+			$xml = $this->_createXML()->addChild($this->_data['namespace'] . ':listUserCodeRequest', '', $this->_namespace($this->_data['namespace']));
+			$xml->addAttribute('version', '1.1');
+			$xml->addAttribute('listVersion', '1.1');
 
-            if (isset($this->_data['limit'])) {
-                $this->_addElements($xml, ['limit'], $this->_data['namespace']);
-            }
-        } else {
-            $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', '', $this->_namespace($this->_data['namespace']));
-            $xml->addAttribute('version', '2.0');
+			if (isset($this->_data['limit'])) {
+				$this->_addElements($xml, ['limit'], $this->_data['namespace']);
+			}
+		} else {
+			$xml = $this->_createXML()->addChild($this->_data['namespace'] . ':list' . $this->_data['type'] . 'Request', '', $this->_namespace($this->_data['namespace']));
+			$xml->addAttribute('version', '2.0');
 
-            // IntParam doesn't have the version attribute
-            if ($this->_data['type'] != 'IntParam') {
-                $xml->addAttribute($this->_getLcFirstType() . 'Version', '2.0');
-            }
+			// IntParam doesn't have the version attribute
+			if ($this->_data['type'] != 'IntParam') {
+				$xml->addAttribute($this->_getLcFirstType() . 'Version', '2.0');
+			}
 
-            if (isset($this->_data[$this->_getLcFirstType() . 'Type'])) {
-                $xml->addAttribute($this->_getLcFirstType() . 'Type', $this->_data[$this->_getLcFirstType() . 'Type']);
-            }
+			if (isset($this->_data[$this->_getLcFirstType() . 'Type'])) {
+				$xml->addAttribute($this->_getLcFirstType() . 'Type', $this->_data[$this->_getLcFirstType() . 'Type']);
+			}
 
-            if (isset($this->_data['limit'])) {
-                $this->_addElements($xml, ['limit'], $this->_data['namespace']);
-            }
+			if (isset($this->_data['limit'])) {
+				$this->_addElements($xml, ['limit'], $this->_data['namespace']);
+			}
 
-            $request = $xml->addChild($this->_data['namespace'] . ':request' . $this->_data['type']);
+			$request = $xml->addChild($this->_data['namespace'] . ':request' . $this->_data['type']);
 
-            if (isset($this->_data['restrictionData'])) {
-                $this->_addElements($xml, ['restrictionData'], 'lst');
-            }
+			if (isset($this->_data['restrictionData'])) {
+				$this->_addElements($xml, ['restrictionData'], 'lst');
+			}
 
-            $this->_addElements($request, ['filter', 'queryFilter', 'userFilterName'], 'ftr');
-        }
+			$this->_addElements($request, ['filter', 'queryFilter', 'userFilterName'], 'ftr');
+		}
 
-        return $xml;
-    }
+		return $xml;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function _configureOptions(OptionsResolver $resolver)
-    {
-        // available options
-        $resolver->setDefined(['type', 'namespace', 'orderType', 'invoiceType']);
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function _configureOptions(OptionsResolver $resolver): void {
+		$resolver->setDefined(['type', 'namespace', 'orderType', 'invoiceType', 'offerType', 'enquiryType']);
+		$resolver->setRequired('type');
+		$resolver->setNormalizer('type', function ($options, $value) {
+			// Addressbook is custom
+			if ($value === 'Addressbook') {
+				return 'AddressBook';
+			}
 
-        // validate / format options
-        $resolver->setRequired('type');
-        $resolver->setNormalizer('type', function ($options, $value) {
-            // Addressbook is custom
-            if ($value == 'Addressbook') {
-                return 'AddressBook';
-            }
+			// IssueSlip is custom
+			if ($value === 'IssueSlip') {
+				return 'Vydejka';
+			}
 
-            // IssueSlip is custom
-            if ($value == 'IssueSlip') {
-                return 'Vydejka';
-            }
+			// CashSlip is custom
+			if ($value === 'CashSlip') {
+				return 'Prodejka';
+			}
 
-            // CashSlip is custom
-            if ($value == 'CashSlip') {
-                return 'Prodejka';
-            }
+			return $value;
+		});
+		$resolver->setDefault('namespace', function (Options $options) {
+			if ($options['type'] === 'Stock') {
+				return 'lStk';
+			}
 
-            return $value;
-        });
-        $resolver->setDefault('namespace', function (Options $options) {
-            if ($options['type'] == 'Stock') {
-                return 'lStk';
-            }
+			if ($options['type'] === 'AddressBook') {
+				return 'lAdb';
+			}
 
-            if ($options['type'] == 'AddressBook') {
-                return 'lAdb';
-            }
+			if ($options['type'] === 'Contract') {
+				return 'lCon';
+			}
 
-            return 'lst';
-        });
-        $resolver->setAllowedValues('orderType', [null, 'receivedOrder', 'issuedOrder']);
-        $resolver->setDefault('orderType', function (Options $options) {
-            if ($options['type'] == 'Order') {
-                return 'receivedOrder';
-            }
+			return 'lst';
+		});
 
-            return null;
-        });
-        $resolver->setAllowedValues('invoiceType', [null, 'issuedInvoice', 'issuedCreditNotice', 'issuedDebitNote', 'issuedAdvanceInvoice', 'receivable', 'issuedProformaInvoice', 'penalty', 'issuedCorrectiveTax', 'receivedInvoice', 'receivedCreditNotice', 'receivedDebitNote', 'receivedAdvanceInvoice', 'commitment', 'receivedProformaInvoice', 'receivedCorrectiveTax']);
-        $resolver->setDefault('invoiceType', function (Options $options) {
-            if ($options['type'] == 'Invoice') {
-                return 'issuedInvoice';
-            }
+		$resolver->setAllowedValues('offerType', [null, 'issuedOffer', 'receivedOffer']);
+		$resolver->setDefault('offerType', function (Options $options) {
+			if ($options['type'] === 'Offer') {
+				return 'receivedOffer';
+			}
 
-            return null;
-        });
-    }
+			return null;
+		});
+		$resolver->setAllowedValues('enquiryType', [null, 'receivedEnquiry', 'issuedEnquiry']);
+		$resolver->setDefault('orderType', function (Options $options) {
+			if ($options['type'] === 'Enquiry') {
+				return 'receivedEnquiry';
+			}
 
-    /**
-     * Get LC first type name.
-     *
-     * @return string
-     */
-    protected function _getLcFirstType(): string
-    {
-        // ActionPrice is custom
-        if ($this->_data['type'] == 'ActionPrice') {
-            return 'actionPrices';
-        }
+			return null;
+		});
+		$resolver->setAllowedValues('orderType', [null, 'receivedOrder', 'issuedOrder']);
+		$resolver->setDefault('orderType', function (Options $options) {
+			if ($options['type'] === 'Order') {
+				return 'receivedOrder';
+			}
 
-        return \lcfirst($this->_data['type']);
-    }
+			return null;
+		});
+		$resolver->setAllowedValues('invoiceType', [null, 'issuedInvoice', 'issuedCreditNotice', 'issuedDebitNote', 'issuedAdvanceInvoice', 'receivable', 'issuedProformaInvoice', 'penalty', 'issuedCorrectiveTax', 'receivedInvoice', 'receivedCreditNotice', 'receivedDebitNote', 'receivedAdvanceInvoice', 'commitment', 'receivedProformaInvoice', 'receivedCorrectiveTax']);
+		$resolver->setDefault('invoiceType', function (Options $options) {
+			if ($options['type'] === 'Invoice') {
+				return 'issuedInvoice';
+			}
+
+			return null;
+		});
+	}
+
+	/**
+	 * Get LC first type name.
+	 *
+	 * @return string
+	 */
+	protected function _getLcFirstType(): string {
+		// ActionPrice is custom
+		if ($this->_data['type'] == 'ActionPrice') {
+			return 'actionPrices';
+		}
+
+		return \lcfirst($this->_data['type']);
+	}
+
 }

@@ -15,6 +15,7 @@ use Riesenia\Pohoda\Agenda;
 /**
  * Factory for Pohoda objects.
  *
+ * @method \Riesenia\Pohoda\AccountingListRequest createAccountingListRequest(array $data = [])
  * @method \Riesenia\Pohoda\Addressbook   createAddressbook(array $data = [])
  * @method \Riesenia\Pohoda\Bank          createBank(array $data = [])
  * @method \Riesenia\Pohoda\CashSlip      createCashSlip(array $data = [])
@@ -61,7 +62,8 @@ class Pohoda
         'stk' => 'http://www.stormware.cz/schema/version_2/stock.xsd',
         'sup' => 'http://www.stormware.cz/schema/version_2/supplier.xsd',
         'typ' => 'http://www.stormware.cz/schema/version_2/type.xsd',
-        'vyd' => 'http://www.stormware.cz/schema/version_2/vydejka.xsd'
+        'vyd' => 'http://www.stormware.cz/schema/version_2/vydejka.xsd',
+	    'lCon' => 'http://www.stormware.cz/schema/version_2/list_contract.xsd',
     ];
 
     /** @var string */
