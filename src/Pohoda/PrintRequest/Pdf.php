@@ -23,12 +23,10 @@ class Pdf extends Agenda
      */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
-        // process report
         if (isset($data['binaryData'])) {
             $data['binaryData'] = new BinaryData($data['binaryData'], $ico, $resolveOptions);
         }
-
-        // process report
+        
         if (isset($data['isdoc'])) {
             $data['isdoc'] = new Isdoc($data['isdoc'], $ico, $resolveOptions);
         }
