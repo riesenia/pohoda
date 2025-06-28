@@ -40,5 +40,8 @@ class BinaryData extends Agenda
 
         // validate / format options
         $resolver->setRequired('responseXml');
+
+        $resolver->setNormalizer('responseXml', $resolver->getNormalizer('bool'));
+        $resolver->setNormalizer('removeFile', $resolver->getNormalizer('bool'));
     }
 }
