@@ -16,7 +16,7 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 class Pdf extends Agenda
 {
     /** @var string[] */
-    protected $_elements = ['fileName', 'binaryData'];
+    protected $_elements = ['fileName', 'binaryData', 'isdoc'];
 
     /**
      * {@inheritdoc}
@@ -26,6 +26,11 @@ class Pdf extends Agenda
         // process report
         if (isset($data['binaryData'])) {
             $data['binaryData'] = new BinaryData($data['binaryData'], $ico, $resolveOptions);
+        }
+
+        // process report
+        if (isset($data['isdoc'])) {
+            $data['isdoc'] = new Isdoc($data['isdoc'], $ico, $resolveOptions);
         }
       
         parent::__construct($data, $ico, $resolveOptions);
