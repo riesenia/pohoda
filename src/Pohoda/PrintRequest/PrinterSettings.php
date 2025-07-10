@@ -16,7 +16,7 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 class PrinterSettings extends Agenda
 {
     /** @var string[] */
-    protected $_elements = ['report', 'printer', 'pdf'];
+    protected $_elements = ['report', 'printer', 'pdf', 'parameters'];
 
     /**
      * {@inheritdoc}
@@ -30,6 +30,10 @@ class PrinterSettings extends Agenda
         // process pdf
         if (isset($data['pdf'])) {
             $data['pdf'] = new Pdf($data['pdf'], $ico, $resolveOptions);
+        }
+        // process parameters
+        if (isset($data['parameters'])) {
+            $data['parameters'] = new Parameters($data['parameters'], $ico, $resolveOptions);
         }
 
         parent::__construct($data, $ico, $resolveOptions);
