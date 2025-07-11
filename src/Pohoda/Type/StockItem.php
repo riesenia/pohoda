@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Type;
@@ -21,7 +20,6 @@ class StockItem extends Agenda
     /** @var string[] */
     protected $_refElements = ['store', 'stockItem'];
 
-    /** {@inheritDoc} */
     protected $_elementsAttributesMapper = [
         'insertAttachStock' => ['stockItem', 'insertAttachStock', null],
         'applyUserSettingsFilterOnTheStore' => ['stockItem', 'applyUserSettingsFilterOnTheStore', null]
@@ -30,9 +28,6 @@ class StockItem extends Agenda
     /** @var string[] */
     protected $_elements = ['store', 'stockItem', 'insertAttachStock', 'applyUserSettingsFilterOnTheStore', 'serialNumber'];
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

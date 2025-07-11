@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Common;
@@ -17,7 +16,7 @@ class OptionsResolver extends SymfonyOptionsResolver
     /**
      * Date formats.
      */
-    const DATE_FORMATS = [
+    public const DATE_FORMATS = [
         'date' => 'Y-m-d',
         'datetime' => 'Y-m-d\TH:i:s',
         'time' => 'H:i:s'
@@ -28,10 +27,6 @@ class OptionsResolver extends SymfonyOptionsResolver
 
     /**
      * Get normalizer.
-     *
-     * @param string $type
-     *
-     * @return \Closure
      */
     public function getNormalizer(string $type): \Closure
     {
@@ -57,10 +52,7 @@ class OptionsResolver extends SymfonyOptionsResolver
     /**
      * Create normalizer.
      *
-     * @param string     $type
      * @param mixed|null $param
-     *
-     * @return \Closure
      */
     protected function _createNormalizer(string $type, $param = null): \Closure
     {

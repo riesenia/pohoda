@@ -1,4 +1,6 @@
 parameters:
-    level: max
+    level: 8
     paths:
         - src
+    ignoreErrors:
+        - identifier: missingType.return

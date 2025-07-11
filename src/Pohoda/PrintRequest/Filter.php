@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\PrintRequest;
@@ -18,9 +17,6 @@ class Filter extends Agenda
     /** @var string[] */
     protected $_elements = ['id'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('ftr:filter', '', $this->_namespace('ftr'));
@@ -30,9 +26,6 @@ class Filter extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

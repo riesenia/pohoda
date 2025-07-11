@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -25,9 +24,6 @@ class Stock extends Agenda
     /** @var string */
     public static $importRoot = 'lStk:stock';
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // pass to header
@@ -59,9 +55,6 @@ class Stock extends Agenda
     /**
      * Add price.
      *
-     * @param string $code
-     * @param float  $value
-     *
      * @return $this
      */
     public function addPrice(string $code, float $value): self
@@ -81,14 +74,9 @@ class Stock extends Agenda
     /**
      * Add image.
      *
-     * @param string   $filepath
-     * @param string   $description
-     * @param int|null $order
-     * @param bool     $default
-     *
      * @return $this
      */
-    public function addImage(string $filepath, string $description = '', int $order = null, bool $default = false): self
+    public function addImage(string $filepath, string $description = '', ?int $order = null, bool $default = false): self
     {
         $this->_data['header']->addImage($filepath, $description, $order, $default);
 
@@ -97,8 +85,6 @@ class Stock extends Agenda
 
     /**
      * Add category.
-     *
-     * @param int $categoryId
      *
      * @return $this
      */
@@ -123,9 +109,6 @@ class Stock extends Agenda
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('stk:stock', '', $this->_namespace('stk'));
@@ -136,9 +119,6 @@ class Stock extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

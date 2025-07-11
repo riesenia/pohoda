@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -26,8 +25,6 @@ class Category extends Agenda
     /**
      * Add subcategory.
      *
-     * @param self $category
-     *
      * @return $this
      */
     public function addSubcategory(self $category): self
@@ -41,9 +38,6 @@ class Category extends Agenda
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('ctg:categoryDetail', '', $this->_namespace('ctg'));
@@ -56,10 +50,6 @@ class Category extends Agenda
 
     /**
      * Attach category to XML element.
-     *
-     * @param \SimpleXMLElement $xml
-     *
-     * @return void
      */
     public function categoryXML(\SimpleXMLElement $xml)
     {
@@ -76,9 +66,6 @@ class Category extends Agenda
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

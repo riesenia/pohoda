@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\ListRequest;
@@ -19,9 +18,6 @@ class Limit extends Agenda
     /** @var string[] */
     protected $_elements = ['idFrom', 'count'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild($this->_data['namespace'] . ':limit', '', $this->_namespace($this->_data['namespace']));
@@ -31,9 +27,6 @@ class Limit extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefined($this->_elements);

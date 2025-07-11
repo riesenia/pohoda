@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Common;
@@ -20,10 +19,6 @@ trait SetNamespaceTrait
 
     /**
      * Set namespace.
-     *
-     * @param string $namespace
-     *
-     * @return void
      */
     public function setNamespace(string $namespace)
     {
@@ -32,19 +27,12 @@ trait SetNamespaceTrait
 
     /**
      * Set node name.
-     *
-     * @param string $nodeName
-     *
-     * @return void
      */
     public function setNodeName(string $nodeName)
     {
         $this->_nodeName = $nodeName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         if ($this->_namespace === null) {

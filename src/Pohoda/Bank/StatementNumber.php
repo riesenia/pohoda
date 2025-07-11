@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Bank;
@@ -18,9 +17,6 @@ class StatementNumber extends Agenda
     /** @var string[] */
     protected $_elements = ['statementNumber', 'numberMovement'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('bnk:statementNumber', '', $this->_namespace('bnk'));
@@ -30,9 +26,6 @@ class StatementNumber extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

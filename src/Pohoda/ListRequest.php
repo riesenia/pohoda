@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -70,8 +69,6 @@ class ListRequest extends Agenda
     /**
      * Add user filter name.
      *
-     * @param string $name
-     *
      * @return $this
      */
     public function addUserFilterName(string $name): self
@@ -96,9 +93,6 @@ class ListRequest extends Agenda
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         // UserList is custom
@@ -139,9 +133,6 @@ class ListRequest extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
@@ -198,8 +189,6 @@ class ListRequest extends Agenda
 
     /**
      * Get LC first type name.
-     *
-     * @return string
      */
     protected function _getLcFirstType(): string
     {

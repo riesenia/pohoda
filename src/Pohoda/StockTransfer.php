@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -22,9 +21,6 @@ class StockTransfer extends Agenda
     /** @var string */
     public static $importRoot = 'lst:prevodka';
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // pass to header
@@ -51,9 +47,6 @@ class StockTransfer extends Agenda
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('pre:prevodka', '', $this->_namespace('pre'));
@@ -64,9 +57,6 @@ class StockTransfer extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

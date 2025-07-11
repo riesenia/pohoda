@@ -26,14 +26,18 @@ jobs:
     - name: Run phpspec
       run: vendor/bin/phpspec run --config=phpspec.yml --no-interaction -vvv
 
+    - name: Install php-cs-fixer
+      run: composer require --dev friendsofphp/php-cs-fixer:^3.0
+      if: ${{ matrix.php-version == '8.3' }}
+
     - name: Run php-cs-fixer
-      run: vendor/bin/php-cs-fixer fix --config=.php_cs.dist --verbose --diff --dry-run
-      if: ${{ matrix.php-version == '8.0' }}
+      run: vendor/bin/php-cs-fixer check --verbose --diff
+      if: ${{ matrix.php-version == '8.3' }}
 
     - name: Install phpstan
-      run: composer require --dev phpstan/phpstan:~0.12
-      if: ${{ matrix.php-version == '8.0' || matrix.php-version == '8.1' }}
+      run: composer require --dev phpstan/phpstan:^2.0
+      if: ${{ matrix.php-version == '8.3' }}
 
     - name: Run phpstan
-      run: vendor/bin/phpstan analyse -c phpstan.neon
-      if: ${{ matrix.php-version == '8.0' || matrix.php-version == '8.1' }}
+      run: vendor/bin/phpstan analyse
+      if: ${{ matrix.php-version == '8.3' }}

@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Type;
@@ -21,9 +20,6 @@ class Link extends Agenda
     /** @var string[] */
     protected $_elements = ['sourceAgenda', 'sourceDocument', 'settingsSourceDocument'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('typ:link', '', $this->_namespace('typ'));
@@ -33,9 +29,6 @@ class Link extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
