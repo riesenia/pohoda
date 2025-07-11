@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Filter;
@@ -18,9 +17,6 @@ class QueryFilter extends Agenda
     /** @var string[] */
     protected $_elements = ['filter', 'textName'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('ftr:queryFilter', '', $this->_namespace('ftr'));
@@ -30,9 +26,6 @@ class QueryFilter extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

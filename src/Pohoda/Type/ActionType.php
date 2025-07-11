@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Type;
@@ -18,9 +17,6 @@ class ActionType extends Agenda
 {
     use SetNamespaceTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         if ($this->_namespace === null) {
@@ -55,9 +51,6 @@ class ActionType extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

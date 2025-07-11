@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -36,9 +35,6 @@ class UserList extends Agenda
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('lst:listUserCode', '', $this->_namespace('lst'));
@@ -59,9 +55,6 @@ class UserList extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

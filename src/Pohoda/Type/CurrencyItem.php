@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Type;
@@ -21,9 +20,6 @@ class CurrencyItem extends Agenda
     /** @var string[] */
     protected $_elements = ['unitPrice', 'price', 'priceVAT', 'priceSum'];
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

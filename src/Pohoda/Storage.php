@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -20,8 +19,6 @@ class Storage extends Agenda
     /**
      * Add substorage.
      *
-     * @param self $storage
-     *
      * @return $this
      */
     public function addSubstorage(self $storage): self
@@ -35,9 +32,6 @@ class Storage extends Agenda
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('str:storage', '', $this->_namespace('str'));
@@ -50,10 +44,6 @@ class Storage extends Agenda
 
     /**
      * Attach storage to XML element.
-     *
-     * @param \SimpleXMLElement $xml
-     *
-     * @return void
      */
     public function storageXML(\SimpleXMLElement $xml)
     {
@@ -73,9 +63,6 @@ class Storage extends Agenda
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

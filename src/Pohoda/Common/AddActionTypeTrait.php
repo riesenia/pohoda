@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Common;
@@ -17,13 +16,9 @@ trait AddActionTypeTrait
     /**
      * Add action type.
      *
-     * @param string      $type
-     * @param mixed|null  $filter
-     * @param string|null $agenda
-     *
-     * @return self
+     * @param mixed|null $filter
      */
-    public function addActionType(string $type, $filter = null, string $agenda = null): self
+    public function addActionType(string $type, $filter = null, ?string $agenda = null): self
     {
         if (isset($this->_data['actionType'])) {
             throw new \OutOfRangeException('Duplicate action type.');

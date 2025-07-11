@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Document;
@@ -25,10 +24,6 @@ abstract class Part extends Agenda
 
     /**
      * Set node name prefix.
-     *
-     * @param string $prefix
-     *
-     * @return void
      */
     public function setNodePrefix(string $prefix)
     {

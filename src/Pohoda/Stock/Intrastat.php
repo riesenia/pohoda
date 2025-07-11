@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Stock;
@@ -18,9 +17,6 @@ class Intrastat extends Agenda
     /** @var string[] */
     protected $_elements = ['goodsCode', 'description', 'statistic', 'unit', 'coefficient', 'country'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('stk:intrastat', '', $this->_namespace('stk'));
@@ -30,9 +26,6 @@ class Intrastat extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

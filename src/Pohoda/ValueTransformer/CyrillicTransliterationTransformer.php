@@ -6,7 +6,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\ValueTransformer;
@@ -18,9 +17,6 @@ namespace Riesenia\Pohoda\ValueTransformer;
  */
 class CyrillicTransliterationTransformer implements ValueTransformer
 {
-    /**
-     * {@inheritdoc}
-     */
     public function transform(string $value): string
     {
         $normalized = \Normalizer::normalize($value, \Normalizer::FORM_C);

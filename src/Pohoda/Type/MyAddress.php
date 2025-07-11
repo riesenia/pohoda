@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Type;
@@ -21,15 +20,13 @@ class MyAddress extends Agenda
     /** @var string[] */
     protected $_elements = ['address', 'establishment'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process address
         if (isset($data['address'])) {
             $data['address'] = new AddressInternetType($data['address'], $ico, $resolveOptions);
         }
+
         // process establishment
         if (isset($data['establishment'])) {
             $data['establishment'] = new EstablishmentType($data['establishment'], $ico, $resolveOptions);
@@ -38,9 +35,6 @@ class MyAddress extends Agenda
         parent::__construct($data, $ico, $resolveOptions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

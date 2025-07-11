@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\ListRequest;
@@ -18,9 +17,6 @@ class StockRestrictionData extends Agenda
     /** @var string[] */
     protected $_elements = ['categories', 'pictures', 'attachments', 'intParameters', 'stockItem', 'stockPriceItem', 'stockParameters', 'stockAttach', 'stockSerialNumber', 'relatedStocks', 'relatedFiles', 'relatedLinks', 'alternativeStocks'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('lst:restrictionData', '', $this->_namespace('lStk'));
@@ -30,9 +26,6 @@ class StockRestrictionData extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

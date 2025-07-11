@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Document;
@@ -16,9 +15,6 @@ use Riesenia\Pohoda\Type\StockItem;
 
 abstract class Item extends Part
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process home currency
@@ -39,9 +35,6 @@ abstract class Item extends Part
         parent::__construct($data, $ico, $resolveOptions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         if ($this->_namespace === null) {
@@ -59,9 +52,6 @@ abstract class Item extends Part
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

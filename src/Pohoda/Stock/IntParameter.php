@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Stock;
@@ -15,9 +14,6 @@ use Riesenia\Pohoda\Common\OptionsResolver;
 
 class IntParameter extends Agenda
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('stk:intParameter', '', $this->_namespace('stk'));
@@ -30,9 +26,6 @@ class IntParameter extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

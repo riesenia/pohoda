@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia;
@@ -15,25 +14,25 @@ use Riesenia\Pohoda\Agenda;
 /**
  * Factory for Pohoda objects.
  *
- * @method \Riesenia\Pohoda\Addressbook   createAddressbook(array $data = [])
- * @method \Riesenia\Pohoda\Bank          createBank(array $data = [])
- * @method \Riesenia\Pohoda\CashSlip      createCashSlip(array $data = [])
- * @method \Riesenia\Pohoda\Category      createCategory(array $data = [])
- * @method \Riesenia\Pohoda\Contract      createContract(array $data = [])
- * @method \Riesenia\Pohoda\IntDoc        createIntDoc(array $data = [])
- * @method \Riesenia\Pohoda\IntParam      createIntParam(array $data = [])
- * @method \Riesenia\Pohoda\Invoice       createInvoice(array $data = [])
- * @method \Riesenia\Pohoda\IssueSlip     createIssueSlip(array $data = [])
- * @method \Riesenia\Pohoda\ListRequest   createListRequest(array $data = [])
- * @method \Riesenia\Pohoda\Offer         createOffer(array $data = [])
- * @method \Riesenia\Pohoda\Order         createOrder(array $data = [])
- * @method \Riesenia\Pohoda\PrintRequest  createPrintRequest(array $data = [])
- * @method \Riesenia\Pohoda\Receipt       createReceipt(array $data = [])
- * @method \Riesenia\Pohoda\Stock         createStock(array $data = [])
- * @method \Riesenia\Pohoda\StockTransfer createStockTransfer(array $data = [])
- * @method \Riesenia\Pohoda\Storage       createStorage(array $data = [])
- * @method \Riesenia\Pohoda\Supplier      createSupplier(array $data = [])
- * @method \Riesenia\Pohoda\UserList      createUserList(array $data = [])
+ * @method \Riesenia\Pohoda\Addressbook   createAddressbook(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Bank          createBank(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\CashSlip      createCashSlip(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Category      createCategory(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Contract      createContract(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\IntDoc        createIntDoc(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\IntParam      createIntParam(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Invoice       createInvoice(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\IssueSlip     createIssueSlip(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\ListRequest   createListRequest(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Offer         createOffer(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Order         createOrder(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\PrintRequest  createPrintRequest(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Receipt       createReceipt(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Stock         createStock(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\StockTransfer createStockTransfer(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Storage       createStorage(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Supplier      createSupplier(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\UserList      createUserList(array<string,mixed> $data = [])
  */
 class Pohoda
 {
@@ -110,10 +109,6 @@ class Pohoda
 
     /**
      * Set the name of the application.
-     *
-     * @param string $name
-     *
-     * @return void
      */
     public function setApplicationName(string $name)
     {
@@ -123,16 +118,13 @@ class Pohoda
     /**
      * Create and return instance of requested agenda.
      *
-     * @param string              $name
      * @param array<string,mixed> $data
-     *
-     * @return Agenda
      */
     public function create(string $name, array $data = []): Agenda
     {
-        $fullName = __NAMESPACE__ . '\\Pohoda\\' . $name;
+        $fullName = __NAMESPACE__ . '\Pohoda\\' . $name;
 
-        if (!\class_exists($fullName)) {
+        if (!\class_exists($fullName) || !\is_subclass_of($fullName, Agenda::class)) {
             throw new \DomainException('Not allowed entity: ' . $name);
         }
 
@@ -143,10 +135,6 @@ class Pohoda
      * Open new XML file for writing.
      *
      * @param string|null $filename path to output file or null for memory
-     * @param string      $id
-     * @param string      $note
-     *
-     * @return bool
      */
     public function open(?string $filename, string $id, string $note = ''): bool
     {
@@ -181,11 +169,6 @@ class Pohoda
 
     /**
      * Add item.
-     *
-     * @param string $id
-     * @param Agenda $agenda
-     *
-     * @return void
      */
     public function addItem(string $id, Agenda $agenda)
     {
@@ -216,9 +199,6 @@ class Pohoda
     /**
      * Load XML file.
      *
-     * @param string $name
-     * @param string $filename
-     *
      * @return bool
      */
     public function load(string $name, string $filename)
@@ -229,7 +209,7 @@ class Pohoda
             return false;
         }
 
-        $fullName = __NAMESPACE__ . '\\Pohoda\\' . $name;
+        $fullName = __NAMESPACE__ . '\Pohoda\\' . $name;
 
         if (!\class_exists($fullName) || !\is_string($fullName::$importRoot)) {
             throw new \DomainException('Not allowed entity: ' . $name);
@@ -263,7 +243,6 @@ class Pohoda
     /**
      * Handle dynamic method calls.
      *
-     * @param string  $method
      * @param mixed[] $arguments
      *
      * @return mixed

@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Receipt;
@@ -21,9 +20,6 @@ class Item extends DocumentItem
     /** @var string[] */
     protected $_elements = ['quantity', 'unit', 'coefficient', 'payVAT', 'rateVAT', 'discountPercentage', 'homeCurrency', 'foreignCurrency', 'code', 'stockItem', 'note', 'centre', 'activity', 'contract'];
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         parent::_configureOptions($resolver);

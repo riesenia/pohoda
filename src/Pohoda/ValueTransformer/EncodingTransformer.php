@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\ValueTransformer;
@@ -24,19 +23,12 @@ class EncodingTransformer implements ValueTransformer
     /** @var string */
     private $toEncoding;
 
-    /**
-     * @param string $fromEncoding
-     * @param string $toEncoding
-     */
     public function __construct(string $fromEncoding, string $toEncoding)
     {
         $this->fromEncoding = $fromEncoding;
         $this->toEncoding = $toEncoding;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function transform(string $value): string
     {
         $result = \iconv($this->fromEncoding, $this->toEncoding, $value);

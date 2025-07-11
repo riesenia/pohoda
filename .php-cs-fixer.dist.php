@@ -8,7 +8,6 @@ $config = new Rshop\CS\Config\Rshop($header);
 
 $config->setStrict()
     ->setRule('general_phpdoc_annotation_remove', ['annotations' => ['author']])
-    ->setRule('native_function_invocation', true)
     ->getFinder()
     ->in(__DIR__)
     ->exclude('vendor');

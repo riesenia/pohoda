@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\StockTransfer;
@@ -19,9 +18,6 @@ class Item extends Agenda
     /** @var string[] */
     protected $_elements = ['quantity', 'stockItem', 'note'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process stock item
@@ -32,9 +28,6 @@ class Item extends Agenda
         parent::__construct($data, $ico, $resolveOptions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('pre:prevodkaItem', '', $this->_namespace('pre'));
@@ -44,9 +37,6 @@ class Item extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

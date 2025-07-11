@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Stock;
@@ -21,7 +20,6 @@ class Header extends Agenda
     /** @var string[] */
     protected $_refElements = ['storage', 'typePrice', 'typeRP', 'supplier', 'typeServiceMOSS'];
 
-    /** {@inheritDoc} */
     protected $_elementsAttributesMapper = [
         'purchasingPricePayVAT' => ['purchasingPrice', 'payVAT', null],
         'sellingPricePayVAT' => ['sellingPrice', 'payVAT', null]
@@ -33,9 +31,6 @@ class Header extends Agenda
     /** @var int */
     protected $_imagesCounter = 0;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process intrastat
@@ -53,15 +48,8 @@ class Header extends Agenda
 
     /**
      * Add image.
-     *
-     * @param string   $filepath
-     * @param string   $description
-     * @param int|null $order
-     * @param bool     $default
-     *
-     * @return void
      */
-    public function addImage(string $filepath, string $description = '', int $order = null, bool $default = false)
+    public function addImage(string $filepath, string $description = '', ?int $order = null, bool $default = false)
     {
         if (!isset($this->_data['pictures'])) {
             $this->_data['pictures'] = [];
@@ -77,10 +65,6 @@ class Header extends Agenda
 
     /**
      * Add category.
-     *
-     * @param int $categoryId
-     *
-     * @return void
      */
     public function addCategory(int $categoryId)
     {
@@ -97,8 +81,6 @@ class Header extends Agenda
      * Add int parameter.
      *
      * @param array<string,mixed> $data
-     *
-     * @return void
      */
     public function addIntParameter(array $data)
     {
@@ -109,9 +91,6 @@ class Header extends Agenda
         $this->_data['intParameters'][] = new IntParameter($data, $this->_ico);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('stk:stockHeader', '', $this->_namespace('stk'));
@@ -121,9 +100,6 @@ class Header extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

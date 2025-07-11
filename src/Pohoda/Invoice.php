@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -55,25 +54,16 @@ class Invoice extends Document
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _getDocumentElements(): array
     {
         return \array_merge(['links'], parent::_getDocumentElements());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _getDocumentNamespace(): string
     {
         return 'inv';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _getDocumentName(): string
     {
         return 'invoice';

@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\IntParam;
@@ -21,9 +20,6 @@ class Settings extends Agenda
     /** @var string[] */
     protected $_elements = ['unit', 'length', 'currency', 'parameterList'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('ipm:parameterSettings', '', $this->_namespace('ipm'));
@@ -33,9 +29,6 @@ class Settings extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

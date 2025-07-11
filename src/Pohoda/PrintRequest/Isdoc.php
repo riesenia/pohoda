@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\PrintRequest;
@@ -18,9 +17,6 @@ class Isdoc extends Agenda
     /** @var string[] */
     protected $_elements = ['includeToPdf', 'graphicNote'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('prn:isdoc', '', $this->_namespace('prn'));
@@ -30,9 +26,6 @@ class Isdoc extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
@@ -41,8 +34,8 @@ class Isdoc extends Agenda
         // validate / format options
         $resolver->setRequired('includeToPdf');
         $resolver->setNormalizer('includeToPdf', $resolver->getNormalizer('bool'));
-        
-        $resolver->setRequired('graphicNote');        
+
+        $resolver->setRequired('graphicNote');
         $resolver->setAllowedValues('graphicNote', ['topRight', 'topLeft', 'bottomRight', 'bottomLeft']);
     }
 }

@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -16,9 +15,6 @@ use Riesenia\Pohoda\PrintRequest\Record;
 
 class PrintRequest extends Agenda
 {
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process record
@@ -30,9 +26,6 @@ class PrintRequest extends Agenda
         parent::__construct($data, $ico, $resolveOptions);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('prn:print', '', $this->_namespace('prn'));
@@ -43,9 +36,6 @@ class PrintRequest extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

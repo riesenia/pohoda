@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\PrintRequest;
@@ -18,9 +17,6 @@ class BinaryData extends Agenda
     /** @var string[] */
     protected $_elements = ['responseXml', 'removeFile'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('prn:binaryData', '', $this->_namespace('prn'));
@@ -30,9 +26,6 @@ class BinaryData extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

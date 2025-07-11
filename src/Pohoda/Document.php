@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -18,9 +17,6 @@ abstract class Document extends Agenda
 {
     use AddParameterToHeaderTrait;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // pass to header
@@ -65,9 +61,6 @@ abstract class Document extends Agenda
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild($this->_getDocumentNamespace() . ':' . $this->_getDocumentName(), '', $this->_namespace($this->_getDocumentNamespace()));
@@ -78,9 +71,6 @@ abstract class Document extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options
@@ -90,22 +80,18 @@ abstract class Document extends Agenda
     /**
      * Document part factory.
      *
-     * @param string              $name
      * @param array<string,mixed> $data
-     * @param string              $ico
-     * @param bool                $resolveOptions
-     *
-     * @return Part
      */
     protected function _getDocumentPart(string $name, array $data, string $ico, bool $resolveOptions = true): Part
     {
         $fullName = \get_class($this) . '\\' . $name;
 
-        if (!\class_exists($fullName)) {
+        if (!\class_exists($fullName) || !\is_subclass_of($fullName, Part::class)) {
             throw new \DomainException('Not allowed entity: ' . $name);
         }
 
         $part = new $fullName($data, $ico, $resolveOptions);
+
         $part->setNamespace($this->_getDocumentNamespace());
         $part->setNodePrefix($this->_getDocumentName());
 
@@ -124,15 +110,11 @@ abstract class Document extends Agenda
 
     /**
      * Get document namespace.
-     *
-     * @return string
      */
     abstract protected function _getDocumentNamespace(): string;
 
     /**
      * Get document name used in XML nodes.
-     *
-     * @return string
      */
     abstract protected function _getDocumentName(): string;
 }

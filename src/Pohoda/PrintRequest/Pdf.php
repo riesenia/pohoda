@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\PrintRequest;
@@ -18,25 +17,19 @@ class Pdf extends Agenda
     /** @var string[] */
     protected $_elements = ['fileName', 'binaryData', 'isdoc'];
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         if (isset($data['binaryData'])) {
             $data['binaryData'] = new BinaryData($data['binaryData'], $ico, $resolveOptions);
         }
-        
+
         if (isset($data['isdoc'])) {
             $data['isdoc'] = new Isdoc($data['isdoc'], $ico, $resolveOptions);
         }
-      
+
         parent::__construct($data, $ico, $resolveOptions);
     }
-    
-    /**
-     * {@inheritdoc}
-     */
+
     public function getXML(): \SimpleXMLElement
     {
         $xml = $this->_createXML()->addChild('prn:pdf', '', $this->_namespace('prn'));
@@ -46,9 +39,6 @@ class Pdf extends Agenda
         return $xml;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function _configureOptions(OptionsResolver $resolver)
     {
         // available options

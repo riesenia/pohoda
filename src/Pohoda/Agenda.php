@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda;
@@ -17,9 +16,6 @@ use Riesenia\Pohoda\ValueTransformer\ValueTransformer;
 
 /**
  * Base class for Pohoda objects.
- *
- * @method setNamespace($namespace)
- * @method setNodeName($nodeName)
  */
 abstract class Agenda
 {
@@ -45,8 +41,6 @@ abstract class Agenda
      * Construct agenda using provided data.
      *
      * @param array<string,mixed> $data
-     * @param string              $ico
-     * @param bool                $resolveOptions
      */
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
@@ -59,24 +53,16 @@ abstract class Agenda
 
     /**
      * Get XML.
-     *
-     * @return \SimpleXMLElement
      */
     abstract public function getXML(): \SimpleXMLElement;
 
     /**
      * Configure options for options resolver.
-     *
-     * @param OptionsResolver $resolver
-     *
-     * @return void
      */
     abstract protected function _configureOptions(OptionsResolver $resolver);
 
     /**
      * Create XML.
-     *
-     * @return \SimpleXMLElement
      */
     protected function _createXML(): \SimpleXMLElement
     {
@@ -87,10 +73,6 @@ abstract class Agenda
 
     /**
      * Get namespace.
-     *
-     * @param string $short
-     *
-     * @return string
      */
     protected function _namespace(string $short): string
     {
@@ -104,13 +86,9 @@ abstract class Agenda
     /**
      * Add batch elements.
      *
-     * @param \SimpleXMLElement $xml
-     * @param string[]          $elements
-     * @param string|null       $namespace
-     *
-     * @return void
+     * @param string[] $elements
      */
-    protected function _addElements(\SimpleXMLElement $xml, array $elements, string $namespace = null)
+    protected function _addElements(\SimpleXMLElement $xml, array $elements, ?string $namespace = null)
     {
         foreach ($elements as $element) {
             if (!isset($this->_data[$element])) {
@@ -173,14 +151,9 @@ abstract class Agenda
     /**
      * Add ref element.
      *
-     * @param \SimpleXMLElement $xml
-     * @param string            $name
-     * @param mixed             $value
-     * @param string|null       $namespace
-     *
-     * @return \SimpleXMLElement
+     * @param mixed $value
      */
-    protected function _addRefElement(\SimpleXMLElement $xml, string $name, $value, string $namespace = null): \SimpleXMLElement
+    protected function _addRefElement(\SimpleXMLElement $xml, string $name, $value, ?string $namespace = null): \SimpleXMLElement
     {
         $node = $namespace ? $xml->addChild($name, '', $this->_namespace($namespace)) : $xml->addChild($name);
 
@@ -199,8 +172,6 @@ abstract class Agenda
      * Sanitize value to XML.
      *
      * @param mixed $value
-     *
-     * @return string
      */
     protected function _sanitize($value): string
     {
@@ -220,11 +191,6 @@ abstract class Agenda
 
     /**
      * Append SimpleXMLElement to another SimpleXMLElement.
-     *
-     * @param \SimpleXMLElement $xml
-     * @param \SimpleXMLElement $node
-     *
-     * @return void
      */
     protected function _appendNode(\SimpleXMLElement $xml, \SimpleXMLElement $node)
     {

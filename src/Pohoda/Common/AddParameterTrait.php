@@ -5,7 +5,6 @@
  * Licensed under the MIT License
  * (c) RIESENIA.com
  */
-
 declare(strict_types=1);
 
 namespace Riesenia\Pohoda\Common;
@@ -18,7 +17,6 @@ trait AddParameterTrait
      * Set user-defined parameter.
      *
      * @param string     $name  (can be set without preceding VPr / RefVPr)
-     * @param string     $type
      * @param mixed      $value
      * @param mixed|null $list
      *
@@ -28,6 +26,10 @@ trait AddParameterTrait
     {
         if (!isset($this->_data['parameters'])) {
             $this->_data['parameters'] = [];
+        }
+
+        if (!\is_array($this->_data['parameters'])) {
+            throw new \InvalidArgumentException('Invalid parameters format.');
         }
 
         $this->_data['parameters'][] = new Parameter([
