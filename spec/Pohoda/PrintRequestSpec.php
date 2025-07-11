@@ -36,6 +36,9 @@ class PrintRequestSpec extends ObjectBehavior
                         'includeToPdf' => true,
                         'graphicNote' => 'topRight'
                     ]
+                ],
+                'parameters' => [
+                    'copy' => 5
                 ]
             ]
         ], '123');
@@ -49,6 +52,6 @@ class PrintRequestSpec extends ObjectBehavior
 
     public function it_creates_correct_xml()
     {
-        $this->getXML()->asXML()->shouldReturn('<prn:print version="1.0"><prn:record agenda="vydane_faktury"><ftr:filter><ftr:id>1234</ftr:id></ftr:filter></prn:record><prn:printerSettings><prn:report><prn:id>5678</prn:id></prn:report><prn:pdf><prn:fileName>C:\Test\1234.pdf</prn:fileName><prn:binaryData><prn:responseXml>true</prn:responseXml><prn:removeFile>true</prn:removeFile></prn:binaryData><prn:isdoc><prn:includeToPdf>true</prn:includeToPdf><prn:graphicNote>topRight</prn:graphicNote></prn:isdoc></prn:pdf></prn:printerSettings></prn:print>');
+        $this->getXML()->asXML()->shouldReturn('<prn:print version="1.0"><prn:record agenda="vydane_faktury"><ftr:filter><ftr:id>1234</ftr:id></ftr:filter></prn:record><prn:printerSettings><prn:report><prn:id>5678</prn:id></prn:report><prn:pdf><prn:fileName>C:\Test\1234.pdf</prn:fileName><prn:binaryData><prn:responseXml>true</prn:responseXml><prn:removeFile>true</prn:removeFile></prn:binaryData><prn:isdoc><prn:includeToPdf>true</prn:includeToPdf><prn:graphicNote>topRight</prn:graphicNote></prn:isdoc></prn:pdf><prn:parameters><prn:copy>5</prn:copy></prn:parameters></prn:printerSettings></prn:print>');
     }
 }
