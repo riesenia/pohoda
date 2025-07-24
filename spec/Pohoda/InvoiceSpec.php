@@ -66,7 +66,43 @@ class InvoiceSpec extends ObjectBehavior
             ]
         ]);
 
-        $this->getXML()->asXML()->shouldReturn('<inv:invoice version="2.0"><inv:invoiceHeader>' . $this->_defaultHeader() . '</inv:invoiceHeader><inv:invoiceDetail><inv:invoiceItem><inv:text>NAME 1</inv:text><inv:quantity>1</inv:quantity><inv:rateVAT>high</inv:rateVAT><inv:homeCurrency><typ:unitPrice>200</typ:unitPrice></inv:homeCurrency></inv:invoiceItem><inv:invoiceItem><inv:quantity>1</inv:quantity><inv:payVAT>true</inv:payVAT><inv:rateVAT>high</inv:rateVAT><inv:homeCurrency><typ:unitPrice>198</typ:unitPrice></inv:homeCurrency><inv:stockItem><typ:stockItem><typ:ids>STM</typ:ids></typ:stockItem></inv:stockItem></inv:invoiceItem></inv:invoiceDetail></inv:invoice>');
+        // Recycling contribution item paid by kg
+        $this->addItem([
+            'text' => 'Product with recycling (kg)',
+            'quantity' => 4,
+            'unit' => 'ks',
+            'payVAT' => true,
+            'rateVAT' => 'high',
+            'homeCurrency' => [
+                'unitPrice' => 299,
+            ],
+            'recyclingContrib' => [
+                'recyclingContribText' => '5-32-1 Recyklační příspěvek',
+                'recyclingContribAmount' => 1.00,
+                'recyclingContribUnit' => 'kg',
+                'coefficientOfRecyclingContrib' => 0.032,
+            ]
+        ]);
+
+        // Recycling contribution item paid by quantity
+        $this->addItem([
+            'text' => 'Product with recycling (ks)',
+            'quantity' => 2,
+            'unit' => 'ks',
+            'payVAT' => true,
+            'rateVAT' => 'high',
+            'homeCurrency' => [
+                'unitPrice' => 199,
+            ],
+            'recyclingContrib' => [
+                'recyclingContribText' => '5-31-10 Recyklační příspěvek',
+                'recyclingContribAmount' => 1.50,
+                'recyclingContribUnit' => 'ks',
+                'coefficientOfRecyclingContrib' => 1.00,
+            ]
+        ]);
+
+        $this->getXML()->asXML()->shouldReturn('<inv:invoice version="2.0"><inv:invoiceHeader>' . $this->_defaultHeader() . '</inv:invoiceHeader><inv:invoiceDetail><inv:invoiceItem><inv:text>NAME 1</inv:text><inv:quantity>1</inv:quantity><inv:rateVAT>high</inv:rateVAT><inv:homeCurrency><typ:unitPrice>200</typ:unitPrice></inv:homeCurrency></inv:invoiceItem><inv:invoiceItem><inv:quantity>1</inv:quantity><inv:payVAT>true</inv:payVAT><inv:rateVAT>high</inv:rateVAT><inv:homeCurrency><typ:unitPrice>198</typ:unitPrice></inv:homeCurrency><inv:stockItem><typ:stockItem><typ:ids>STM</typ:ids></typ:stockItem></inv:stockItem></inv:invoiceItem><inv:invoiceItem><inv:text>Product with recycling (kg)</inv:text><inv:quantity>4</inv:quantity><inv:unit>ks</inv:unit><inv:payVAT>true</inv:payVAT><inv:rateVAT>high</inv:rateVAT><inv:homeCurrency><typ:unitPrice>299</typ:unitPrice></inv:homeCurrency><inv:recyclingContrib><typ:recyclingContribText>5-32-1 Recyklační příspěvek</typ:recyclingContribText><typ:recyclingContribAmount>1</typ:recyclingContribAmount><typ:recyclingContribUnit>kg</typ:recyclingContribUnit><typ:coefficientOfRecyclingContrib>0.032</typ:coefficientOfRecyclingContrib></inv:recyclingContrib></inv:invoiceItem><inv:invoiceItem><inv:text>Product with recycling (ks)</inv:text><inv:quantity>2</inv:quantity><inv:unit>ks</inv:unit><inv:payVAT>true</inv:payVAT><inv:rateVAT>high</inv:rateVAT><inv:homeCurrency><typ:unitPrice>199</typ:unitPrice></inv:homeCurrency><inv:recyclingContrib><typ:recyclingContribText>5-31-10 Recyklační příspěvek</typ:recyclingContribText><typ:recyclingContribAmount>1.5</typ:recyclingContribAmount><typ:recyclingContribUnit>ks</typ:recyclingContribUnit><typ:coefficientOfRecyclingContrib>1</typ:coefficientOfRecyclingContrib></inv:recyclingContrib></inv:invoiceItem></inv:invoiceDetail></inv:invoice>');
     }
 
     public function it_can_add_advance_payment_item()
