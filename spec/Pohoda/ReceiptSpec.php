@@ -23,7 +23,7 @@ class ReceiptSpec extends ObjectBehavior
                 'id' => 20
             ],
             'activity' => [
-                'id' => 1,
+                'id' => 1
             ],
             'intNote' => 'Note'
         ], '123');

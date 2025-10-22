@@ -74,13 +74,13 @@ class InvoiceSpec extends ObjectBehavior
             'payVAT' => true,
             'rateVAT' => 'high',
             'homeCurrency' => [
-                'unitPrice' => 299,
+                'unitPrice' => 299
             ],
             'recyclingContrib' => [
                 'recyclingContribText' => '5-32-1 Recyklační příspěvek',
                 'recyclingContribAmount' => 1.00,
                 'recyclingContribUnit' => 'kg',
-                'coefficientOfRecyclingContrib' => 0.032,
+                'coefficientOfRecyclingContrib' => 0.032
             ]
         ]);
 
@@ -92,13 +92,13 @@ class InvoiceSpec extends ObjectBehavior
             'payVAT' => true,
             'rateVAT' => 'high',
             'homeCurrency' => [
-                'unitPrice' => 199,
+                'unitPrice' => 199
             ],
             'recyclingContrib' => [
                 'recyclingContribText' => '5-31-10 Recyklační příspěvek',
                 'recyclingContribAmount' => 1.50,
                 'recyclingContribUnit' => 'ks',
-                'coefficientOfRecyclingContrib' => 1.00,
+                'coefficientOfRecyclingContrib' => 1.00
             ]
         ]);
 
