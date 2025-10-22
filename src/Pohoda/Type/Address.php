@@ -24,7 +24,7 @@ class Address extends Agenda
     protected $_elements = ['id', 'extId', 'address', 'addressLinkToAddress', 'shipToAddress'];
 
     protected $_elementsAttributesMapper = [
-        'addressLinkToAddress' => ['address', 'linkToAddress', null],
+        'addressLinkToAddress' => ['address', 'linkToAddress', null]
     ];
 
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
