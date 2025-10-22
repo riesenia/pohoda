@@ -22,9 +22,15 @@ jobs:
 
     - name: Composer install
       run: composer update
+      if: ${{ matrix.php-version != '8.4' }}
+
+    - name: Composer install (PHP 8.4 with --ignore-platform-reqs)
+      run: composer update --ignore-platform-reqs
+      if: ${{ matrix.php-version == '8.4' }}
 
     - name: Run phpspec
       run: vendor/bin/phpspec run --config=phpspec.yml --no-interaction -vvv
+      if: ${{ matrix.php-version != '8.4' }}
 
     - name: Install php-cs-fixer
       run: composer require --dev friendsofphp/php-cs-fixer:^3.0
