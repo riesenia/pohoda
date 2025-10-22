@@ -14,7 +14,7 @@
     },
     "require-dev": {
         "friends-of-phpspec/phpspec-expect": "*",
-        "phpspec/phpspec": "^5.0 || ^6.0 || ^7.0",
+        "phpspec/phpspec": "^5.0 || ^6.0 || ^7.0 || ^8.0",
         "rshop/php-cs-fixer-config": "^3.0"
     },
     "autoload": {
