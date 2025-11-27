@@ -84,6 +84,33 @@ class AddressbookSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:addressbookHeader><adb:identity><typ:address><typ:name>Călărași ñüé¿s</typ:name><typ:city>Dâmbovița</typ:city></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre></adb:addressbookHeader></adb:addressbook>');
     }
 
+    public function it_can_set_ref_address_with_inline_address_type()
+    {
+        // simulating the "typ:addressType" structure inside "refAddress"
+        $this->beConstructedWith([
+            'identity' => [
+                'address' => [
+                    'name' => 'NAME',
+                    'ico' => '123'
+                ]
+            ],
+            'phone' => '123',
+            'centre' => ['id' => 1],
+            'refAddress' => [
+                'address' => [
+                    'company' => 'My Company',
+                    'city' => 'Prague',
+                    'street' => 'Dlouha 123',
+                    'zip' => '11000'
+                ]
+            ]
+        ], '123');
+
+        $this->getXML()->asXML()->shouldReturn(
+            '<adb:addressbook version="2.0"><adb:addressbookHeader><adb:identity><typ:address><typ:name>NAME</typ:name><typ:ico>123</typ:ico></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre><adb:refAddress><typ:address><typ:company>My Company</typ:company><typ:city>Prague</typ:city><typ:street>Dlouha 123</typ:street><typ:zip>11000</typ:zip></typ:address></adb:refAddress></adb:addressbookHeader></adb:addressbook>'
+        );
+    }
+
     protected function _defaultHeader()
     {
         return '<adb:identity><typ:address><typ:name>NAME</typ:name><typ:ico>123</typ:ico></typ:address></adb:identity><adb:phone>123</adb:phone><adb:centre><typ:id>1</typ:id></adb:centre>';
