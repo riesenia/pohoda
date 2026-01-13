@@ -14,25 +14,26 @@ use Riesenia\Pohoda\Agenda;
 /**
  * Factory for Pohoda objects.
  *
- * @method \Riesenia\Pohoda\Addressbook   createAddressbook(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\Bank          createBank(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\CashSlip      createCashSlip(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\Category      createCategory(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\Contract      createContract(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\IntDoc        createIntDoc(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\IntParam      createIntParam(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\Invoice       createInvoice(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\IssueSlip     createIssueSlip(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\ListRequest   createListRequest(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\Offer         createOffer(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\Order         createOrder(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\PrintRequest  createPrintRequest(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\Receipt       createReceipt(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\Stock         createStock(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\StockTransfer createStockTransfer(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\Storage       createStorage(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\Supplier      createSupplier(array<string,mixed> $data = [])
- * @method \Riesenia\Pohoda\UserList      createUserList(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Addressbook     createAddressbook(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Bank            createBank(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\CashSlip        createCashSlip(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Category        createCategory(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Contract        createContract(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\IntDoc          createIntDoc(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\IntParam        createIntParam(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Invoice         createInvoice(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\IssueSlip       createIssueSlip(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\ListRequest     createListRequest(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\ListTableExport createListTableExport(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Offer           createOffer(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Order           createOrder(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\PrintRequest    createPrintRequest(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Receipt         createReceipt(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Stock           createStock(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\StockTransfer   createStockTransfer(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Storage         createStorage(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\Supplier        createSupplier(array<string,mixed> $data = [])
+ * @method \Riesenia\Pohoda\UserList        createUserList(array<string,mixed> $data = [])
  */
 class Pohoda
 {
@@ -59,6 +60,7 @@ class Pohoda
         'str' => 'http://www.stormware.cz/schema/version_2/storage.xsd',
         'stk' => 'http://www.stormware.cz/schema/version_2/stock.xsd',
         'sup' => 'http://www.stormware.cz/schema/version_2/supplier.xsd',
+        'tex' => 'http://www.stormware.cz/schema/version_2/tableExport.xsd',
         'typ' => 'http://www.stormware.cz/schema/version_2/type.xsd',
         'vyd' => 'http://www.stormware.cz/schema/version_2/vydejka.xsd'
     ];
