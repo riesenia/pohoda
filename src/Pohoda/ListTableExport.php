@@ -15,6 +15,9 @@ use Riesenia\Pohoda\ListTableExport\RequestTableExport;
 
 class ListTableExport extends Agenda
 {
+    /** @var string */
+    public static $importRoot = 'lst:tableExport';
+
     public function __construct(array $data, string $ico, bool $resolveOptions = true)
     {
         // process requestTableExport
