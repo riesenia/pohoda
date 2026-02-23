@@ -45,7 +45,7 @@ class RequestTableExport extends Agenda
         }
 
         // add columns
-        $this->_addElements($xml, ['columns'], 'tex');
+        $this->_addElements($xml, ['columns'], 'tbe');
 
         return $xml;
     }

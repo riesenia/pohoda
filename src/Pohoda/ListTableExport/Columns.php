@@ -16,11 +16,11 @@ class Columns extends Agenda
 {
     public function getXML(): \SimpleXMLElement
     {
-        $xml = $this->_createXML()->addChild('tex:columns', '', $this->_namespace('tex'));
+        $xml = $this->_createXML()->addChild('tbe:columns', '', $this->_namespace('tbe'));
 
         // add each column
         foreach ($this->_data['columns'] as $column) {
-            $xml->addChild('tex:column', $this->_sanitize($column), $this->_namespace('tex'));
+            $xml->addChild('tbe:column', $this->_sanitize($column), $this->_namespace('tbe'));
         }
 
         return $xml;

@@ -60,7 +60,7 @@ class Pohoda
         'str' => 'http://www.stormware.cz/schema/version_2/storage.xsd',
         'stk' => 'http://www.stormware.cz/schema/version_2/stock.xsd',
         'sup' => 'http://www.stormware.cz/schema/version_2/supplier.xsd',
-        'tex' => 'http://www.stormware.cz/schema/version_2/tableExport.xsd',
+        'tbe' => 'http://www.stormware.cz/schema/version_2/tableExport.xsd',
         'typ' => 'http://www.stormware.cz/schema/version_2/type.xsd',
         'vyd' => 'http://www.stormware.cz/schema/version_2/vydejka.xsd'
     ];
