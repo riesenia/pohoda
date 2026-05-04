@@ -162,6 +162,17 @@ class InvoiceSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<inv:invoice version="2.0"><inv:links><typ:link><typ:sourceAgenda>receivedOrder</typ:sourceAgenda><typ:sourceDocument><typ:number>142100003</typ:number></typ:sourceDocument></typ:link></inv:links><inv:invoiceHeader>' . $this->_defaultHeader() . '</inv:invoiceHeader></inv:invoice>');
     }
 
+    public function it_can_set_correction_moss()
+    {
+        $this->beConstructedWith([
+            'invoiceType' => 'issuedCreditNotice',
+            'dateTaxOriginalDocumentMOSS' => '2026-03-31',
+            'correctionMOSS' => true,
+        ], '123');
+
+        $this->getXML()->asXML()->shouldReturn('<inv:invoice version="2.0"><inv:invoiceHeader><inv:invoiceType>issuedCreditNotice</inv:invoiceType><inv:dateTaxOriginalDocumentMOSS>2026-03-31</inv:dateTaxOriginalDocumentMOSS><inv:correctionMOSS>true</inv:correctionMOSS></inv:invoiceHeader></inv:invoice>');
+    }
+
     protected function _defaultHeader()
     {
         return '<inv:invoiceType>issuedInvoice</inv:invoiceType><inv:date>2015-01-10</inv:date><inv:partnerIdentity><typ:id>25</typ:id></inv:partnerIdentity><inv:myIdentity><typ:address><typ:name>NAME</typ:name><typ:ico>123</typ:ico></typ:address></inv:myIdentity><inv:intNote>Note</inv:intNote>';
