@@ -167,7 +167,7 @@ class InvoiceSpec extends ObjectBehavior
         $this->beConstructedWith([
             'invoiceType' => 'issuedCreditNotice',
             'dateTaxOriginalDocumentMOSS' => '2026-03-31',
-            'correctionMOSS' => true,
+            'correctionMOSS' => true
         ], '123');
 
         $this->getXML()->asXML()->shouldReturn('<inv:invoice version="2.0"><inv:invoiceHeader><inv:invoiceType>issuedCreditNotice</inv:invoiceType><inv:dateTaxOriginalDocumentMOSS>2026-03-31</inv:dateTaxOriginalDocumentMOSS><inv:correctionMOSS>true</inv:correctionMOSS></inv:invoiceHeader></inv:invoice>');
