@@ -18,7 +18,7 @@ class Header extends DocumentHeader
     protected $_refElements = ['extId', 'number', 'accounting', 'classificationVAT', 'classificationKVDPH', 'order', 'paymentType', 'priceLevel', 'account', 'paymentAccount', 'centre', 'activity', 'contract', 'regVATinEU', 'MOSS', 'evidentiaryResourcesMOSS', 'carrier'];
 
     /** @var string[] */
-    protected $_elements = ['extId', 'invoiceType', 'number', 'symVar', 'originalDocument', 'originalDocumentNumber', 'symPar', 'date', 'dateTax', 'dateAccounting', 'dateKHDPH', 'dateDue', 'dateApplicationVAT', 'dateDelivery', 'accounting', 'classificationVAT', 'classificationKVDPH', 'numberKHDPH', 'text', 'partnerIdentity', 'myIdentity', 'order', 'numberOrder', 'dateOrder', 'paymentType', 'priceLevel', 'account', 'symConst', 'symSpec', 'paymentAccount', 'paymentTerminal', 'centre', 'activity', 'contract', 'regVATinEU', 'MOSS', 'evidentiaryResourcesMOSS', 'accountingPeriodMOSS', 'dateTaxOriginalDocumentMOSS', 'note', 'carrier', 'intNote'];
+    protected $_elements = ['extId', 'invoiceType', 'number', 'symVar', 'originalDocument', 'originalDocumentNumber', 'symPar', 'date', 'dateTax', 'dateAccounting', 'dateKHDPH', 'dateDue', 'dateApplicationVAT', 'dateDelivery', 'accounting', 'classificationVAT', 'classificationKVDPH', 'numberKHDPH', 'text', 'partnerIdentity', 'myIdentity', 'order', 'numberOrder', 'dateOrder', 'paymentType', 'priceLevel', 'account', 'symConst', 'symSpec', 'paymentAccount', 'paymentTerminal', 'centre', 'activity', 'contract', 'regVATinEU', 'MOSS', 'evidentiaryResourcesMOSS', 'accountingPeriodMOSS', 'dateTaxOriginalDocumentMOSS', 'correctionMOSS', 'carrier', 'note', 'intNote'];
 
     protected function _configureOptions(OptionsResolver $resolver)
     {
@@ -45,5 +45,6 @@ class Header extends DocumentHeader
         $resolver->setNormalizer('symSpec', $resolver->getNormalizer('string16'));
         $resolver->setNormalizer('paymentTerminal', $resolver->getNormalizer('bool'));
         $resolver->setNormalizer('dateTaxOriginalDocumentMOSS', $resolver->getNormalizer('date'));
+        $resolver->setNormalizer('correctionMOSS', $resolver->getNormalizer('bool'));
     }
 }
