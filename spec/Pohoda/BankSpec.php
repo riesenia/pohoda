@@ -66,7 +66,7 @@ class BankSpec extends ObjectBehavior
             ],
             'bankType' => 'receipt',
             'account' => 'KB',
-            'datePayment' => '2021-11-22',
+            'datePayment' => '2021-11-22'
         ], '123');
 
         $this->getXML()->asXML()->shouldReturn('<bnk:bank version="2.0"><bnk:bankHeader><bnk:extId><typ:ids>EXT-001</typ:ids><typ:exSystemName>TestApp</typ:exSystemName></bnk:extId><bnk:bankType>receipt</bnk:bankType><bnk:account><typ:ids>KB</typ:ids></bnk:account><bnk:datePayment>2021-11-22</bnk:datePayment></bnk:bankHeader></bnk:bank>');
