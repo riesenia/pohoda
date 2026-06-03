@@ -57,6 +57,21 @@ class BankSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<bnk:bank version="2.0"><bnk:bankHeader>' . $this->_defaultHeader() . '</bnk:bankHeader><bnk:bankSummary><bnk:homeCurrency><typ:priceNone>500</typ:priceNone></bnk:homeCurrency></bnk:bankSummary></bnk:bank>');
     }
 
+    public function it_can_set_ext_id()
+    {
+        $this->beConstructedWith([
+            'extId' => [
+                'ids' => 'EXT-001',
+                'exSystemName' => 'TestApp'
+            ],
+            'bankType' => 'receipt',
+            'account' => 'KB',
+            'datePayment' => '2021-11-22'
+        ], '123');
+
+        $this->getXML()->asXML()->shouldReturn('<bnk:bank version="2.0"><bnk:bankHeader><bnk:extId><typ:ids>EXT-001</typ:ids><typ:exSystemName>TestApp</typ:exSystemName></bnk:extId><bnk:bankType>receipt</bnk:bankType><bnk:account><typ:ids>KB</typ:ids></bnk:account><bnk:datePayment>2021-11-22</bnk:datePayment></bnk:bankHeader></bnk:bank>');
+    }
+
     public function it_can_set_parameters()
     {
         $this->addParameter('IsOn', 'boolean', 'true');
