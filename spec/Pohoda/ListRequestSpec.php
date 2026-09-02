@@ -86,6 +86,15 @@ class ListRequestSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<lst:listIntParamRequest version="2.0"><lst:requestIntParam/></lst:listIntParamRequest>');
     }
 
+    public function it_creates_correct_xml_for_gpsr()
+    {
+        $this->beConstructedWith([
+            'type' => 'Gpsr'
+        ], '123');
+
+        $this->getXML()->asXML()->shouldReturn('<lst:listGPSRRequest version="2.0" GPSRVersion="2.0"><lst:requestGPSR/></lst:listGPSRRequest>');
+    }
+
     public function it_creates_correct_xml_for_user_lists()
     {
         $this->beConstructedWith([

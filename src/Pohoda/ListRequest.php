@@ -156,6 +156,11 @@ class ListRequest extends Agenda
                 return 'Prodejka';
             }
 
+            // Gpsr is custom
+            if ($value == 'Gpsr') {
+                return 'GPSR';
+            }
+
             return $value;
         });
         $resolver->setDefault('namespace', function (Options $options) {
@@ -195,6 +200,11 @@ class ListRequest extends Agenda
         // ActionPrice is custom
         if ($this->_data['type'] == 'ActionPrice') {
             return 'actionPrices';
+        }
+
+        // GPSR is custom
+        if ($this->_data['type'] == 'GPSR') {
+            return 'GPSR';
         }
 
         return \lcfirst($this->_data['type']);
