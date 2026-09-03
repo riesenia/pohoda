@@ -68,6 +68,18 @@ class AddressbookSpec extends ObjectBehavior
         $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:actionType><adb:delete><ftr:filter><ftr:company>COMPANY</ftr:company></ftr:filter></adb:delete></adb:actionType></adb:addressbook>');
     }
 
+    public function it_can_set_parameters_without_header_data()
+    {
+        $this->beConstructedWith([], '123');
+
+        $this->addActionType('update', [
+            'id' => '123'
+        ]);
+        $this->addParameter('IsOn', 'boolean', 'true');
+
+        $this->getXML()->asXML()->shouldReturn('<adb:addressbook version="2.0"><adb:actionType><adb:update><ftr:filter><ftr:id>123</ftr:id></ftr:filter></adb:update></adb:actionType><adb:addressbookHeader><adb:parameters><typ:parameter><typ:name>VPrIsOn</typ:name><typ:booleanValue>true</typ:booleanValue></typ:parameter></adb:parameters></adb:addressbookHeader></adb:addressbook>');
+    }
+
     public function it_leaves_special_characters_intact_by_default()
     {
         $this->beConstructedWith([
